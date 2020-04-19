@@ -62,16 +62,25 @@ function editData() {
                 })
                     .then(res => res.json())
                     .then(data => {
-                        let inputs = document.getElementById('productFormEdit');
-                        inputs[1].setAttribute('value', data.id_product);
-                        inputs[2].setAttribute('value', data.name);
-                        inputs[3].value += data.description;
-                        inputs[4].setAttribute('value', data.quantity);
-                        inputs[5].setAttribute('value', data.unit_price);
-
-                        document.getElementById('formEditClear').addEventListener('click', () => document.getElementById('productFormEdit').reset());
-                        document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.getElementById('productFormEdit').reset() } });
-
+                        if(data.code == 404){
+                            swal({
+                                title: "error !",
+                                type: "error",
+                                text: "El producto que intenta modificar no se encuentra registrado en el sistema.",
+                                confirmButtonText: 'Aceptar',
+                            })
+                                .then(() => closeModalEdit());
+                        }else{
+                            let inputs = document.getElementById('productFormEdit');
+                            inputs[1].setAttribute('value', data.id_product);
+                            inputs[2].setAttribute('value', data.name);
+                            inputs[3].value += data.description;
+                            inputs[4].setAttribute('value', data.quantity);
+                            inputs[5].setAttribute('value', data.unit_price);
+    
+                            document.getElementById('formEditClear').addEventListener('click', () => document.getElementById('productFormEdit').reset());
+                            document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.getElementById('productFormEdit').reset() } });
+                        }
                     })
                     .catch(error => console.log(error));
             })
