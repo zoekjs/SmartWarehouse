@@ -2,10 +2,10 @@
 
 ## AQUÍ CODEAMOS DE PANA, NA DE WEAS !
 
-[Laragon](https://sourceforge.net/projects/laragon/files/releases/4.0/laragon-full.exe/download)
-[MariaDB - 10.4.12 (Ultima versión estable)](https://downloads.mariadb.org/interstitial/mariadb-10.4.12/winx64-packages/mariadb-10.4.12-winx64.zip/from/http%3A//ftp.igh.cnrs.fr/pub/mariadb/)
+- [Laragon](https://sourceforge.net/projects/laragon/files/releases/4.0/laragon-full.exe/download).
+- [MariaDB - 10.4.12 (Ultima versión estable)](https://downloads.mariadb.org/interstitial/mariadb-10.4.12/winx64-packages/mariadb-10.4.12-winx64.zip/from/http%3A//ftp.igh.cnrs.fr/pub/mariadb/).
 
-
+##
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
 
