@@ -10,7 +10,7 @@ Para instalar mariaDB en laragon: extraer el rar, copiar la carpeta "mariadb-10.
 
 **Seleccionar mariaDB en laragon:**
 
-<p align="center><img src="https://steemitimages.com/p/3W72119s5BjWMGm4Xa2MvD5AT2bJsSA8F9WeC71v1s1fKfGkK9mMKuc3LcvF4KigbWg9UsrpEPFzgfsszhXtBbT3BnFTEdzXwVMTPTPN9gEGf8h72xjt5t?format=match&mode=fit" width="600px"></p>
+<p align="center><img src="https://steemitimages.com/p/3W72119s5BjWMGm4Xa2MvD5AT2bJsSA8F9WeC71v1s1fKfGkK9mMKuc3LcvF4KigbWg9UsrpEPFzgfsszhXtBbT3BnFTEdzXwVMTPTPN9gEGf8h72xjt5t?format=match&mode=fit" width="600"></p>
 
 
 Para instalar PHPMyAdmin en laragon: extraer el rar, copiar la carpeta "phpMyAdmin" y pegarla en **"laragon/etc/apps/"**
