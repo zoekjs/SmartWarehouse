@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
                 }
-                else if (data.code == 422) {
+                else if (data.code == 404) {
                     swal({
                         title: "No se pudo actualizar el producto :(",
                         type: "error",

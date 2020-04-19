@@ -125,7 +125,12 @@ route::put('products/{id}', function(Request $request, $id_product) {
 
         return response()->json($data, $data['code']);
     }catch(Exception $e){
-        return response($e);
+        $data = array(
+            'status'    => 'not found',
+            'code'      => '404',
+            'message'   => 'El producto que intenta modificar no está registrado en el sistema.'
+        )
+        return response()->json($data, $data['code']);
     }
 });
 
