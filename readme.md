@@ -6,6 +6,10 @@
 - [MariaDB - 10.4.12 (Ultima versión estable)](https://downloads.mariadb.org/interstitial/mariadb-10.4.12/winx64-packages/mariadb-10.4.12-winx64.zip/from/http%3A//ftp.igh.cnrs.fr/pub/mariadb/)
 - [PHPMyAdmin 5.0.2](https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-all-languages.zip)
 
+Para instalar mariaDB en laragon: extraer el rar, copiar la carpeta "mariadb-10.4.12-winx64" completa y pegarla en **"laragon/bin/mysql/"**
+
+Para instalar PHPMyAdmin en laragon: extraer el rar, copiar la carpeta "phpMyAdmin" y pegarla en **"laragon/etc/apps/"**
+
 ##
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
