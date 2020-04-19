@@ -1,4 +1,23 @@
+<p align="center"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRUdQMJs1Bjeo23xzSI76Knhh11hKIB8moH_UGtia5fN_N4s2Zg&usqp=CAU" width="400"></p>
+
+## AQUÍ CODEAMOS DE PANA, NA DE WEAS !
+
+- [Laragon](https://sourceforge.net/projects/laragon/files/releases/4.0/laragon-full.exe/download)
+- [MariaDB - 10.4.12 (Ultima versión estable)](https://downloads.mariadb.org/interstitial/mariadb-10.4.12/winx64-packages/mariadb-10.4.12-winx64.zip/from/http%3A//ftp.igh.cnrs.fr/pub/mariadb/)
+- [PHPMyAdmin 5.0.2](https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-all-languages.zip)
+
+Para instalar mariaDB en laragon: extraer el rar, copiar la carpeta "mariadb-10.4.12-winx64" completa y pegarla en **"laragon/bin/mysql/"**
+
+**Seleccionar mariaDB en laragon:**
+<p align="center"><img src="https://steemitimages.com/p/3W72119s5BjWMGm4Xa2MvD5AT2bJsSA8F9WeC71v1s1fKfGkK9mMKuc3LcvF4KigbWg9UsrpEPFzgfsszhXtBbT3BnFTEdzXwVMTPTPN9gEGf8h72xjt5t?format=match&mode=fit" width="600"></p>
+
+
+Para instalar PHPMyAdmin en laragon: extraer el rar, copiar la carpeta "phpMyAdmin" y pegarla en **"laragon/etc/apps/"**
+
+##
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+
+
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
