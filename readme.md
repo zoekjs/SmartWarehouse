@@ -13,6 +13,21 @@ Para instalar mariaDB en laragon: extraer el rar, copiar la carpeta "mariadb-10.
 
 
 Para instalar PHPMyAdmin en laragon: extraer el rar, copiar la carpeta "phpMyAdmin" y pegarla en **"laragon/etc/apps/"**
+##
+**Clonar Repo**
+1.- Abrir la terminal de laragon.
+
+<p align="center"><img src="https://1.bp.blogspot.com/-sOqvnuCNOrM/XRI2bsTlMNI/AAAAAAAAmio/S7jnL4uPR_kmhoEGV9Ry7lbFPcQ_3JI8QCLcBGAs/s1600/paso8.png" width="600"></p>
+
+2.- Debes clonar el repo en el directorio **"laragon/www"** con el comando **git clone https://github.com/Z0EK/SmartWarehouse.git**.
+
+3.- Entra a la carpeta del repo clonado (**SmartWarehouse**) a través de la terminal de laragon y ejecuta el comando **composer install**, para instalar las dependencias del proyecto.
+
+4.- Crea el archivo **.env** para establecer los parámetros de conexión con la DB.
+
+5.- Testea los avances y reporta los bugs plox ! :)
+
+##
 
 ##
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
