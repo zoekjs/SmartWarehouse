@@ -12,7 +12,9 @@
 */
 
 Route::match(array('GET', 'POST', 'PUT'), '/', function () {
-    return view('welcome');
+    return view('products');
 })->name('main');
 
-Route::post('insertar', 'BodegaController@store')->name('insertar');
+Route::match(array('GET', 'POST', 'PUT'), '/proveedores', function () {
+    return view('providers');
+})->name('providers');
