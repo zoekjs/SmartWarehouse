@@ -175,8 +175,11 @@ route::delete('products/{id}', function($id_product) {
  * ********************************************************************************************************************************************************************/
 
  route::get('providers', function() {
+     $query = DB::table('provider as p')->select('p.rut_provider', 'p.name', 'p.telephone', 'p.address', 'p.email', 'c.name as country_name')
+                ->join('country as c', 'c.id_country', '=', 'p.id_country')
+                ->get();
      return DataTables()
-                ->eloquent(App\Provider::query())
+                ->of($query)
                 ->toJson();
  });
 
@@ -229,3 +232,90 @@ route::delete('products/{id}', function($id_product) {
         return response($e);
     }
  });
+
+ route::get('providers/{rut_provider}', function(Request $request, $rut_provider) {
+    if($request->input('json', null)) {
+        $json = $request->input('json', null);
+        $params = json_decode($json);
+    }else{
+        $json = $request->all();
+        $params = json_decode(json_encode($json));
+    }
+
+    $provider = new Provider();
+    $exist = $provider->exist($rut_provider);
+    if($exist){
+        return json_encode($provider->searchProvider($rut_provider));
+    }else {
+        $data = array(
+            'status'    => 'error',
+            'code'      => '404',
+            'message'   => 'El proveedor que intenta buscar, no se encuentra registrado en el sistema :('
+        );
+        return response()->json($data, $data['code']);
+    }
+    
+ });
+
+ route::put('providers/{rut_provider}', function(Request $request, $rut_provider) {
+    if($request->input('json', null)) {
+        $json = $request->input('json', null);
+        $params = json_decode($json);
+    }else{
+        $json = $request->all();
+        $params = json_decode(json_encode($json));
+    }
+
+     $provider = new Provider();
+
+     $id_country    = $params->id_country;
+     $name          = $params->name;
+     $telephone     = $params->telephone;
+     $address       = $params->address;
+     $email         = $params->email;
+
+     $provider->updateProvider($rut_provider, $id_country, $name, $telephone, $address, $email);
+
+     $data = array(
+         'status'   => 'success',
+         'code'     => '201',
+         'message'  => 'El proveedor ha sido modificado exitosamente :)'
+     );
+
+     return response()->json($data, $data['code']);
+
+     
+ });
+
+ route::delete('providers/{rut_provider}', function($rut_provider){
+     $provider = new Provider();
+     $exist = $provider->exist($rut_provider);
+
+     try{
+        if($exist) {
+            $provider->deleteProvider($rut_provider);
+   
+            $data = array(
+                'status'   => 'success',
+                'code'     => '200',
+                'message'  => 'El proveedor ha sido eliminado correctamente del sistema'
+            );
+   
+            return response()->json($data, $data['code']);
+        }else {
+            $data = array(
+               'status'    => 'error',
+               'code'      => '404',
+               'message'   => 'El proveedor que intenta eliminar no está registrado en el sistema'     
+           );
+        }
+     }catch(Exception $e) {
+         $data = array(
+             'status'   => 'error',
+             'code'     => '400',
+             'message'  => 'No se ha podido eliminar el proveedor :('
+         );
+         return response()->json($data, $data['code']);
+     } 
+ });
+

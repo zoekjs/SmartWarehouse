@@ -4,14 +4,14 @@ $(document).ready(function () {
 function ajaxRequest() {
     var table = $('#providers').DataTable({
         "serverSide": true,
-        "ajax": "api/products",
+        "ajax": "api/providers",
         "columns": [
-            { data: 'id_product' },
+            { data: 'rut_provider' },
             { data: 'name' },
-            { data: 'description' },
-            { data: 'quantity' },
-            { data: 'quantity' },
-            { data: 'quantity'},
+            { data: 'country_name'},
+            { data: 'telephone' },
+            { data: 'address' },
+            { data: 'email' },
             { "defaultContent": "<button type='button' class='btn btn-warning btn-sm edit' data-toggle='modal' data-target='#modalEdit'>Editar</button>&nbsp&nbsp<button type='button' id='formClear' class='btn  btn-sm btn-danger delete'>Eliminar</button>" },
         ],
         "language": {
