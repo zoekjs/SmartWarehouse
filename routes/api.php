@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use App\Product;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\Provider;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +18,12 @@ use RealRashid\SweetAlert\Facades\Alert;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+/**********************************************************************************************************************************************************************
+ * ********************************************************************************************************************************************************************
+ * ***********************************************                 PRODUCTS SECTION                                ****************************************************
+ * ********************************************************************************************************************************************************************
+ * ********************************************************************************************************************************************************************/
 
 Route::get('products', function(){
     //return json_encode(DB::table('product')->get()->toArray());
@@ -154,3 +160,191 @@ route::delete('products/{id}', function($id_product) {
         return response()->json($data, $data['code']);
     }
 });
+
+/**********************************************************************************************************************************************************************
+ * ********************************************************************************************************************************************************************
+ * ***********************************************                 END PRODUCTS SECTION                            ****************************************************
+ * ********************************************************************************************************************************************************************
+ * ********************************************************************************************************************************************************************/
+
+
+/**********************************************************************************************************************************************************************
+ * ********************************************************************************************************************************************************************
+ * ***********************************************                 PROVIDERS SECTION                               ****************************************************
+ * ********************************************************************************************************************************************************************
+ * ********************************************************************************************************************************************************************/
+
+ route::get('providers', function() {
+     $query = DB::table('provider as p')->select('p.rut_provider', 'p.name', 'p.telephone', 'p.address', 'p.email', 'c.name as country_name')
+                ->join('country as c', 'c.id_country', '=', 'p.id_country')
+                ->get();
+     return DataTables()
+                ->of($query)
+                ->toJson();
+ });
+
+ route::get('countrys', function() {
+    return datatables()
+    ->eloquent(App\Country::query())
+    ->toJson();
+});
+
+ route::post('providers', function(Request $request) {
+
+    if($request->input('json', null)){
+        $json = $request->input('json', null);
+        $params = json_decode($json);
+    }else{
+        $json = $request->all();
+        $params = json_decode(json_encode($json));
+    }
+
+    try{
+        $provider = new Provider();
+        $exist = $provider->exist($params->rut_provider);
+
+        if(!$exist) {
+            $rut_provider   = $params->rut_provider;
+            $id_pais        = (int)$params->id_pais;
+            $name           = $params->name;
+            $telephone      = $params->telephone;
+            $address        = $params->address;
+            $email          = $params->email;
+    
+            $provider->createProvider($rut_provider, $id_pais, $name, $telephone, $address, $email);
+    
+            $data = array(
+                'status'    => 'created',
+                'code'      => '201',
+                'message'   => 'El proveedor fue registrado correctamente en el sistema :)' 
+            );
+    
+            return response()->json($data, $data['code']);
+        }else{
+            $data = array(
+                'status'    => 'Unprocessable Entity',
+                'code'      => '422',
+                'message'   => 'El proveedor que intenta registrar ya existe en el sistema.'
+            );
+
+            return response()->json($data, $data['code']);
+        }
+    }catch(Exception $e) {
+        $data = array(
+            'status'    => 'error',
+            'code'      => '400',
+            'message'   => 'No se ha podido registrar el proveedor :('
+        );
+        return response($e);
+    }
+ });
+
+ route::get('providers/{rut_provider}', function(Request $request, $rut_provider) {
+    if($request->input('json', null)) {
+        $json = $request->input('json', null);
+        $params = json_decode($json);
+    }else{
+        $json = $request->all();
+        $params = json_decode(json_encode($json));
+    }
+
+    $provider = new Provider();
+    $exist = $provider->exist($rut_provider);
+    if($exist){
+        return $provider->searchProvider($rut_provider);
+    }else {
+        $data = array(
+            'status'    => 'error',
+            'code'      => '404',
+            'message'   => 'El proveedor que intenta buscar, no se encuentra registrado en el sistema :('
+        );
+        return response()->json($data, $data['code']);
+    }
+    
+ });
+
+ route::put('providers/{rut_provider}', function(Request $request, $rut_provider) {
+    if($request->input('json', null)) {
+        $json = $request->input('json', null);
+        $params = json_decode($json);
+    }else{
+        $json = $request->all();
+        $params = json_decode(json_encode($json));
+    }
+
+    try{
+        $provider = new Provider();
+        $exist = $provider->exist($rut_provider);
+
+        if($exist){
+            
+            $id_country    = $params->id_country;
+            $name          = $params->name;
+            $telephone     = $params->telephone;
+            $address       = $params->address;
+            $email         = $params->email;
+    
+            $provider->updateProvider($rut_provider, $id_country, $name, $telephone, $address, $email);
+    
+            $data = array(
+                'status'   => 'success',
+                'code'     => '201',
+                'message'  => 'El proveedor ha sido modificado exitosamente :)'
+            );
+
+            return response()->json($data, $data['code']);
+        }else{
+            $data = array(
+                'status'    => 'error',
+                'code'      => '404',
+                'message'   => 'El proveedor que intenta modificar no se encuentra registrado en el sistema'
+            );
+
+            return response()->json($data, $data['code']);
+        }
+   
+    }catch(Exception $e){
+        $data = array(
+            'status'    => 'error',
+            'code'      => '400',
+            'message'   => 'no se pudo modificar el proveedor :('
+        );
+        return response()->json($data, $data['code']);
+    }
+
+
+     
+ });
+
+ route::delete('providers/{rut_provider}', function($rut_provider){
+     $provider = new Provider();
+     $exist = $provider->exist($rut_provider);
+
+     try{
+        if($exist) {
+            $provider->deleteProvider($rut_provider);
+   
+            $data = array(
+                'status'   => 'success',
+                'code'     => '200',
+                'message'  => 'El proveedor ha sido eliminado correctamente del sistema'
+            );
+   
+            return response()->json($data, $data['code']);
+        }else {
+            $data = array(
+               'status'    => 'error',
+               'code'      => '404',
+               'message'   => 'El proveedor que intenta eliminar no está registrado en el sistema'     
+           );
+        }
+     }catch(Exception $e) {
+         $data = array(
+             'status'   => 'error',
+             'code'     => '400',
+             'message'  => 'No se ha podido eliminar el proveedor :('
+         );
+         return response()->json($data, $data['code']);
+     } 
+ });
+
