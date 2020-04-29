@@ -16,6 +16,23 @@
    
 </head>
 <body>
+    @guest
+        <a href="{{ route('login') }}">{{ __('Login') }}</a>
+    @else
+        <li class="nav-item dropdown">
+            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                {{ Auth::user()->name }} <span class="caret"></span>
+            </a>
+            <a href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                {{ __('Logout') }}
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                @csrf
+            </form>
+        </li>
+    @endguest
     <div class="container">
         @yield('content')
     </div>
