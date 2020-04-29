@@ -183,6 +183,12 @@ route::delete('products/{id}', function($id_product) {
                 ->toJson();
  });
 
+ route::get('countrys', function() {
+    return datatables()
+    ->eloquent(App\Country::query())
+    ->toJson();
+});
+
  route::post('providers', function(Request $request) {
 
     if($request->input('json', null)){
@@ -245,7 +251,7 @@ route::delete('products/{id}', function($id_product) {
     $provider = new Provider();
     $exist = $provider->exist($rut_provider);
     if($exist){
-        return json_encode($provider->searchProvider($rut_provider));
+        return $provider->searchProvider($rut_provider);
     }else {
         $data = array(
             'status'    => 'error',
@@ -266,23 +272,46 @@ route::delete('products/{id}', function($id_product) {
         $params = json_decode(json_encode($json));
     }
 
-     $provider = new Provider();
+    try{
+        $provider = new Provider();
+        $exist = $provider->exist($rut_provider);
 
-     $id_country    = $params->id_country;
-     $name          = $params->name;
-     $telephone     = $params->telephone;
-     $address       = $params->address;
-     $email         = $params->email;
+        if($exist){
+            
+            $id_country    = $params->id_country;
+            $name          = $params->name;
+            $telephone     = $params->telephone;
+            $address       = $params->address;
+            $email         = $params->email;
+    
+            $provider->updateProvider($rut_provider, $id_country, $name, $telephone, $address, $email);
+    
+            $data = array(
+                'status'   => 'success',
+                'code'     => '201',
+                'message'  => 'El proveedor ha sido modificado exitosamente :)'
+            );
 
-     $provider->updateProvider($rut_provider, $id_country, $name, $telephone, $address, $email);
+            return response()->json($data, $data['code']);
+        }else{
+            $data = array(
+                'status'    => 'error',
+                'code'      => '404',
+                'message'   => 'El proveedor que intenta modificar no se encuentra registrado en el sistema'
+            );
 
-     $data = array(
-         'status'   => 'success',
-         'code'     => '201',
-         'message'  => 'El proveedor ha sido modificado exitosamente :)'
-     );
+            return response()->json($data, $data['code']);
+        }
+   
+    }catch(Exception $e){
+        $data = array(
+            'status'    => 'error',
+            'code'      => '400',
+            'message'   => 'no se pudo modificar el proveedor :('
+        );
+        return response()->json($data, $data['code']);
+    }
 
-     return response()->json($data, $data['code']);
 
      
  });

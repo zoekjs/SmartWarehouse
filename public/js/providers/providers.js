@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
             jsonData[k] = v;
         }
 
-        jsonData['id_pais'] = document.getElementById('id_pais').value; ;
+        jsonData['id_pais'] = document.getElementById('id_pais').value;
         console.log(jsonData);
 
         fetch('api/providers', {
@@ -29,7 +29,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         type: "success",
                         text: data.message,
                         confirmButtonText: 'Aceptar',
+                    })
+                    .then(function () {
+                        closeModal();
+                        deleteProvider();
+                        editData();
                     });
+                document.getElementById('providerFormEdit').reset();
+                tableDestroy();
                 }else if(data.code == 422 || data.code == 400){
                     swal({
                         title: 'Algo malio sal :(',
@@ -42,9 +49,11 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.log(error));
 
     }
-    //editData();
-    //deleteProduct();
+
+    deleteProvider();
+    editData();
 });
+
 
 function editData() {
     setTimeout(() => {
@@ -52,31 +61,37 @@ function editData() {
         buttons.forEach((btn) => {
             btn.addEventListener('click', () => {
                 //obtener id desde la tabla antes de editar
-                let idProduct = btn.parentElement.parentElement.children[0].lastChild.nodeValue;
-                let url = 'api/products/';
-                fetch(url += `${idProduct}`, {
+                let idProvider = btn.parentElement.parentElement.children[0].lastChild.nodeValue;
+                console.log(idProvider);
+                let url = 'api/providers/';
+                fetch(url += `${idProvider}`, {
                     method: 'GET'
                 })
                     .then(res => res.json())
                     .then(data => {
+                        let json = data[0];
+                        console.log(json);
                         if(data.code == 404){
                             swal({
                                 title: "error !",
                                 type: "error",
-                                text: "El producto que intenta modificar no se encuentra registrado en el sistema.",
+                                text: "El proveedor que intenta modificar no se encuentra registrado en el sistema.",
                                 confirmButtonText: 'Aceptar',
                             })
                                 .then(() => closeModalEdit());
                         }else{
-                            let inputs = document.getElementById('productFormEdit');
-                            inputs[1].setAttribute('value', data.id_product);
-                            inputs[2].setAttribute('value', data.name);
-                            inputs[3].value += data.description;
-                            inputs[4].setAttribute('value', data.quantity);
-                            inputs[5].setAttribute('value', data.unit_price);
+                            let inputs = document.getElementById('providerFormEdit');
+                            let select = document.getElementById('id_select');
+                            select.setAttribute('value', `${json.id_country}`)
+                            select.innerText = `${json.country_name}` 
+                            inputs[1].setAttribute('value', json.rut_provider);
+                            inputs[3].setAttribute('value', json.name);
+                            inputs[4].setAttribute('value', json.telephone);
+                            inputs[5].setAttribute('value', json.address);
+                            inputs[6].setAttribute('value', json.email);
     
-                            document.getElementById('formEditClear').addEventListener('click', () => document.getElementById('productFormEdit').reset());
-                            document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.getElementById('productFormEdit').reset() } });
+                            document.getElementById('formEditClear').addEventListener('click', () => document.getElementById('providerFormEdit').reset());
+                            document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.getElementById('providerFormEdit').reset() } });
                         }
                     })
                     .catch(error => console.log(error));
@@ -88,16 +103,18 @@ function editData() {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('productFormEdit').onsubmit = (e) => {
+    document.getElementById('providerFormEdit').onsubmit = (e) => {
         e.preventDefault();
-        let formData = new FormData(document.getElementById('productFormEdit'));
+        let formData = new FormData(document.getElementById('providerFormEdit'));
         let json = {};
         for (var [k, v] of formData) {
             json[k] = v;
         }
+        json['id_country'] = document.getElementById('id_pais').value;
 
-        let url = 'api/products/';
-        fetch(url += `${json.id_product}`, {
+        console.log(json);
+        let url = 'api/providers/';
+        fetch(url += `${json.rut_provider}`, {
             method: 'PUT',
             body: JSON.stringify(json),
             headers: {
@@ -118,19 +135,27 @@ document.addEventListener('DOMContentLoaded', () => {
                         .then(() => {
                             closeModalEdit();
                             tableDestroy();
-                            document.getElementById('productFormEdit').reset()
+                            document.getElementById('providerFormEdit').reset()
                             editData();
-                            deleteProduct();
+                            deleteProvider();
                         });
 
 
                 }
                 else if (data.code == 404) {
                     swal({
-                        title: "No se pudo actualizar el producto :(",
+                        title: "No se pudo actualizar el proveedor :(",
                         type: "error",
                         text: data.message,
-                        confirmButtonText: 'FEELS BAD MAN'
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
+                else if (data.code == 400) {
+                    swal({
+                        title: "No se pudo actualizar el proveedor :(",
+                        type: "error",
+                        text: data.message,
+                        confirmButtonText: 'Aceptar'
                     });
                 }
 
@@ -139,16 +164,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-function deleteProduct() {
+function deleteProvider() {
     setTimeout(() => {
         let delButtons = document.querySelectorAll('.delete');
         delButtons.forEach(btn => {
             btn.addEventListener('click', () => {
-                let idProduct = btn.parentElement.parentElement.childNodes[0].lastChild.nodeValue;
-                let url = 'api/products/'
+                let idProvider = btn.parentElement.parentElement.childNodes[0].lastChild.nodeValue;
+                let url = 'api/providers/'
                 swal({
                     title: "Estás seguro?",
-                    text: "No podrás recuperar el producto después de borrarlo!",
+                    text: "No podrás recuperar el proveedor después de borrarlo!",
                     type: "warning",
                     showCancelButton: true,
                     cancelButtonText: "cancelar",
@@ -157,9 +182,9 @@ function deleteProduct() {
                 })
                     .then(res => {
                         if (res.value) {
-                            fetch(url += idProduct, {
+                            fetch(url += idProvider, {
                                 method: 'DELETE',
-                                body: String(idProduct),
+                                body: String(idProvider),
                                 headers: {
                                     "Content-Type": "application/json",
                                     "Accept": "application/json",
@@ -177,13 +202,13 @@ function deleteProduct() {
                                         })
                                             .then(() => {
                                                 tableDestroy();
+                                                deleteProvider();
                                                 editData();
-                                                deleteProduct();
                                             });
                                     }
                                     else if (data.code == 400) {
                                         swal({
-                                            title: "No se pudo eliminar el producto :(",
+                                            title: "No se pudo eliminar el proveedor :(",
                                             type: "error",
                                             text: data.message,
                                             confirmButtonText: 'Aceptar'

@@ -16,5 +16,8 @@ Route::match(array('GET', 'POST', 'PUT'), '/', function () {
 })->name('main');
 
 Route::match(array('GET', 'POST', 'PUT'), '/proveedores', function () {
-    return view('providers');
-})->name('providers');
+    $countrys = \DB::table('country')
+            ->orderBy('name', 'asc')
+            ->get();
+    return view('providers', compact('countrys'));
+})->name('proveedores');

@@ -11,7 +11,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4>Añadir producto</h4>
+                        <h4>Añadir Proveedor</h4>
                     </div>
                     <div class="modal-body">
                         <form class="col-sm-12" action="" method="post" id="providerForm">
@@ -26,10 +26,10 @@
                                 <div class="input-field col-sm-12">
                                     <label for="id_pais">País</label>
                                     <select class="custom-select" id="id_pais">
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        <option selected>Selecccionar</option>
+                                        @foreach ($countrys as $country)
+                                        <option value="{{$country->id_country}}">{{$country->name}}</option>
+                                        @endforeach    
                                     </select>
                                 </div>
                               </div>
@@ -74,43 +74,56 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4>Modificar producto</h4>
+                        <h4>Modificar Proveedor</h4>
                     </div>
                     <div class="modal-body">
-                        <form class="col-sm-12" action="" method="post" id="productFormEdit">
+                        <form class="col-sm-12" action="" method="post" id="providerFormEdit">
                             @csrf
                             <div class="form-group">
                                 <div class="input-field col-sm-12">
-                                    <label for="id_product">Código de producto</label>
-                                    <input class="form-control" type="text" name="id_product" id="id_product" readonly="true">
+                                    <label for="rut_provider">Rut proveedor</label>
+                                    <input class="form-control" type="text" name="rut_provider" id="rut_provider">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-field col-sm-12">
-                                    <label for="name">Nombre producto</label>
+                                    <label for="id_country">País</label>
+                                    <select class="custom-select" id="id_country">
+                                        <option selected id="id_select">Selecccionar</option>
+                                        @foreach ($countrys as $country)
+                                        <option value="{{$country->id_country}}">{{$country->name}}</option>
+                                        @endforeach    
+                                    </select>
+                                </div>
+                              </div>
+                            <div class="form-group">
+                                <div class="input-field col-sm-12">
+                                    <label for="name">Nombre proveedor</label>
                                     <input class="form-control" type="text" name="name" id="name">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-field col-sm-12">
-                                    <label for="description">Descripción</label>
-                                    <textarea id="description" name="description" class="form-control"></textarea>
+                                    <label for="name">Teléfono</label>
+                                    <input class="form-control" type="text" name="telephone" id="telephone">
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="input-field col-sm-6">
-                                    <label for="quantity">Cantidad</label>
-                                    <input class="form-control" type="text" name="quantity" id="quantity">
-                                </div>
-                                <div class="form-group col-sm-6">
-                                    <label for="unit_price">Precio Unitario</label>
-                                    <input class="form-control" type="text" name="unit_price" id="unit_price">
+                            <div class="form-group">
+                                <div class="input-field col-sm-12">
+                                    <label for="quantity">Dirección</label>
+                                    <input class="form-control" type="text" name="address" id="address">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="form-group col-sm-12">
+                                    <label for="unit_price">Correo de contacto</label>
+                                    <input class="form-control" type="text" name="email" id="email">
+                                </div>
+                            </div>    
                             <div class="modal-footer">
                                 <button type="submit" value=" Send" id="sendForm"
-                                    class="btn btn-success">Modificar</button>
-                                <button type="button" id="formEditClear" data-dismiss="modal"
+                                    class="btn btn-success">Agregar</button>
+                                <button type="button" id="formClear" data-dismiss="modal"
                                     class="btn btn-danger">Cancelar</button>
                             </div>
                         </form>

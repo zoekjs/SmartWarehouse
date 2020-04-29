@@ -37,7 +37,7 @@ function ajaxRequest() {
 }
 
 function tableDestroy() {
-    var table = $('#products').DataTable();
+    var table = $('#providers').DataTable();
     table.destroy();
     ajaxRequest();
 }
