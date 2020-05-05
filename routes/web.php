@@ -22,6 +22,17 @@ Route::match(array('GET', 'POST', 'PUT'), '/proveedores', function () {
     return view('providers', compact('countrys'));
 })->name('proveedores')->middleware('auth');
 
+Route::match(array('GET', 'POST', 'PUT'), '/oc', function () {
+    $countrys = \DB::table('country')
+            ->orderBy('name', 'asc')
+            ->get();
+    return view('providers', compact('countrys'));
+})->name('OC')->middleware('auth');
+
+Route::match(array('GET', 'POST', 'PUT'), '/categorias', function () {
+    return view('categories');
+})->name('categorias')->middleware('auth');
+
 Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
@@ -30,13 +41,15 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 });*/
 
 //ruta para crear usuario
-/*Route::get('test_user', function(){
+Route::get('test_user', function(){
     $user = new App\User;
-    $user->rut_user = '191730984';
-    $user->name = 'Javier';
-    $user->last_name = 'Romero';
-    $user->email = 'Javier@email.cl';
+    $user->rut_user = '181912111';
+    $user->name = 'Felipe';
+    $user->last_name = 'Espinoza';
+    $user->email = 'Felipe@email.cl';
     $user->password = bcrypt('123456');
     $user->save();
     return $user;
-});*/
+});
+Auth::routes();
+
