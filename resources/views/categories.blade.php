@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-sm-12 col-xl-12 offset-s4 mt-5 d-flex flex-row-reverse">
         <button type="button" class="btn btn-primary p-2" data-toggle="modal" data-target="#modal1">Añadir
-            proveedor</button>
+            Categoría</button>
         <div id="modal1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Modal1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -57,7 +57,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" value=" Send" id="sendForm"
-                                    class="btn btn-success">Agregar</button>
+                                    class="btn btn-success">Modificar</button>
                                 <button type="button" id="formClear" data-dismiss="modal"
                                     class="btn btn-danger">Cancelar</button>
                             </div>

@@ -10,3 +10,9 @@
 th.actions{
     width: 15%;
 }
+.card-img-top.menu{
+    margin-top: 23px !important;
+}
+.row.menu{
+    margin-top: 180px !important;
+}

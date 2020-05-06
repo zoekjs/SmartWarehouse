@@ -13,7 +13,7 @@
 
 Route::match(array('GET', 'POST', 'PUT'), '/', function () {
     return view('products');
-})->name('main')->middleware('auth');
+})->name('productos')->middleware('auth');
 
 Route::match(array('GET', 'POST', 'PUT'), '/proveedores', function () {
     $countrys = \DB::table('country')
@@ -32,6 +32,18 @@ Route::match(array('GET', 'POST', 'PUT'), '/oc', function () {
 Route::match(array('GET', 'POST', 'PUT'), '/categorias', function () {
     return view('categories');
 })->name('categorias')->middleware('auth');
+
+Route::match(array('GET', 'POST', 'PUT'), '/menu', function () {
+    return view('user/menu');
+})->name('menu')->middleware('auth');
+
+Route::get('/nueva-orden', function () {
+    return view('neworder');
+})->name('nueva-orden')->middleware('auth');
+
+Route::get('/admin', function () {
+    return view('admin/menu');
+})->name('admin')->middleware('auth');
 
 Auth::routes(['register' => false]);
 

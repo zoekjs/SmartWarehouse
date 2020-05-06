@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{asset('css/main.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
     <link rel="stylesheet" href="{{asset('css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/main.css')}}">
     @yield('css')
     
    
