@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use App\Product;
 use App\Provider;
+use App\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -348,3 +349,142 @@ route::delete('products/{id}', function($id_product) {
      } 
  });
 
+/**********************************************************************************************************************************************************************
+ * ********************************************************************************************************************************************************************
+ * ***********************************************                 CATEGORIES SECTION                              ****************************************************
+ * ********************************************************************************************************************************************************************
+ * ********************************************************************************************************************************************************************/
+
+ route::get('categories', function() {
+    return datatables()
+    ->eloquent(\App\Category::query())
+    ->toJson();
+ });
+
+ route::post('categories', function(Request $request) {
+     if($request->input('json', null)){
+        $json = $request->input('json', null);
+        $params = json_decode($json);
+     }else{
+         $json = $request->all();
+         $params = json_decode(json_encode($json));
+     }
+
+     try{
+        $category = new Category();
+        $exist = $category->exist($params->name);
+
+        if(!$exist) {
+            $name = $params->name;
+            $category->createCategory($name);
+
+            $data = array(
+                'status'    => 'created',
+                'code'      => '201',
+                'message'   => 'La categoría ha sido agregada correctamente :)'
+            );
+            return response()->json($data, $data['code']);
+        }else{
+            $data = array(
+                'status'    => 'error',
+                'code'      => '422',
+                'message'   => 'La categoría que intenta registrar, ya existe en el sistema :('
+            );
+            return response()->json($data, $data['code']);
+        }
+     }catch(Exception $e) {
+         return $e;
+     }
+ });
+
+ route::get('categories/{name}', function($name) {
+     $category = new Category();
+     $exist = $category->exist($name);
+
+     if($exist){
+         return $category->searchCategory($name);
+     }else{
+         $data = array(
+             'status'   => 'not found',
+             'code'     => '404',
+             'message'  => 'La categoría que desea editar no está registrada en el sistema'
+         );
+
+         return response()->json($data, $data['code']);
+     }
+ });
+
+ route::put('categories/{id_category}', function(Request $request) {
+    if($request->input('json', null)){
+        $json = $request->input('json', null);
+        $params = json_decode($json);
+     }else{
+         $json = $request->all();
+         $params = json_decode(json_encode($json));
+     }
+
+     try{
+         $category = new Category();
+         $exist = $category->existId($params->id_category);
+
+         if($exist){
+             $name = $params->name;
+             $id_category = $params->id_category;
+             $category->updateCategory($id_category, $name);
+
+             $data = array(
+                 'status'   => 'modified',
+                 'code'     => '201',
+                 'message'  => 'La categoría ha sido modificada exitosamente :)'
+             );
+             return response()->json($data, $data['code']);
+         }else{
+             $data = array(
+                 'status'   => 'not found',
+                 'code'     => '404',
+                 'message'  => 'La categoría que desea editar no se encuentra registrada en el sistema :('
+             );
+             return response()->json($data, $data['code']);
+         }
+     }catch(Exception $e){
+        $data = array(
+            'status'    => 'bad request',
+            'code'      => '400',
+            'message'   => 'No se pudo actualizar la categoría :('
+        );
+        return response()->json($data, $data['code']);
+    }
+ });
+
+ route::delete('categories/{name}', function(Request $request, $name) {
+    $category = new Category();
+    $exist = $category->exist($name);
+
+    try{
+       if($exist) {
+           $category->deleteCategory($name);
+  
+           $data = array(
+               'status'   => 'success',
+               'code'     => '200',
+               'message'  => 'La categoría ha sido eliminado correctamente del sistema'
+           );
+  
+           return response()->json($data, $data['code']);
+       }else {
+           $data = array(
+              'status'    => 'error',
+              'code'      => '404',
+              'message'   => 'La categoría que intenta eliminar no está registrado en el sistema'     
+          );
+       }
+    }catch(Exception $e) {
+       /* $data = array(
+            'status'   => 'error',
+            'code'     => '400',
+            'message'  => 'No se ha podido eliminar la categoría :('
+        );
+        return response()->json($data, $data['code']);*/
+        return $e;
+    } 
+ });
