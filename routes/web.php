@@ -37,9 +37,15 @@ Route::match(array('GET', 'POST', 'PUT'), '/menu', function () {
     return view('user/menu');
 })->name('menu')->middleware('auth');
 
-Route::get('/nueva-orden', function () {
-    return view('neworder');
-})->name('nueva-orden')->middleware('auth');
+Route::match(array('GET', 'POST', 'PUT'),'/nueva-orden', 'PurchaseOrderController@listOrders')->name('nueva-orden')->middleware('auth');
+Route::match(array('GET', 'POST', 'PUT'),'/ordenes', 'PurchaseOrderController@listOrders')->name('listorders')->middleware('auth');
+Route::get('/detalles/{id_purchase_order}', 'PurchaseOrderDetailController@create')->name('detalles')->middleware('auth');
+Route::post('/detalles', 'PurchaseOrderDetailController@store')->name('add-detalles')->middleware('auth');
+Route::post('/create-order', 'PurchaseOrderController@store')->name('create-order')->middleware('auth');
+Route::post('/update-order', 'PurchaseOrderDetailController@update')->name('update-order')->middleware('auth');
+Route::get('/ver-orden/{id_purchase_order}', 'PurchaseOrderController@show')->name('ver-orden')->middleware('auth');
+Route::post('/estado-orden', 'PurchaseOrderController@update')->name('estado-orden')->middleware('auth');
+
 
 Route::get('/admin', function () {
     return view('admin/menu');

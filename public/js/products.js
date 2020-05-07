@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: "Todo listo !",
                         type: "success",
                         text: data.message,
-                        confirmButtonText: 'GRACIAS BRO!',
+                        confirmButtonText: 'Aceptar',
                     })
                         .then(function () {
                             closeModal();
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: "No se pudo agregar el producto :(",
                         type: "error",
                         text: data.message,
-                        confirmButtonText: 'PUTA LA WEA!'
+                        confirmButtonText: 'Aceptar'
                     });
                 }
             })
