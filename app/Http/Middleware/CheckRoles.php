@@ -20,6 +20,6 @@ class CheckRoles
         if (auth()->user()->hasRoles($roles)) {
             return $next($request);
         }
-        return redirect('/');
+        return redirect()->back();
     }
 }
