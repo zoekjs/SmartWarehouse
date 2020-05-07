@@ -49,6 +49,7 @@ class PurchaseOrderController extends Controller
     public function store(Request $request)
     {
         try{
+            
             $order = new PurchaseOrder();
             $id_money               = $request->id_money;
             $id_payment             = $request->id_payment;

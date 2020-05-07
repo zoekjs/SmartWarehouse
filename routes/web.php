@@ -49,7 +49,7 @@ Route::post('/estado-orden', 'PurchaseOrderController@update')->name('estado-ord
 
 Route::get('/admin', function () {
     return view('admin/menu');
-})->name('admin')->middleware('auth');
+})->name('admin')->middleware(['auth', 'roles:Administrador, Supervisor']);
 
 Auth::routes(['register' => false]);
 
