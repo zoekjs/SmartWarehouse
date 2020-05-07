@@ -13,29 +13,29 @@
 
 Route::match(array('GET', 'POST', 'PUT'), '/', function () {
     return view('products');
-})->name('productos')->middleware('auth');
+})->name('productos')->middleware(['auth']);
 
 Route::match(array('GET', 'POST', 'PUT'), '/proveedores', function () {
     $countrys = \DB::table('country')
             ->orderBy('name', 'asc')
             ->get();
     return view('providers', compact('countrys'));
-})->name('proveedores')->middleware('auth');
+})->name('proveedores')->middleware(['auth', 'roles:Administrador,Supervisor']);
 
 Route::match(array('GET', 'POST', 'PUT'), '/oc', function () {
     $countrys = \DB::table('country')
             ->orderBy('name', 'asc')
             ->get();
     return view('providers', compact('countrys'));
-})->name('OC')->middleware('auth');
+})->name('OC')->middleware(['auth', 'roles:Administrador,Supervisor']);
 
 Route::match(array('GET', 'POST', 'PUT'), '/categorias', function () {
     return view('categories');
-})->name('categorias')->middleware('auth');
+})->name('categorias')->middleware(['auth', 'roles:Administrador,Supervisor']);
 
 Route::match(array('GET', 'POST', 'PUT'), '/menu', function () {
     return view('user/menu');
-})->name('menu')->middleware('auth');
+})->name('menu')->middleware(['auth']);
 
 Route::match(array('GET', 'POST', 'PUT'),'/nueva-orden', 'PurchaseOrderController@listOrders')->name('nueva-orden')->middleware('auth');
 Route::match(array('GET', 'POST', 'PUT'),'/ordenes', 'PurchaseOrderController@listOrders')->name('listorders')->middleware('auth');
@@ -44,16 +44,16 @@ Route::post('/detalles', 'PurchaseOrderDetailController@store')->name('add-detal
 Route::post('/create-order', 'PurchaseOrderController@store')->name('create-order')->middleware('auth');
 Route::post('/update-order', 'PurchaseOrderDetailController@update')->name('update-order')->middleware('auth');
 Route::get('/ver-orden/{id_purchase_order}', 'PurchaseOrderController@show')->name('ver-orden')->middleware('auth');
-Route::post('/estado-orden', 'PurchaseOrderController@update')->name('estado-orden')->middleware('auth');
+Route::post('/estado-orden', 'PurchaseOrderController@update')->name('estado-orden')->middleware(['auth', 'roles:Administrador,Supervisor']);
 
 
 Route::get('/admin', function () {
     return view('admin/menu');
-})->name('admin')->middleware(['auth', 'roles:Administrador, Supervisor']);
+})->name('admin')->middleware(['auth', 'roles:Administrador,Supervisor']);
 
 Auth::routes(['register' => false]);
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
+Route::get('/home', 'HomeController@index')->name('home')->middleware(['auth']);
 /*Route::get('roles', function(){
     return \App\Role::with('user')->get();
 });*/

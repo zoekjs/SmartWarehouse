@@ -34,13 +34,15 @@ class LoginController extends Controller
         {
             case 'Administrador':
                 return redirect()->route('admin');
-
                 break;
-            case 'Aprobador':
+            case 'Supervisor':
+                return redirect()->route('admin');
+                break;
+            case 'Bodeguero':
                 return redirect()->route('menu');
                 break;
             default:
-                return redirect()->route('proveedores');
+                return redirect()->route('menu');
         }
     }
 

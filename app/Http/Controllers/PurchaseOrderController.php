@@ -9,6 +9,11 @@ use App\PurchaseOrderDetail;
 
 class PurchaseOrderController extends Controller
 {
+
+    function __construct()
+    {
+        $this->middleware(['auth']);
+    }
     /**
      * Display a listing of the resource.
      *
