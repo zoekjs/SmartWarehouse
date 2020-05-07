@@ -64,4 +64,40 @@ class User extends Authenticatable
         }
         return false;
     }
+    
+    public function validarRut($rut, $dvForm){
+        $dv;
+        $numero;
+        $constante = 2;
+        $suma = 0;
+        $largo = strlen($rut);
+
+        if(strlen($rut) > 0){
+            for($i = $largo -1; $i>=0 ; $i--){
+                (int)$numero = (int) substr($rut,(int) $i, 1);
+                $suma = $suma + ($numero*$constante);
+                $constante +=1;
+                if ($constante == 8){
+                    $constante = 2;
+                }
+            }
+        }else{
+            return false;
+        }
+            $dv=(11-((int)$suma%11));
+            if($dv == 10){
+                $dv = "K";
+            }
+            if($dv == 11){
+                $dv = "0";
+            }
+            if($dv == $dvForm){
+                return true;
+            }else if(strcasecmp($dv, $dvForm) == 0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
 }

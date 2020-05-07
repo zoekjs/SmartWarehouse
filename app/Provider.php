@@ -35,6 +35,7 @@ class Provider extends Model
         return \DB::table('provider as p')
                 ->join('country as c', 'p.id_country', '=', 'c.id_country')
                 ->select('p.rut_provider', 'p.name', 'p.telephone', 'p.address', 'p.email', 'p.id_country', 'c.name as country_name')
+                ->where('p.rut_provider', $rut_provider)
                 ->get();
     }
 
