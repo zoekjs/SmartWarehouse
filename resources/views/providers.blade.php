@@ -16,10 +16,18 @@
                     <div class="modal-body">
                         <form class="col-sm-12" action="" method="post" id="providerForm">
                             @csrf
-                            <div class="form-group">
-                                <div class="input-field col-sm-12">
-                                    <label for="rut_provider">Rut proveedor</label>
-                                    <input class="form-control" type="text" name="rut_provider" id="rut_provider">
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <div class="input-field">
+                                        <label for="rut_provider">Rut proveedor</label>
+                                        <input class="form-control" type="text" name="rut_provider" id="rut_provider" maxlength="8">
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <div class="input-field ">
+                                        <label for="rut_provider">Dv</label>
+                                        <input class="form-control" type="text" name="dv" id="dv" maxlength="1">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -36,25 +44,25 @@
                             <div class="form-group">
                                 <div class="input-field col-sm-12">
                                     <label for="name">Nombre proveedor</label>
-                                    <input class="form-control" type="text" name="name" id="name">
+                                    <input class="form-control" type="text" name="name" id="name" maxlength="30">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-field col-sm-12">
                                     <label for="name">Teléfono</label>
-                                    <input class="form-control" type="text" name="telephone" id="telephone">
+                                    <input class="form-control" type="text" name="telephone" id="telephone" maxlength="10">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-field col-sm-12">
                                     <label for="quantity">Dirección</label>
-                                    <input class="form-control" type="text" name="address" id="address">
+                                    <input class="form-control" type="text" name="address" id="address" maxlength="30">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="form-group col-sm-12">
                                     <label for="unit_price">Correo de contacto</label>
-                                    <input class="form-control" type="text" name="email" id="email">
+                                    <input class="form-control" type="text" name="email" id="email" maxlength="25">
                                 </div>
                             </div>    
                             <div class="modal-footer">
@@ -82,13 +90,13 @@
                             <div class="form-group">
                                 <div class="input-field col-sm-12">
                                     <label for="rut_provider">Rut proveedor</label>
-                                    <input class="form-control" type="text" name="rut_provider" id="rut_provider">
+                                    <input class="form-control" type="text" name="rut_provider" id="rut_providerEdit" maxlength="8" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-field col-sm-12">
                                     <label for="id_country">País</label>
-                                    <select class="custom-select" id="id_country">
+                                    <select class="custom-select" id="id_countryEdit">
                                         <option selected id="id_select">Selecccionar</option>
                                         @foreach ($countrys as $country)
                                         <option value="{{$country->id_country}}">{{$country->name}}</option>
@@ -99,31 +107,31 @@
                             <div class="form-group">
                                 <div class="input-field col-sm-12">
                                     <label for="name">Nombre proveedor</label>
-                                    <input class="form-control" type="text" name="name" id="name">
+                                    <input class="form-control" type="text" name="name" id="nameEdit" maxlength="30">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-field col-sm-12">
                                     <label for="name">Teléfono</label>
-                                    <input class="form-control" type="text" name="telephone" id="telephone">
+                                    <input class="form-control" type="text" name="telephone" id="telephoneEdit" maxlength="10">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-field col-sm-12">
                                     <label for="quantity">Dirección</label>
-                                    <input class="form-control" type="text" name="address" id="address">
+                                    <input class="form-control" type="text" name="address" id="addressEdit" maxlength="30">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="form-group col-sm-12">
                                     <label for="unit_price">Correo de contacto</label>
-                                    <input class="form-control" type="text" name="email" id="email">
+                                    <input class="form-control" type="text" name="email" id="emailEdit" maxlength="25">
                                 </div>
                             </div>    
                             <div class="modal-footer">
-                                <button type="submit" value=" Send" id="sendForm"
-                                    class="btn btn-success">Agregar</button>
-                                <button type="button" id="formClear" data-dismiss="modal"
+                                <button type="submit" value=" Send" id="sendFormEdit"
+                                    class="btn btn-success">Modificar</button>
+                                <button type="button" id="formEditClear" data-dismiss="modal"
                                     class="btn btn-danger">Cancelar</button>
                             </div>
                         </form>
@@ -156,9 +164,11 @@
 @endsection
 
 @section('scripts')
+
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="{{asset('js/providers/providers.js')}}"></script>
 <script src="{{ asset('js/providers/providerTable.js')}}"></script>
 <script src="{{ asset('js/dataTables.min.js')}}"></script>
-<script src="{{asset('js/providers/providers.js')}}"></script>
+
 @endsection

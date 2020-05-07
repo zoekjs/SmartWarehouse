@@ -5,6 +5,7 @@ use App\Product;
 use App\Provider;
 use App\Category;
 use App\PurchaseOrderDetail;
+use App\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,7 +70,7 @@ Route::post('products', function(Request $request){
     }else{
         $json = $request->all();
         $params = json_decode(json_encode($json));
-    }   
+    } 
     
     //crear un nuevo producto
     $product = new Product();
@@ -204,33 +205,48 @@ route::delete('products/{id}', function($id_product) {
     try{
         $provider = new Provider();
         $exist = $provider->exist($params->rut_provider);
+        $user = new User();
 
-        if(!$exist) {
-            $rut_provider   = $params->rut_provider;
-            $id_pais        = (int)$params->id_pais;
-            $name           = $params->name;
-            $telephone      = $params->telephone;
-            $address        = $params->address;
-            $email          = $params->email;
+        $validaRut = $user->validarRut((int)$params->rut_provider, (int)$params->dv);
     
-            $provider->createProvider($rut_provider, $id_pais, $name, $telephone, $address, $email);
+  
+        
+        if($validaRut){
+            if(!$exist) {
+                $rut_provider   = $params->rut_provider.'-'.$params->dv;
+                $id_pais        = (int)$params->id_pais;
+                $name           = $params->name;
+                $telephone      = $params->telephone;
+                $address        = $params->address;
+                $email          = $params->email;
+        
+                $provider->createProvider($rut_provider, $id_pais, $name, $telephone, $address, $email);
+        
+                $data = array(
+                    'status'    => 'created',
+                    'code'      => '201',
+                    'message'   => 'El proveedor fue registrado correctamente en el sistema :)' 
+                );
+        
+                return response()->json($data, $data['code']);
+            }else{
+                $data = array(
+                    'status'    => 'Unprocessable Entity',
+                    'code'      => '422',
+                    'message'   => 'El proveedor que intenta registrar ya existe en el sistema.'
+                );
     
+                return response()->json($data, $data['code']);
+            }
+        }else if(!$validaRut){
             $data = array(
-                'status'    => 'created',
-                'code'      => '201',
-                'message'   => 'El proveedor fue registrado correctamente en el sistema :)' 
+                'status'    => 'error en el rut',
+                'code'      => '409',
+                'message'   => 'El rut ingresado no es válido, intente nuevamente'
             );
-    
-            return response()->json($data, $data['code']);
-        }else{
-            $data = array(
-                'status'    => 'Unprocessable Entity',
-                'code'      => '422',
-                'message'   => 'El proveedor que intenta registrar ya existe en el sistema.'
-            );
-
             return response()->json($data, $data['code']);
         }
+    
     }catch(Exception $e) {
         $data = array(
             'status'    => 'error',

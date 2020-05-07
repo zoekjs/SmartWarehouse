@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     myForm.onsubmit = function (e) {
         e.preventDefault();
+        
         var formData = new FormData(this);
         var jsonData = {};
         for (var [k, v] of formData) {
@@ -10,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         jsonData['id_pais'] = document.getElementById('id_pais').value;
-        console.log(jsonData);
 
         fetch('api/providers', {
             method: 'POST',
@@ -44,22 +44,29 @@ document.addEventListener('DOMContentLoaded', function () {
                         text: data.message,
                         confirmButtonText: 'Aceptar',
                     })
+                }else if(data.code == 409){
+                    swal({
+                        title: 'Algo malio sal :(',
+                        type: 'error',
+                        text: data.message,
+                        confirmButtonText: 'Aceptar',
+                    })
                 }
             })
             .catch(error => console.log(error));
-
     }
-
     deleteProvider();
     editData();
 });
 
 
-function editData() {
+function editData(){
     setTimeout(() => {
         let buttons = document.querySelectorAll('.edit');
+        console.log(buttons);
         buttons.forEach((btn) => {
             btn.addEventListener('click', () => {
+                deleteProvider();
                 //obtener id desde la tabla antes de editar
                 let idProvider = btn.parentElement.parentElement.children[0].lastChild.nodeValue;
                 console.log(idProvider);
@@ -69,6 +76,7 @@ function editData() {
                 })
                     .then(res => res.json())
                     .then(data => {
+                        console.log(data);
                         let json = data[0];
                         console.log(json);
                         if(data.code == 404){
@@ -98,7 +106,9 @@ function editData() {
             })
         });
     }, 500);
-}
+};
+
+
 
 
 
@@ -110,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (var [k, v] of formData) {
             json[k] = v;
         }
-        json['id_country'] = document.getElementById('id_pais').value;
+        json['id_country'] = document.getElementById('id_countryEdit').value;
 
         console.log(json);
         let url = 'api/providers/';
@@ -170,6 +180,7 @@ function deleteProvider() {
         delButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 let idProvider = btn.parentElement.parentElement.childNodes[0].lastChild.nodeValue;
+                console.log(idProvider);
                 let url = 'api/providers/'
                 swal({
                     title: "Estás seguro?",
@@ -215,6 +226,7 @@ function deleteProvider() {
                                         });
                                     }
                                 })
+                                .catch(error => console.log(error));
                         }
                     });
             })

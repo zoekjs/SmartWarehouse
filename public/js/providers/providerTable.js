@@ -12,7 +12,7 @@ function ajaxRequest() {
             { data: 'telephone' },
             { data: 'address' },
             { data: 'email' },
-            { "defaultContent": "<button type='button' class='btn btn-warning btn-sm edit' data-toggle='modal' data-target='#modalEdit'>Editar</button>&nbsp&nbsp<button type='button' id='formClear' class='btn  btn-sm btn-danger delete'>Eliminar</button>" },
+            { "defaultContent": "<button type='button' class='btn btn-warning btn-sm edit' data-toggle='modal' data-target='#modalEdit' onClick='editData();'>Editar</button>&nbsp&nbsp<button type='button' id='formClear' class='btn  btn-sm btn-danger delete'>Eliminar</button>" },
         ],
         "language": {
             "info": "_TOTAL_ registros",
