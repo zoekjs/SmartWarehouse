@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Provider;
 use App\Category;
+use App\PurchaseOrderDetail;
 
 /*
 |--------------------------------------------------------------------------
@@ -488,3 +489,24 @@ route::delete('products/{id}', function($id_product) {
         return $e;
     } 
  });
+
+ route::delete('pods/{id_pod}', function($id_pod) {
+    try{
+        $pod = new PurchaseOrderDetail();
+        $pod->deletePod((int)$id_pod);
+
+        $data = array(
+            'status'    => 'success',
+            'code'      => '200',
+            'message'   => 'Detalle eliminado correctamente del sistema ;)'
+        );
+        return response()->json($data, $data['code']);
+    }catch(Exception $e) {
+        $data = array(
+            'status'    => 'error',
+            'code'      => '400',
+            'message'   => 'No se pudo eliminar el detalle, intente nuevamente'
+        );
+        return response()->json($data, $data['code']);
+    }
+});

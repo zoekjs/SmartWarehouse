@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 <div class="row menu">
-  <div class="col-md-3 offset-md-1">
+  <div class="col-md-3">
     <div class="card mt-5" style="width: 15rem;">
       <img class="card-img-top" src="{{asset('img/adddoc.png')}}" alt="Card image cap">
       <div class="card-body">
@@ -28,6 +28,15 @@
       <div class="card-body">
         <h5 class="card-title mx-auto"></h5>
         <a href="{{route('productos')}}" class="btn btn-primary d-flex justify-content-center">Gestionar Productos</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card mt-5" style="width: 15rem;">
+      <img class="card-img-top" src="{{asset('img/goc.png')}}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title mx-auto"></h5>
+        <a href="{{route('nueva-orden')}}" class="btn btn-primary d-flex justify-content-center">Gestionar OC</a>
       </div>
     </div>
   </div>
