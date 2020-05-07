@@ -39,8 +39,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function roles(){
-        return $this->belongsToMany(Role::class, 'user_role', 'rut_user', 'role_id');
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
     }
     
     /**
@@ -56,13 +57,10 @@ class User extends Authenticatable
     {
         foreach ($roles as $role)
         {
-            foreach ($this->roles as $userRole)
+            if ($this->role->name == $role)
             {
-                if ($userRole->name === $role)
-                {
-                    return true;
-                }
-            }  
+                return true;
+            }
         }
         return false;
     }
