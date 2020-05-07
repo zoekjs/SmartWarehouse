@@ -69,5 +69,5 @@ Route::get('test_user', function(){
     $user->save();
     return $user;
 });
-Auth::routes();
+//Auth::routes();
 

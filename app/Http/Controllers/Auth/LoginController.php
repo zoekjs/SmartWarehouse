@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -25,7 +27,22 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected function authenticated(Request $request, $user)
+    {
+        $rol = Auth::User()->role->name;
+        switch ($rol)
+        {
+            case 'Administrador':
+                return redirect()->route('admin');
+
+                break;
+            case 'Aprobador':
+                return redirect()->route('menu');
+                break;
+            default:
+                return redirect()->route('proveedores');
+        }
+    }
 
     /**
      * Create a new controller instance.
