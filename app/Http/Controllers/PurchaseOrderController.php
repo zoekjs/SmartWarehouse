@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\PurchaseOrder;
 use App\PaymentMethod;
 use App\PurchaseOrderDetail;
+use App\Log;
 
 class PurchaseOrderController extends Controller
 {
@@ -22,6 +23,15 @@ class PurchaseOrderController extends Controller
     public function index()
     {
         //
+    }
+
+    public function download($id_purchase_order){
+        $orderDetail = new PurchaseOrderDetail();
+        $details = $orderDetail->getDetail($id_purchase_order);
+        $order = new PurchaseOrder();
+        $orderData = $order->getOrder($id_purchase_order);
+        $pdf = \PDF::loadView('PO/order', compact('details', 'orderData'));
+        return $pdf->stream('Orden-'.$id_purchase_order.'.pdf');
     }
 
     public function listOrders(){
@@ -54,18 +64,23 @@ class PurchaseOrderController extends Controller
     public function store(Request $request)
     {
         try{
-            
             $order = new PurchaseOrder();
+            $log = new Log();
             $id_money               = $request->id_money;
             $id_payment             = $request->id_payment;
             $rut_provider           = $request->rut_provider;
             $observation            = $request->observation;
             $observation_payment    = $request->observation_payment;
+            $rut_user               = $request->rut_user;
 
             $order->createOrder($id_money, $id_payment, $rut_provider, $observation, $observation_payment);
+            $last = \DB::table('purchase_order')->orderBy('id_purchase_order', 'DESC')->first();
+            $action = 'Añadió una orden de compra al sistema, el numero de orden es: '.$last->id_purchase_order;
+            $log->productLog($rut_user, $action);
+            
             return redirect()->back();
         }catch(Exception $e){
-            return $e;
+            return response()->back();
         }
     }
 
@@ -119,8 +134,9 @@ class PurchaseOrderController extends Controller
                 $neto               = $request->neto;
                 $iva                = $request->iva;
                 $total              = $request->total;
+                $reason             = $request->reason;
     
-                $order->updateOrder($id_purchase_order, $neto, $iva, $total, $id_status);
+                $order->updateOrder($id_purchase_order, $neto, $iva, $total, $id_status, $reason);
                 return redirect('/ordenes');
             }else if($request->estado == 'rechazada') {
                 $id_status          = 4;
@@ -128,8 +144,9 @@ class PurchaseOrderController extends Controller
                 $neto               = $request->neto;
                 $iva                = $request->iva;
                 $total              = $request->total;
-    
-                $order->updateOrder($id_purchase_order, $neto, $iva, $total, $id_status);
+                $reason             = $request->reason;
+
+                $order->updateOrder($id_purchase_order, $neto, $iva, $total, $id_status, $reason);
                 return redirect('/ordenes');
             }
 

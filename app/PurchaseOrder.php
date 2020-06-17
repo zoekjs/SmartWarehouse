@@ -16,6 +16,7 @@ class PurchaseOrder extends Model
                     ->join('money as m', 'm.id_money', '=', 'po.id_money')
                     ->join('provider as pro', 'pro.rut_provider', '=', 'po.rut_provider')
                     ->select('po.id_purchase_order', 'pro.name as provider', 's.name as status_name', 'po.created_at')
+                    ->orderBy('po.id_purchase_order', 'desc')
                     ->paginate(10);
     }
 
@@ -46,17 +47,18 @@ class PurchaseOrder extends Model
             ->join('payment_method as met', 'met.id_payment', '=', 'po.id_payment')
             ->join('provider as pro', 'pro.rut_provider', '=', 'po.rut_provider')
             ->join('users as u', 'u.rut_user', '=', 'po.rut_user')
-            ->select('po.id_purchase_order', 's.name as status_name', 'pro.rut_provider', 'pro.name as provider_name', 'pro.address', 'pro.telephone', 'pro.email',  'met.name as method', 'po.observation', 'po.observation_payment', 'po.created_at', 'u.name', 'u.last_name')
+            ->select('po.id_purchase_order', 's.name as status_name', 'pro.rut_provider', 'pro.name as provider_name', 'pro.address', 'pro.telephone', 'pro.email',  'met.name as method', 'po.observation', 'po.observation_payment', 'po.created_at', 'po.total', 'u.name', 'u.last_name', 'po.reason', 's.id_status')
             ->where('po.id_purchase_order', $id_purchase_order)
             ->get();
     }
 
-    public function updateOrder($id_purchase_order, $neto, $iva, $total, $id_status){
+    public function updateOrder($id_purchase_order, $neto, $iva, $total, $id_status, $reason){
         $order = PurchaseOrder::where('id_purchase_order', $id_purchase_order)->firstOrFail();
         $order->neto    = $neto;
         $order->iva     = $iva;
         $order->total   = $total;
         $order->id_status  = $id_status;
+        $order->reason = $reason;
         $order->save();
     }
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\PurchaseOrderDetail;
 use App\PurchaseOrder;
+use App\Log;
 
 class PurchaseOrderDetailController extends Controller
 {
@@ -52,13 +53,20 @@ class PurchaseOrderDetailController extends Controller
         try{
             $pdo = new PurchaseOrderDetail();
             $order = new PurchaseOrder();
+            $log = new Log();
 
             $id_purchase_order  = $request->id_purchase_order;
             $id_product         = $request->id_product;
             $quantity           = $request->quantity;
             $unit_price         = $request->unit_price;
-            $total           = (float)$quantity*(float)$unit_price;
+            $total              = (float)$quantity*(float)$unit_price;
+            $rut_user           = $request->rut_user;
 
+            $product = \DB::table('product')->where('id_product', $id_product)->first();
+            dd(gettype($product));
+            $action = 'Añadió '.$quantity.' '.$product->name.' a la orden de compra número '.$id_purchase_order;
+            
+            $log->productLog($rut_user, $action);
             $pdo->createPODetails($id_purchase_order, $id_product, $quantity, $unit_price, $total);
             return redirect()->back();
         }catch(Exception $e){

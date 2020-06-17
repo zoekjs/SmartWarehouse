@@ -27,6 +27,7 @@
       <div class="card-body">
         <form method="post" id="podForm" action="{{action('PurchaseOrderDetailController@store')}}">
           @csrf
+          <input type="text" hidden name="rut_user" id="rut_user" value="{{Auth()->user()->rut_user}}">
           <div class="row">
             <div class="col-md-12">
               <!-- ROW SELECCIÓN PROVEEDOR -->
@@ -60,8 +61,7 @@
                   </div>
                   <div class="modal-footer">
                       <button type="submit" value=" Send" id="sendForm"
-                          class="btn btn-success">Agregar</button>
-                          
+                          class="btn btn-success">Agregar</button>           
                       <a href="{{route('nueva-orden')}}" class="btn btn-danger">Cancelar</a>
                   </div>
           </form>
@@ -91,8 +91,8 @@
                           <td class='text-center'>{{$detail->id_product}}</td>
                           <td class='text-center'>{{$detail->name}}</td>
                           <td class='text-center'>{{$detail->quantity}}</td>
-                          <td class='text-center'>{{$detail->unit_price}}</td>
-                          <td class='text-center'>{{$detail->total}}</td>
+                          <td class='text-center'>{{number_format($detail->unit_price, 0, ",", ".")}}</td>
+                          <td class='text-center'>{{number_format($detail->total, 0, ",", ".")}}</td>
                           <td class='text-center'><button class="btn btn-danger delete">quitar</button></td>        
                       @endforeach
                     </tbody>

@@ -1,5 +1,6 @@
 <?php
-
+use App\PurchaseOrderDetail;
+use App\PurchaseOrder;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,7 +46,7 @@ Route::post('/create-order', 'PurchaseOrderController@store')->name('create-orde
 Route::post('/update-order', 'PurchaseOrderDetailController@update')->name('update-order')->middleware('auth');
 Route::get('/ver-orden/{id_purchase_order}', 'PurchaseOrderController@show')->name('ver-orden')->middleware('auth');
 Route::post('/estado-orden', 'PurchaseOrderController@update')->name('estado-orden')->middleware(['auth', 'roles:Administrador,Supervisor']);
-
+Route::get('/descargar/{id_purchase_order}', 'PurchaseOrderController@download')->name('descargar-orden')->middleware('auth');
 
 Route::get('/admin', function () {
     return view('admin/menu');
@@ -57,6 +58,15 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware(['auth']);
 /*Route::get('roles', function(){
     return \App\Role::with('user')->get();
 });*/
+
+Route::get('/order', function(){
+    $orderDetail = new PurchaseOrderDetail();
+    $details = $orderDetail->getDetail(9);
+    $order = new PurchaseOrder();
+    $orderData = $order->getOrder(9);
+    $pdf = PDF::loadView('PO/order', compact('details', 'orderData'));
+    return $pdf->stream('archivo.pdf');
+})->name('order');
 
 //ruta para crear usuario
 Route::get('test_user', function(){

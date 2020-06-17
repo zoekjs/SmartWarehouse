@@ -12,30 +12,74 @@
         </div>
         @if (auth()->user()->hasRoles(['Administrador']))
         <div class="col-md-2">
-          <form action="{{action('PurchaseOrderController@update')}}" method="post">
-            @csrf
-            <button class="btn btn-danger">Rechazar</button>
-            @foreach($orderData as $order)
-            <input type="text" name="id_purchase_order" id="" value='{{$order->id_purchase_order}}' hidden readonly>
-            @endforeach
-            <input type="text" name="neto" id="" value='{{$neto}}' hidden readonly>
-            <input type="text" name="iva" id="" value='{{$iva}}' hidden readonly>
-            <input type="text" name="total" id="" value='{{$total}}' hidden readonly>
-            <input type="text" name="estado" id="" value='rechazada' hidden readonly>
-          </form>
+          @foreach ($orderData as $order)
+          @if ($order->id_status != 3 and $order->id_status != 4)
+          <button class="btn btn-danger" data-toggle="modal" data-target="#modalRefuse">Rechazar</button>
+          @endif
+          @endforeach
+          <div id="modalRefuse" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Modal1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Rechazar orden</h4>
+                    </div>
+                    <div class="modal-body">
+                      <form action="{{action('PurchaseOrderController@update')}}" method="post">
+                        @csrf
+                        <div class="form-group">
+                          <label for="reason">Motivo de rechazo: </label>
+                          <textarea class="form-control" name="reason" id="" rows="2" style="resize: none;" required></textarea>
+                        </div>
+                        <div class="form-group d-flex justify-content-end">
+                          <button class="btn btn-danger">Rechazar orden</button>
+                        </div>
+                        @foreach($orderData as $order)
+                        <input type="text" name="id_purchase_order" id="" value='{{$order->id_purchase_order}}' hidden readonly>
+                        @endforeach
+                        <input type="text" name="neto" id="" value='{{$neto}}' hidden readonly>
+                        <input type="text" name="iva" id="" value='{{$iva}}' hidden readonly>
+                        <input type="text" name="total" id="" value='{{$total}}' hidden readonly>
+                        <input type="text" name="estado" id="" value='rechazada' hidden readonly>
+                      </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
         <div class="col-md-3">
-          <form action="{{action('PurchaseOrderController@update')}}" method="post">
-            @csrf
-            <button class="btn btn-success" style="width: 100%;">Aprobar</button>
-            @foreach($orderData as $order)
-            <input type="text" name="id_purchase_order" id="" value='{{$order->id_purchase_order}}' hidden readonly>
-            @endforeach
-            <input type="text" name="neto" id="" value='{{$neto}}' hidden readonly>
-            <input type="text" name="iva" id="" value='{{$iva}}' hidden readonly>
-            <input type="text" name="total" id="" value='{{$total}}' hidden readonly>
-            <input type="text" name="estado" id="" value='aprobada' hidden readonly>
-          </form>
+          @foreach ($orderData as $order)
+          @if ($order->id_status != 3 and $order->id_status != 4)
+          <button class="btn btn-success" data-toggle="modal" data-target="#modalApproved">Aprobar</button>
+          @endif
+          @endforeach
+          <div id="modalApproved" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Modal1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Aprobar orden</h4>
+                    </div>
+                    <div class="modal-body">
+                      <form action="{{action('PurchaseOrderController@update')}}" method="post">
+                        @csrf
+                        <div class="form-group">
+                          <label for="reason">Comentarios de aprobación: </label>
+                          <textarea class="form-control" name="reason" id="" rows="2" style="resize: none;" required></textarea>
+                        </div>
+                        <div class="form-group d-flex justify-content-end">
+                          <button class="btn btn-success">Aprobar orden</button>
+                        </div>
+                        @foreach($orderData as $order)
+                        <input type="text" name="id_purchase_order" id="" value='{{$order->id_purchase_order}}' hidden readonly>
+                        @endforeach
+                        <input type="text" name="neto" id="" value='{{$neto}}' hidden readonly>
+                        <input type="text" name="iva" id="" value='{{$iva}}' hidden readonly>
+                        <input type="text" name="total" id="" value='{{$total}}' hidden readonly>
+                        <input type="text" name="estado" id="" value='aprobada' hidden readonly>
+                      </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
         @endif
       </div>
@@ -52,6 +96,20 @@
         <label for="Estado:">Estado:</label>
         {{$order->status_name}}
       </h4>
+      @if ($order->reason != null and $order->reason != "")
+      @if ($order->id_status == 3)
+      <h5 class="alert alert-success col-md">
+        <label for="reason">Razón: </label>
+        {{$order->reason}}
+      </h5>
+      @endif
+      @if ($order->id_status == 4)
+      <h5 class="alert alert-danger col-md">
+        <label for="reason">Razón: </label>
+        {{$order->reason}}
+      </h5>
+      @endif
+      @endif
       <table class="table table-striped table-sm">
         <tbody>
           <tr>

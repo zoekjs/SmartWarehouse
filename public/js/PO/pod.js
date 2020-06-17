@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
             let idPOD = btn.parentElement.parentElement.childNodes[1].lastChild.nodeValue;
             let row = btn.parentElement.parentElement.rowIndex;
-            console.log(row);
+            let rutUser = document.getElementById('rut_user').value;
             let url = 'http://smartwarehouse.test:8080/api/pods/'
             swal({
                 title: "Estás seguro?",
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
                 .then(res => {
                     if(res.value){
-                        fetch(url += idPOD, {
+                        fetch(url += idPOD += '/' += rutUser, {
                             method: 'DELETE',
                             body: String(idPOD),
                             headers: {

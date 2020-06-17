@@ -16,3 +16,6 @@ th.actions{
 .row.menu{
     margin-top: 180px !important;
 }
+body.order{
+    font-size: 0.6rem !important;
+}
