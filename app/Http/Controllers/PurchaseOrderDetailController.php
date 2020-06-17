@@ -63,7 +63,6 @@ class PurchaseOrderDetailController extends Controller
             $rut_user           = $request->rut_user;
 
             $product = \DB::table('product')->where('id_product', $id_product)->first();
-            dd(gettype($product));
             $action = 'Añadió '.$quantity.' '.$product->name.' a la orden de compra número '.$id_purchase_order;
             
             $log->productLog($rut_user, $action);
@@ -106,8 +105,13 @@ class PurchaseOrderDetailController extends Controller
     public function update(Request $request)
     {
         $order = new PurchaseOrder();
+        $log = new Log();
 
+        $rut_user = $request->rut_user;
         $id_purchase_order  = $request->id_purchase_order;
+        $action = 'Emitió la orden de compra N°: '.$id_purchase_order.' la cual está lista para su revisión.';
+        $log->productLog($rut_user, $action);
+
         $order->updateStatus($id_purchase_order);
         return redirect('nueva-orden');
     }

@@ -528,18 +528,20 @@ route::delete('products/{id}', function($id_product) {
     try{
         $pod = new PurchaseOrderDetail();
         $log = new Log();
-        $pod->deletePod((int)$id_pod);
 
-        $product = \DB::table('product_purchase_order as ppo')
+
+        $products = \DB::table('product_purchase_order as ppo')
         ->join('product as p', 'p.id_product', '=', 'ppo.id_product')
         ->select('ppo.quantity', 'p.name', 'ppo.id_purchase_order')
         ->where('ppo.id_product_purchase_order', (int)$id_pod)->get();
-     
-        $action = 'Quitó '.$product->quantity.' '.$product->name.' a la orden de compra número '.$product->id_purchase_order;
-     
+        foreach($products as $product){
+            $action = 'Quitó '.$product->quantity.' '.$product->name.' a la orden de compra número '.$product->id_purchase_order;
+        }
+        
+        
         
         $log->productLog($rut_user, $action);
-
+        $pod->deletePod((int)$id_pod);
         $data = array(
             'status'    => 'success',
             'code'      => '200',

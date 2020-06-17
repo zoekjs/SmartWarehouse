@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
                 .then(res => {
                     if(res.value){
-                        fetch(url += idPOD += '/' += rutUser, {
+                        fetch(url += idPOD += `/${rutUser}`, {
                             method: 'DELETE',
                             body: String(idPOD),
                             headers: {
@@ -39,3 +39,16 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     })
 });
+
+function getPrice(){
+    let idProduct = document.getElementById('id_product').value;
+    let url = 'http://smartwarehouse.test:8080/api/products/';
+    fetch(url+=`${idProduct }`, {
+        method: 'GET'
+    })
+        .then(res => res.json())
+        .then(data => {
+            let precio = document.getElementById('price');
+            precio.setAttribute('value', data.unit_price);
+        })
+}

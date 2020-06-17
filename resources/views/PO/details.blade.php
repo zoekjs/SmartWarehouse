@@ -17,6 +17,7 @@
           <div class="col-md 3 d-flex justify-content-end mr-4">
             <form action="{{action('PurchaseOrderDetailController@update')}}" method="post">
               @csrf
+              <input type="text" hidden name="rut_user" id="rut_user" value="{{Auth()->user()->rut_user}}">
               <button type="submit" value=" Send" id="sendForm"
               class="btn btn-info">Emitir OC</button>
               <input class="form-control" type="text" name="id_purchase_order" id="" hidden value="{{$id_purchase_order}}">
@@ -37,7 +38,7 @@
                   <div class="form-group">
                     <div class="input-field col-sm-12">
                         <label for="id_product">Producto</label>
-                        <select class="custom-select" name="id_product" id="id_product">
+                        <select class="custom-select" name="id_product" id="id_product" onchange="getPrice();">
                           <option selected>Selecccionar</option>
                           @foreach ($products as $product)
                           <option value="{{$product->id_product}}">{{$product->name}}</option>
@@ -55,7 +56,7 @@
                     <div class="col-md-4">
                       <div class="form-group">
                           <label for="name">Precio</label>
-                          <input class="form-control" type="text" name="unit_price" id="value">
+                          <input class="form-control" type="text" name="unit_price" id="price" readonly>
                       </div>
                     </div>
                   </div>

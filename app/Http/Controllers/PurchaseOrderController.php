@@ -96,6 +96,7 @@ class PurchaseOrderController extends Controller
         $orderData = $order->getOrder($id_purchase_data);
         $orderDetail = new PurchaseOrderDetail();
         $details = $orderDetail->getDetail($id_purchase_data);
+        
         $neto = 0;
         foreach($details as $detail){
             $neto += $detail->total;
@@ -128,6 +129,7 @@ class PurchaseOrderController extends Controller
     {
         try{
             $order = new PurchaseOrder();
+            $log =  new Log();
             if($request->estado == 'aprobada'){
                 $id_status          = 3;
                 $id_purchase_order  = $request->id_purchase_order;
@@ -135,7 +137,10 @@ class PurchaseOrderController extends Controller
                 $iva                = $request->iva;
                 $total              = $request->total;
                 $reason             = $request->reason;
+                $rut_user           = $request->rut_user;
     
+                $action = 'aprobó la orden de compra N°: '.$id_purchase_order;
+                $log->productLog($rut_user, $action);
                 $order->updateOrder($id_purchase_order, $neto, $iva, $total, $id_status, $reason);
                 return redirect('/ordenes');
             }else if($request->estado == 'rechazada') {
@@ -145,7 +150,10 @@ class PurchaseOrderController extends Controller
                 $iva                = $request->iva;
                 $total              = $request->total;
                 $reason             = $request->reason;
+                $rut_user           = $request->rut_user;
 
+                $action = 'rechazó la orden de compra N°: '.$id_purchase_order;
+                $log->productLog($rut_user, $action);
                 $order->updateOrder($id_purchase_order, $neto, $iva, $total, $id_status, $reason);
                 return redirect('/ordenes');
             }

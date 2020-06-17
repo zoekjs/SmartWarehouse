@@ -26,7 +26,7 @@
                     <div class="modal-body">
                       <form action="{{action('PurchaseOrderController@update')}}" method="post">
                         @csrf
-                        <div class="form-group">
+                        <input type="text" hidden name="rut_user" id="rut_user" value="{{Auth()->user()->rut_user}}">                        <div class="form-group">
                           <label for="reason">Motivo de rechazo: </label>
                           <textarea class="form-control" name="reason" id="" rows="2" style="resize: none;" required></textarea>
                         </div>
@@ -61,6 +61,7 @@
                     <div class="modal-body">
                       <form action="{{action('PurchaseOrderController@update')}}" method="post">
                         @csrf
+                        <input type="text" hidden name="rut_user" id="rut_user" value="{{Auth()->user()->rut_user}}">
                         <div class="form-group">
                           <label for="reason">Comentarios de aprobación: </label>
                           <textarea class="form-control" name="reason" id="" rows="2" style="resize: none;" required></textarea>
