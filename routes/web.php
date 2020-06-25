@@ -23,6 +23,7 @@ Route::match(array('GET', 'POST', 'PUT'), '/proveedores', function () {
     return view('providers', compact('countrys'));
 })->name('proveedores')->middleware(['auth', 'roles:Administrador,Supervisor']);
 
+
 Route::match(array('GET', 'POST', 'PUT'), '/oc', function () {
     $countrys = \DB::table('country')
             ->orderBy('name', 'asc')
@@ -34,10 +35,17 @@ Route::match(array('GET', 'POST', 'PUT'), '/categorias', function () {
     return view('categories');
 })->name('categorias')->middleware(['auth', 'roles:Administrador,Supervisor']);
 
+/**************************** USERS MENU **********************************/
 Route::match(array('GET', 'POST', 'PUT'), '/menu', function () {
     return view('user/menu');
 })->name('menu')->middleware(['auth']);
 
+/****************************  PAYMENT STATUS ***********************************/
+route::get('/status', 'PaymentStatusController@create')->name('estado-oc');
+route::post('update-payment/', 'PaymentStatusController@updatePaymentStatus')->name('update-payment');
+route::get('oc-pagadas', 'PaymentStatusController@getPayed')->name('oc-pagadas');
+
+/***************************** PURCHASE ORDER ***********************************/
 Route::match(array('GET', 'POST', 'PUT'),'/nueva-orden', 'PurchaseOrderController@listOrders')->name('nueva-orden')->middleware('auth');
 Route::match(array('GET', 'POST', 'PUT'),'/ordenes', 'PurchaseOrderController@listOrders')->name('listorders')->middleware('auth');
 Route::get('/detalles/{id_purchase_order}', 'PurchaseOrderDetailController@create')->name('detalles')->middleware('auth');
@@ -52,6 +60,10 @@ Route::get('/admin', function () {
     return view('admin/menu');
 })->name('admin')->middleware(['auth', 'roles:Administrador,Supervisor']);
 
+/****************************** AUDIT ROUTES **********************************/
+Route::get('auditoria', 'AuditController@index')->name('auditoria');
+
+
 Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware(['auth']);
@@ -59,6 +71,7 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware(['auth']);
     return \App\Role::with('user')->get();
 });*/
 
+/******************************* ORDER TO PDF *******************************/
 Route::get('/order', function(){
     $orderDetail = new PurchaseOrderDetail();
     $details = $orderDetail->getDetail(9);
@@ -68,6 +81,7 @@ Route::get('/order', function(){
     return $pdf->stream('archivo.pdf');
 })->name('order');
 
+/****************************** TEST ROUTE TO ADD USERS *********************/
 //ruta para crear usuario
 Route::get('test_user', function(){
     $user = new App\User;

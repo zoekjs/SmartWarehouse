@@ -15,9 +15,36 @@ class PurchaseOrder extends Model
                     ->join('status as s', 's.id_status', '=', 'po.id_status')
                     ->join('money as m', 'm.id_money', '=', 'po.id_money')
                     ->join('provider as pro', 'pro.rut_provider', '=', 'po.rut_provider')
-                    ->select('po.id_purchase_order', 'pro.name as provider', 's.name as status_name', 'po.created_at')
+                    ->join('payment_status as ps', 'po.id_payment_status', '=', 'ps.id_payment_status')
+                    ->select('po.id_purchase_order', 'pro.name as provider', 's.name as status_name', 'po.created_at', 'ps.status', 'po.total')
                     ->orderBy('po.id_purchase_order', 'desc')
                     ->paginate(10);
+    }
+
+    public function getAprovedPOrders(){
+        return \DB::table('purchase_order as po')
+        ->join('status as s', 's.id_status', '=', 'po.id_status')
+        ->join('money as m', 'm.id_money', '=', 'po.id_money')
+        ->join('provider as pro', 'pro.rut_provider', '=', 'po.rut_provider')
+        ->join('payment_status as ps', 'po.id_payment_status', '=', 'ps.id_payment_status')
+        ->select('po.id_purchase_order', 'pro.name as provider', 's.name as status_name', 'po.created_at', 'ps.status', 'po.total')
+        ->orderBy('po.id_purchase_order', 'desc')
+        ->where('po.id_status', 3)
+        ->where('po.id_payment_status', 0)
+        ->paginate(10);
+    }
+
+    public function getPayedPOrders(){
+        return \DB::table('purchase_order as po')
+        ->join('status as s', 's.id_status', '=', 'po.id_status')
+        ->join('money as m', 'm.id_money', '=', 'po.id_money')
+        ->join('provider as pro', 'pro.rut_provider', '=', 'po.rut_provider')
+        ->join('payment_status as ps', 'po.id_payment_status', '=', 'ps.id_payment_status')
+        ->select('po.id_purchase_order', 'pro.name as provider', 's.name as status_name', 'po.created_at', 'po.updated_at', 'ps.status', 'po.total')
+        ->orderBy('po.id_purchase_order', 'desc')
+        ->where('po.id_status', 3)
+        ->where('po.id_payment_status', 1)
+        ->paginate(10);
     }
 
     public function createOrder($id_money, $id_payment, $rut_provider, $observation, $observation_payment) {
@@ -38,6 +65,14 @@ class PurchaseOrder extends Model
             $order->id_status   = 2;
             $order->save();            
         }   
+    }
+
+    public function updatePaymentStatus($id_purchase_order){
+        $order = PurchaseOrder::where('id_purchase_order', $id_purchase_order)->firstOrFail();
+        if($order->id_payment_status == 0){
+            $order->id_payment_status = 1;
+            $order->save();
+        }
     }
 
     public function getOrder($id_purchase_order){

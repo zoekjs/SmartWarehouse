@@ -15,4 +15,13 @@ class Log extends Model
         $log->action = $action;
         $log->save();
     }
+
+    public function getLogs(){
+        return \DB::table('log as l')
+            ->join('users as u', 'u.rut_user', '=', 'l.rut_user')
+            ->select('l.rut_user', 'l.action', 'l.created_at', 'u.name', 'u.last_name')
+            ->orderBy('l.created_at', 'desc')
+            ->paginate(10);
+    }
 }
+

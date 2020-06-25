@@ -36,7 +36,7 @@ class PurchaseOrderDetail extends Model
     public function getDetail($id_purchase_order) {
         return \DB::table('product_purchase_order as ppo')
                 ->join('product as p', 'p.id_product', '=', 'ppo.id_product')
-                ->select('ppo.id_product_purchase_order', 'p.name', 'ppo.quantity', 'p.unit_price', 'ppo.total')
+                ->select('ppo.id_product_purchase_order', 'p.name', 'ppo.quantity', 'p.unit_price', 'ppo.total', 'p.id_product')
                 ->where('id_purchase_order', $id_purchase_order)
                 ->get();
     }

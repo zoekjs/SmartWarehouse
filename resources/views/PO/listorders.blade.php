@@ -64,11 +64,11 @@
               <div class="row">
                 <div class="form-group col-md-6">
                   <label for="paymentObservations">Observaciones relacionadas al pago</label>
-                  <textarea class="form-control" name="observation" id="" style="resize: none;" rows="3"></textarea>
+                  <textarea class="form-control" name="observation" required id="" style="resize: none;" rows="3"></textarea>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="observations">Otras observaciones</label>
-                  <textarea class="form-control" name="observation_payment" id="" style="resize: none;" rows="3"></textarea>
+                  <textarea class="form-control" name="observation_payment" required id="" style="resize: none;" rows="3"></textarea>
                 </div>
               </div>
             </div>
