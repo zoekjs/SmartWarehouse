@@ -41,7 +41,26 @@
     </div>
   </div>
 </div>
-
+<div class="row mb-5">
+  <div class="col-md-3">
+    <div class="card mt-5" style="width: 15rem;">
+      <img class="card-img-top" src="{{asset('img/adddoc.png')}}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title mx-auto"></h5>
+        <a href="{{route('estado-oc')}}" class="btn btn-primary d-flex justify-content-center">Estados de pago OC</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card mt-5" style="width: 15rem;">
+      <img class="card-img-top" src="{{asset('img/adddoc.png')}}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title mx-auto"></h5>
+        <a href="{{route('auditoria')}}" class="btn btn-primary d-flex justify-content-center">Auditoría</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

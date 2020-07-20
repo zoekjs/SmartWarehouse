@@ -16,6 +16,7 @@
                     <div class="modal-body">
                         <form class="col-sm-12" action="" method="post" id="providerForm">
                             @csrf
+                            <input type="text" hidden name="rut_user" value="{{Auth()->user()->rut_user}}">
                             <div class="row">
                                 <div class="form-group col-sm-6">
                                     <div class="input-field">
@@ -87,6 +88,7 @@
                     <div class="modal-body">
                         <form class="col-sm-12" action="" method="post" id="providerFormEdit">
                             @csrf
+                            <input type="text" hidden name="rut_user" value="{{Auth()->user()->rut_user}}">
                             <div class="form-group">
                                 <div class="input-field col-sm-12">
                                     <label for="rut_provider">Rut proveedor</label>

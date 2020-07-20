@@ -17,6 +17,7 @@
           <div class="col-md 3 d-flex justify-content-end mr-4">
             <form action="{{action('PurchaseOrderDetailController@update')}}" method="post">
               @csrf
+              <input type="text" hidden name="rut_user" id="rut_user" value="{{Auth()->user()->rut_user}}">
               <button type="submit" value=" Send" id="sendForm"
               class="btn btn-info">Emitir OC</button>
               <input class="form-control" type="text" name="id_purchase_order" id="" hidden value="{{$id_purchase_order}}">
@@ -27,6 +28,7 @@
       <div class="card-body">
         <form method="post" id="podForm" action="{{action('PurchaseOrderDetailController@store')}}">
           @csrf
+          <input type="text" hidden name="rut_user" id="rut_user" value="{{Auth()->user()->rut_user}}">
           <div class="row">
             <div class="col-md-12">
               <!-- ROW SELECCIÓN PROVEEDOR -->
@@ -36,7 +38,7 @@
                   <div class="form-group">
                     <div class="input-field col-sm-12">
                         <label for="id_product">Producto</label>
-                        <select class="custom-select" name="id_product" id="id_product">
+                        <select class="custom-select" name="id_product" id="id_product" onchange="getPrice();">
                           <option selected>Selecccionar</option>
                           @foreach ($products as $product)
                           <option value="{{$product->id_product}}">{{$product->name}}</option>
@@ -54,14 +56,13 @@
                     <div class="col-md-4">
                       <div class="form-group">
                           <label for="name">Precio</label>
-                          <input class="form-control" type="text" name="unit_price" id="value">
+                          <input class="form-control" type="text" name="unit_price" id="price" readonly>
                       </div>
                     </div>
                   </div>
                   <div class="modal-footer">
                       <button type="submit" value=" Send" id="sendForm"
-                          class="btn btn-success">Agregar</button>
-                          
+                          class="btn btn-success">Agregar</button>           
                       <a href="{{route('nueva-orden')}}" class="btn btn-danger">Cancelar</a>
                   </div>
           </form>
@@ -91,8 +92,8 @@
                           <td class='text-center'>{{$detail->id_product}}</td>
                           <td class='text-center'>{{$detail->name}}</td>
                           <td class='text-center'>{{$detail->quantity}}</td>
-                          <td class='text-center'>{{$detail->unit_price}}</td>
-                          <td class='text-center'>{{$detail->total}}</td>
+                          <td class='text-center'>{{number_format($detail->unit_price, 0, ",", ".")}}</td>
+                          <td class='text-center'>{{number_format($detail->total, 0, ",", ".")}}</td>
                           <td class='text-center'><button class="btn btn-danger delete">quitar</button></td>        
                       @endforeach
                     </tbody>

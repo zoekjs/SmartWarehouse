@@ -17,13 +17,14 @@
       <div class="card-body">
         <form method="post" action="{{action('PurchaseOrderController@store')}}">
           @csrf
+          <input type="text" hidden name="rut_user" value="{{Auth()->user()->rut_user}}">
           <div class="row">
             <div class="col-md-12">
               <!-- ROW SELECCIÓN PROVEEDOR -->
               <div class="row">
                 <div class="form-group col-md-3">
                   <label for="rut_provider">Proveedor</label>
-                  <select class="form-control" name="rut_provider" id="rut_provider">
+                  <select class="form-control" name="rut_provider" id="rut_provider" required>
                     <option selected>Selecccionar</option>
                     @foreach ($providers as $provider)
                     <option value="{{$provider->rut_provider}}">{{$provider->name}}</option>
@@ -34,7 +35,7 @@
                 </div>
                 <div class="form-group col-md-6">
                   <label for="payment_condition">Condición de pago</label>
-                  <select class="form-control" name="id_payment" id="">
+                  <select class="form-control" name="id_payment" id="" required>
                     <option selected>Selecccionar</option>
                     @foreach ($payment_methods as $payment_method)
                     <option value="{{$payment_method->id_payment}}">{{$payment_method->name}}</option>
@@ -46,12 +47,14 @@
                 <div class="row">
                 <div class="form-group col-md-3">
                   <label for="money">Moneda</label>
-                  <select class="form-control" name="id_money" id="money">
+                  <select class="form-control" name="id_money" id="money" required>
                     @foreach ($moneys as $money)
                     <option value="{{$money->id_money}}">{{$money->name}}</option>
                     @endforeach 
                   </select>
                 </div>
+              </div>
+                <!--
                 <div class="form-group col-md-2">
                   <label for="valor_moneda">Valor moneda</label>
                   <input class="form-control" type="text" name="valor_moneda" id="valor-moneda">
@@ -61,11 +64,11 @@
               <div class="row">
                 <div class="form-group col-md-6">
                   <label for="paymentObservations">Observaciones relacionadas al pago</label>
-                  <textarea class="form-control" name="observation" id="" style="resize: none;" rows="3"></textarea>
+                  <textarea class="form-control" name="observation" required id="" style="resize: none;" rows="3"></textarea>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="observations">Otras observaciones</label>
-                  <textarea class="form-control" name="observation_payment" id="" style="resize: none;" rows="3"></textarea>
+                  <textarea class="form-control" name="observation_payment" required id="" style="resize: none;" rows="3"></textarea>
                 </div>
               </div>
             </div>
@@ -112,7 +115,8 @@
                           @endif
                           @if ($order->status_name == "Aprobada")
                           <td class='text-center' style="width: 15%;"><a href="{{route('ver-orden', ['id_purchase_order' => $order->id_purchase_order])}}"
-                          class="btn-sm btn-success">Ver</a></td>
+                          class="btn-sm btn-success">Ver</a> <a href="{{route('descargar-orden', ['id_purchase_order' => $order->id_purchase_order])}}"
+                            class="btn-sm btn-success">Descargar</a></td>
                           @endif
                           @if ($order->status_name == "Rechazada")
                           <td class='text-center' style="width: 15%;"><a href="{{route('ver-orden', ['id_purchase_order' => $order->id_purchase_order])}}"

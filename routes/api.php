@@ -6,6 +6,7 @@ use App\Provider;
 use App\Category;
 use App\PurchaseOrderDetail;
 use App\User;
+use App\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,9 +72,10 @@ Route::post('products', function(Request $request){
         $json = $request->all();
         $params = json_decode(json_encode($json));
     } 
-    
+
     //crear un nuevo producto
     $product = new Product();
+    $log = new Log();
     $exist = $product->exist((int)$params->id_product);
     if(!$exist){
         $id_product = (int)$params->id_product;
@@ -81,8 +83,12 @@ Route::post('products', function(Request $request){
         $description = $params->description;
         $quantity   = (int)$params->quantity;
         $unit_price = (int)$params->unit_price;
-    
+        $rut_user   =  $params->rut_user;
+
+        $action = 'Añadió producto "'.$name.'" al sistema';
+        $log->productLog($rut_user, $action);
         $product->createProduct($id_product, $name, $description, $quantity, $unit_price);
+
 
         $data = array(
             'status'    =>  'Created',
@@ -117,13 +123,17 @@ route::put('products/{id}', function(Request $request, $id_product) {
 
     try{
         $product = new Product();
+        $log = new Log();
 
         $id_product     = (int)$id_product;        
         $name           = $params->name;
         $description    = $params->description;
         $quantity       = (int)$params->quantity;
         $unit_price     = (int)$params->unit_price;
+        $rut_user       = $params->rut_user;
 
+        $action = 'Modificó producto "'.$name.'" con código "'.$id_product.'" en el sistema';
+        $log->productLog($rut_user, $action);
         $product->updateProduct($id_product, $name, $description, $quantity, $unit_price);
 
         $data = array(
@@ -206,6 +216,7 @@ route::delete('products/{id}', function($id_product) {
         $provider = new Provider();
         $exist = $provider->exist($params->rut_provider);
         $user = new User();
+        $log = new Log();
 
         $validaRut = $user->validarRut((int)$params->rut_provider, (int)$params->dv);
     
@@ -219,7 +230,10 @@ route::delete('products/{id}', function($id_product) {
                 $telephone      = $params->telephone;
                 $address        = $params->address;
                 $email          = $params->email;
+                $rut_user       =  $params->rut_user;
         
+                $action = 'Añadió el proveedor "'.$name.'" RUT: '.$rut_provider.' al sistema';
+                $log->productLog($rut_user, $action);
                 $provider->createProvider($rut_provider, $id_pais, $name, $telephone, $address, $email);
         
                 $data = array(
@@ -293,6 +307,7 @@ route::delete('products/{id}', function($id_product) {
     try{
         $provider = new Provider();
         $exist = $provider->exist($rut_provider);
+        $log = new Log();
 
         if($exist){
             
@@ -301,7 +316,10 @@ route::delete('products/{id}', function($id_product) {
             $telephone     = $params->telephone;
             $address       = $params->address;
             $email         = $params->email;
+            $rut_user      = $params->rut_user;
     
+            $action = 'Modificó el proveedor "'.$name.'", RUT: '.$rut_provider.' en el sistema';
+            $log->productLog($rut_user, $action);
             $provider->updateProvider($rut_provider, $id_country, $name, $telephone, $address, $email);
     
             $data = array(
@@ -506,11 +524,24 @@ route::delete('products/{id}', function($id_product) {
     } 
  });
 
- route::delete('pods/{id_pod}', function($id_pod) {
+ route::delete('pods/{id_pod}/{rut_user}', function($id_pod, $rut_user) {
     try{
         $pod = new PurchaseOrderDetail();
-        $pod->deletePod((int)$id_pod);
+        $log = new Log();
 
+
+        $products = \DB::table('product_purchase_order as ppo')
+        ->join('product as p', 'p.id_product', '=', 'ppo.id_product')
+        ->select('ppo.quantity', 'p.name', 'ppo.id_purchase_order')
+        ->where('ppo.id_product_purchase_order', (int)$id_pod)->get();
+        foreach($products as $product){
+            $action = 'Quitó '.$product->quantity.' '.$product->name.' a la orden de compra número '.$product->id_purchase_order;
+        }
+        
+        
+        
+        $log->productLog($rut_user, $action);
+        $pod->deletePod((int)$id_pod);
         $data = array(
             'status'    => 'success',
             'code'      => '200',
@@ -518,11 +549,12 @@ route::delete('products/{id}', function($id_product) {
         );
         return response()->json($data, $data['code']);
     }catch(Exception $e) {
-        $data = array(
+        return $e;
+        /*$data = array(
             'status'    => 'error',
             'code'      => '400',
             'message'   => 'No se pudo eliminar el detalle, intente nuevamente'
-        );
-        return response()->json($data, $data['code']);
+        );*/
+        //return response()->json($data, $data['code']);
     }
 });

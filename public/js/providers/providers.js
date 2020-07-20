@@ -92,11 +92,11 @@ function editData(){
                             let select = document.getElementById('id_select');
                             select.setAttribute('value', `${json.id_country}`)
                             select.innerText = `${json.country_name}` 
-                            inputs[1].setAttribute('value', json.rut_provider);
-                            inputs[3].setAttribute('value', json.name);
-                            inputs[4].setAttribute('value', json.telephone);
-                            inputs[5].setAttribute('value', json.address);
-                            inputs[6].setAttribute('value', json.email);
+                            inputs[2].setAttribute('value', json.rut_provider);
+                            inputs[4].setAttribute('value', json.name);
+                            inputs[5].setAttribute('value', json.telephone);
+                            inputs[6].setAttribute('value', json.address);
+                            inputs[7].setAttribute('value', json.email);
     
                             document.getElementById('formEditClear').addEventListener('click', () => document.getElementById('providerFormEdit').reset());
                             document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.getElementById('providerFormEdit').reset() } });

@@ -14,5 +14,11 @@ th.actions{
     margin-top: 23px !important;
 }
 .row.menu{
-    margin-top: 180px !important;
+    margin-top: 150px !important;
+}
+body.order{
+    font-size: 0.6rem !important;
+}
+a.orders:hover{
+    text-decoration: none;
 }
