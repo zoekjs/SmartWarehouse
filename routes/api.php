@@ -72,7 +72,7 @@ Route::post('products', function(Request $request){
         $json = $request->all();
         $params = json_decode(json_encode($json));
     } 
-
+    
     //crear un nuevo producto
     $product = new Product();
     $log = new Log();

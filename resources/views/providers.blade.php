@@ -169,8 +169,8 @@
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="{{asset('js/providers/providers.js')}}"></script>
+<script src="{{asset('js/providers/providers.js')}}"></script>
 <script src="{{ asset('js/providers/providerTable.js')}}"></script>
-<script src="{{ asset('js/dataTables.min.js')}}"></script>
+<script src="{{asset('js/dataTables.min.js')}}"></script>
 
 @endsection
