@@ -72,7 +72,7 @@ Route::post('products', function(Request $request){
         $json = $request->all();
         $params = json_decode(json_encode($json));
     } 
-
+    
     //crear un nuevo producto
     $product = new Product();
     $log = new Log();
@@ -224,7 +224,7 @@ route::delete('products/{id}', function($id_product) {
         
         if($validaRut){
             if(!$exist) {
-                $rut_provider   = $params->rut_provider.'-'.$params->dv;
+                $rut_provider   = $params->rut_provider.$params->dv;
                 $id_pais        = (int)$params->id_pais;
                 $name           = $params->name;
                 $telephone      = $params->telephone;
