@@ -558,3 +558,6 @@ route::delete('products/{id}', function($id_product) {
         //return response()->json($data, $data['code']);
     }
 });
+
+//RFID
+Route::post('rfid', 'RFIDController@index');
