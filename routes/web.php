@@ -81,6 +81,14 @@ Route::get('/order', function(){
     return $pdf->stream('archivo.pdf');
 })->name('order');
 
+/*********************** INGRESS REGISTER ************************************/
+Route::match(array('GET', 'POST', 'PUT'),'/ingresos', 'IngressController@listIngress')->name('ingresos')->middleware('auth');
+Route::post('/ingreso', 'IngressController@store')->middleware('auth');
+Route::get('/detalles/{id_ingress}', 'IngressDetailController@create')->name('ingress-details')->middleware('auth');
+Route::get('/details/{id_ingress}', 'IngressDetailController@create')->name('ingress-details')->middleware('auth');
+Route::post('/details', 'IngressDetailController@store')->name('add-details')->middleware('auth');
+Route::post('/update-details', 'IngressDetailController@update')->name('update-details')->middleware('auth');
+
 /****************************** TEST ROUTE TO ADD USERS *********************/
 //ruta para crear usuario
 Route::get('test_user', function(){
