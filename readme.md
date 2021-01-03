@@ -1,6 +1,6 @@
 <p align="center"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRUdQMJs1Bjeo23xzSI76Knhh11hKIB8moH_UGtia5fN_N4s2Zg&usqp=CAU" width="400"></p>
 
-## AQUÍ CODEAMOS DE PANA, NA DE WEAS !
+## AQUÍ CODEAMOS DE PANA, JEJE<3
 
 - [Laragon](https://sourceforge.net/projects/laragon/files/releases/4.0/laragon-full.exe/download)
 - [MariaDB - 10.4.12 (Ultima versión estable)](https://downloads.mariadb.org/interstitial/mariadb-10.4.12/winx64-packages/mariadb-10.4.12-winx64.zip/from/http%3A//ftp.igh.cnrs.fr/pub/mariadb/)
