@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Santiago',
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -162,10 +162,10 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
         /*
          * Package Service Providers...
          */
-        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -226,7 +226,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

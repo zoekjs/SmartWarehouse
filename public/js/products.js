@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
         for (var [k, v] of formData) {
             jsonData[k] = v;
         }
-
+        console.log(jsonData);
         fetch("api/products", {
             method: "POST",
             body: JSON.stringify(jsonData),
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: "Todo listo !",
                         type: "success",
                         text: data.message,
-                        confirmButtonText: 'GRACIAS BRO!',
+                        confirmButtonText: 'Aceptar',
                     })
                         .then(function () {
                             closeModal();
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: "No se pudo agregar el producto :(",
                         type: "error",
                         text: data.message,
-                        confirmButtonText: 'PUTA LA WEA!'
+                        confirmButtonText: 'Aceptar'
                     });
                 }
             })
@@ -56,22 +56,32 @@ function editData() {
             btn.addEventListener('click', () => {
                 //obtener id desde la tabla antes de editar
                 let idProduct = btn.parentElement.parentElement.children[0].lastChild.nodeValue;
+                console.log(idProduct);
                 let url = 'api/products/';
                 fetch(url += `${idProduct}`, {
                     method: 'GET'
                 })
                     .then(res => res.json())
                     .then(data => {
-                        let inputs = document.getElementById('productFormEdit');
-                        inputs[1].setAttribute('value', data.id_product);
-                        inputs[2].setAttribute('value', data.name);
-                        inputs[3].value += data.description;
-                        inputs[4].setAttribute('value', data.quantity);
-                        inputs[5].setAttribute('value', data.unit_price);
-
-                        document.getElementById('formEditClear').addEventListener('click', () => document.getElementById('productFormEdit').reset());
-                        document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.getElementById('productFormEdit').reset() } });
-
+                        if(data.code == 404){
+                            swal({
+                                title: "error !",
+                                type: "error",
+                                text: "El producto que intenta modificar no se encuentra registrado en el sistema.",
+                                confirmButtonText: 'Aceptar',
+                            })
+                                .then(() => closeModalEdit());
+                        }else{
+                            let inputs = document.getElementById('productFormEdit');
+                            inputs[2].setAttribute('value', data.id_product);
+                            inputs[3].setAttribute('value', data.name);
+                            inputs[4].value += data.description;
+                            inputs[5].setAttribute('value', data.quantity);
+                            inputs[6].setAttribute('value', data.unit_price);
+    
+                            document.getElementById('formEditClear').addEventListener('click', () => document.getElementById('productFormEdit').reset());
+                            document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.getElementById('productFormEdit').reset() } });
+                        }
                     })
                     .catch(error => console.log(error));
             })
@@ -119,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
                 }
-                else if (data.code == 422) {
+                else if (data.code == 404) {
                     swal({
                         title: "No se pudo actualizar el producto :(",
                         type: "error",

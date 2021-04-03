@@ -6,6 +6,17 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    
+    /**
+     * Crea una nueva instacia del controlador.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth', 'roles:Administrador']);
+    }
+    
     /**
      * Display a listing of the resource.
      *

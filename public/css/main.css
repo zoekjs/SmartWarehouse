@@ -1,3 +1,24 @@
 .modal.product{
     width: 32%;
 }
+#loginbg{
+    background-image: url('../img/loginbg.jpeg');
+}
+.py-4.login{
+    padding-top: 15.5rem !important;
+}
+th.actions{
+    width: 15%;
+}
+.card-img-top.menu{
+    margin-top: 23px !important;
+}
+.row.menu{
+    margin-top: 150px !important;
+}
+body.order{
+    font-size: 0.6rem !important;
+}
+a.orders:hover{
+    text-decoration: none;
+}
