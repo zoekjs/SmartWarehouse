@@ -2,34 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Country;
 use Illuminate\Http\Request;
-use App\Ingress;
-use App\Log;
 
-class IngressController extends Controller
+class CountryController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    public function listIngress(){
-        $ingress = new Ingress();
-        $allIngresses = $ingress->getAllIngresses();
-        $providers = \App\Provider::all();
-        $doctypes = \DB::table('type_document')->get();
-
-        return view('products/ingress', compact('allIngresses', 'providers', 'doctypes'));
-    }
-
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-
+        return datatables()->eloquent(Country::query())->toJson();
     }
 
     /**
@@ -50,24 +35,7 @@ class IngressController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-            $log = new Log();
-            $ingress = new Ingress();
-
-            $rut_user              = $request->rut_user;
-            $id_type_document      = $request->id_type_document;
-            $document_number       = $request->document_number;
-            $observation           = $request->observation;
-            $rut_provider          = $request->rut_provider;
-
-            $action = 'Recibió productos en bodega';
-            $log->productLog($rut_user, $action);
-            $ingress->storeIngress($rut_user, $id_type_document, $document_number, $observation, $rut_provider);
-
-            return redirect()->back();
-        }catch(Exception $e){
-            throw new Exception;
-        }
+        //
     }
 
     /**
