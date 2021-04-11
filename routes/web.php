@@ -12,28 +12,13 @@ use App\PurchaseOrder;
 |
 */
 
-Route::match(array('GET', 'POST', 'PUT'), '/', function () {
-    return view('products');
-})->name('productos')->middleware(['auth']);
+Route::match(array('GET', 'POST', 'PUT'), '/', 'ProductController@create')->name('productos');
 
-Route::match(array('GET', 'POST', 'PUT'), '/proveedores', function () {
-    $countrys = \DB::table('country')
-            ->orderBy('name', 'asc')
-            ->get();
-    return view('providers', compact('countrys'));
-})->name('proveedores')->middleware(['auth', 'roles:Administrador,Supervisor']);
+Route::match(array('GET', 'POST', 'PUT'),'/proveedores', 'ProviderController@create')->name('proveedores')->middleware(['auth', 'roles:Administrador,Supervisor']);
 
+Route::match(array('GET', 'POST', 'PUT'),'/oc', 'PurchaseOrderController@index')->name('oc')->middleware('roles:Administrador,Supervisor');
 
-Route::match(array('GET', 'POST', 'PUT'), '/oc', function () {
-    $countrys = \DB::table('country')
-            ->orderBy('name', 'asc')
-            ->get();
-    return view('providers', compact('countrys'));
-})->name('OC')->middleware(['auth', 'roles:Administrador,Supervisor']);
-
-Route::match(array('GET', 'POST', 'PUT'), '/categorias', function () {
-    return view('categories');
-})->name('categorias')->middleware(['auth', 'roles:Administrador,Supervisor']);
+Route::match(array('GET', 'POST', 'PUT'),'/categorias', 'CategoryController@create')->name('categorias')->middleware('roles:Administrador,Supervisor');
 
 /**************************** USERS MENU **********************************/
 Route::match(array('GET', 'POST', 'PUT'), '/menu', function () {
@@ -46,15 +31,15 @@ route::post('update-payment/', 'PaymentStatusController@updatePaymentStatus')->n
 route::get('oc-pagadas', 'PaymentStatusController@getPayed')->name('oc-pagadas');
 
 /***************************** PURCHASE ORDER ***********************************/
-Route::match(array('GET', 'POST', 'PUT'),'/nueva-orden', 'PurchaseOrderController@listOrders')->name('nueva-orden')->middleware('auth');
-Route::match(array('GET', 'POST', 'PUT'),'/ordenes', 'PurchaseOrderController@listOrders')->name('listorders')->middleware('auth');
-Route::get('/detalles/{id_purchase_order}', 'PurchaseOrderDetailController@create')->name('detalles')->middleware('auth');
-Route::post('/detalles', 'PurchaseOrderDetailController@store')->name('add-detalles')->middleware('auth');
-Route::post('/create-order', 'PurchaseOrderController@store')->name('create-order')->middleware('auth');
-Route::post('/update-order', 'PurchaseOrderDetailController@update')->name('update-order')->middleware('auth');
-Route::get('/ver-orden/{id_purchase_order}', 'PurchaseOrderController@show')->name('ver-orden')->middleware('auth');
-Route::post('/estado-orden', 'PurchaseOrderController@update')->name('estado-orden')->middleware(['auth', 'roles:Administrador,Supervisor']);
-Route::get('/descargar/{id_purchase_order}', 'PurchaseOrderController@download')->name('descargar-orden')->middleware('auth');
+Route::match(array('GET', 'POST', 'PUT'),'/nueva-orden', 'PurchaseOrderController@listOrders')->name('nueva-orden');
+Route::match(array('GET', 'POST', 'PUT'),'/ordenes', 'PurchaseOrderController@listOrders')->name('listorders');
+Route::get('/detalles/{id_purchase_order}', 'PurchaseOrderDetailController@create')->name('detalles');
+Route::post('/detalles', 'PurchaseOrderDetailController@store')->name('add-detalles');
+Route::post('/create-order', 'PurchaseOrderController@store')->name('create-order');
+Route::post('/update-order', 'PurchaseOrderDetailController@update')->name('update-order');
+Route::get('/ver-orden/{id_purchase_order}', 'PurchaseOrderController@show')->name('ver-orden');
+Route::post('/estado-orden', 'PurchaseOrderController@update')->name('estado-orden')->middleware('roles:Administrador,Supervisor');
+Route::get('/descargar/{id_purchase_order}', 'PurchaseOrderController@download')->name('descargar-orden');
 
 Route::get('/admin', function () {
     return view('admin/menu');
@@ -82,12 +67,12 @@ Route::get('/order', function(){
 })->name('order');
 
 /*********************** INGRESS REGISTER ************************************/
-Route::match(array('GET', 'POST', 'PUT'),'/ingresos', 'IngressController@listIngress')->name('ingresos')->middleware('auth');
-Route::post('/ingreso', 'IngressController@store')->middleware('auth');
-Route::get('/detalles/{id_ingress}', 'IngressDetailController@create')->name('ingress-details')->middleware('auth');
-Route::get('/details/{id_ingress}', 'IngressDetailController@create')->name('ingress-details')->middleware('auth');
-Route::post('/details', 'IngressDetailController@store')->name('add-details')->middleware('auth');
-Route::post('/update-details', 'IngressDetailController@update')->name('update-details')->middleware('auth');
+Route::match(array('GET', 'POST', 'PUT'),'/ingresos', 'IngressController@listIngress')->name('ingresos');
+Route::post('/ingreso', 'IngressController@store');
+Route::get('/detalles/{id_ingress}', 'IngressDetailController@create')->name('ingress-details');
+Route::get('/details/{id_ingress}', 'IngressDetailController@create')->name('ingress-details');
+Route::post('/details', 'IngressDetailController@store')->name('add-details');
+Route::post('/update-details', 'IngressDetailController@update')->name('update-details');
 
 /****************************** TEST ROUTE TO ADD USERS *********************/
 //ruta para crear usuario

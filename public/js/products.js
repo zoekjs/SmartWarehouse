@@ -57,7 +57,7 @@ function editData() {
                 //obtener id desde la tabla antes de editar
                 let idProduct = btn.parentElement.parentElement.children[0].lastChild.nodeValue;
                 console.log(idProduct);
-                let url = 'api/products/';
+                let url = 'api/products';
                 fetch(url += `${idProduct}`, {
                     method: 'GET'
                 })
@@ -78,7 +78,7 @@ function editData() {
                             inputs[4].value += data.description;
                             inputs[5].setAttribute('value', data.quantity);
                             inputs[6].setAttribute('value', data.unit_price);
-    
+
                             document.getElementById('formEditClear').addEventListener('click', () => document.getElementById('productFormEdit').reset());
                             document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.getElementById('productFormEdit').reset() } });
                         }
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
             json[k] = v;
         }
 
-        let url = 'api/products/';
+        let url = 'api/products';
         fetch(url += `${json.id_product}`, {
             method: 'PUT',
             body: JSON.stringify(json),
