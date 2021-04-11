@@ -8,16 +8,19 @@ use App\Log;
 
 class IngressController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function listIngress(){
         $ingress = new Ingress();
         $allIngresses = $ingress->getAllIngresses();
-        $providers = \App\Provider::all();  
+        $providers = \App\Provider::all();
         $doctypes = \DB::table('type_document')->get();
-        
+
         return view('products/ingress', compact('allIngresses', 'providers', 'doctypes'));
     }
-
 
     /**
      * Display a listing of the resource.
