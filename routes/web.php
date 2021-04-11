@@ -1,7 +1,6 @@
 <?php
 use App\PurchaseOrderDetail;
 use App\PurchaseOrder;
-use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes

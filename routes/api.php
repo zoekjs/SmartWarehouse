@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +23,9 @@ Route::resource('products', 'ProductController');
 
 /******************************* PROVIDERS SECTION ******************************/
 Route::resource('providers', 'ProviderController');
-Route::get('countrys', 'CountryController@index');
+Route::get('countrys', function() {
+    return datatables()->eloquent(App\Country::query())->toJson();
+});
 
 
 /******************************* CATEGORIES SECTION ******************************/
