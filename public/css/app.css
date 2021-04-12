@@ -22578,3 +22578,6 @@ h3 {
     border-color: #dee2e6;
   }
 }
+.modal-backdrop {
+  opacity: 0.7 !important;
+}

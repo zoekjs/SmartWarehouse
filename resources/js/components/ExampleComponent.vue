@@ -27,10 +27,10 @@
         created() {
           axios.get('http://localhost:8083/api/products')
           .then(res => {
-              console.log(res.data.data)
               res.data.data.forEach((product) => {
                   const producto = { id_product: product.id_product, name: product.name, quantity: product.quantity, unit_price: product.unit_price }
                   this.items.push(producto)
+                  console.log(this.items)
               })
           })
             .catch(err => console.log(err))
