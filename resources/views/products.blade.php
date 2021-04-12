@@ -1,8 +1,5 @@
 @extends('layout.layout')
-@section('css')
-<link rel="stylesheet" href="{{asset('css/responsive.bootstrap4.min.css')}}">
-@endsection
-@section('content')
+{{--@section('content')
 <div class="row">
     <div class="col-sm-12 col-xl-12 offset-s4 mt-5 d-flex flex-row-reverse">
         <button type="button" class="btn btn-primary p-2" data-toggle="modal" data-target="#modal1">Añadir
@@ -125,15 +122,8 @@
         </tbody>
         </thead>
     </table>
-</div>
+</div>--}}
 
-
-@endsection
-
-@section('scripts')
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-<script src="{{ asset('js/productTable.js')}}"></script>
-<script src="{{ asset('js/dataTables.min.js')}}"></script>
-<script src="{{asset('js/products.js')}}"></script>
+@section('components')
+    <example-component />
 @endsection
