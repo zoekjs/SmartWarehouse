@@ -125,5 +125,5 @@
 </div>--}}
 
 @section('components')
-    <example-component />
+    <products-component :rut-user="{{Auth()->user()->rut_user}}"></products-component>
 @endsection
