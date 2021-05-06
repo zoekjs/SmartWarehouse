@@ -7,15 +7,13 @@ use App\Product;
 use App\PurchaseOrderDetail;
 use App\PurchaseOrder;
 use App\Log;
-use Illuminate\Support\Facades\DB;
 
 class PurchaseOrderDetailController extends Controller
 {
     function __construct()
     {
-        $this->middleware('auth')->except('destroy');
+        $this->middleware(['auth']);
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -66,7 +64,7 @@ class PurchaseOrderDetailController extends Controller
 
             $product = \DB::table('product')->where('id_product', $id_product)->first();
             $action = 'Añadió '.$quantity.' '.$product->name.' a la orden de compra número '.$id_purchase_order;
-
+            
             $log->productLog($rut_user, $action);
             $pdo->createPODetails($id_purchase_order, $id_product, $quantity, $unit_price, $total);
             return redirect()->back();
@@ -122,38 +120,10 @@ class PurchaseOrderDetailController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
-    public function destroy($id_pod, $rut_user)
+    public function destroy($id)
     {
-        try {
-            $pod = new PurchaseOrderDetail();
-            $log = new Log();
-
-            $products = DB::table('product_purchase_order as ppo')
-                ->join('product as p', 'p.id_product', '=', 'ppo.id_product')
-                ->select('ppo.quantity', 'p.name', 'ppo.id_purchase_order')
-                ->where('ppo.id_product_purchase_order', (int)$id_pod)->get();
-            foreach($products as $product){
-                $action = 'Quitó '.$product->quantity.' '.$product->name.' a la orden de compra número '.$product->id_purchase_order;
-            }
-
-            $log->productLog($rut_user, $action);
-            $pod->deletePod((int)$id_pod);
-            $data = array(
-                'status'    => 'success',
-                'code'      => '200',
-                'message'   => 'Detalle eliminado correctamente del sistema ;)'
-            );
-            return response()->json($data, $data['code']);
-        } catch(Exception $e) {
-            return $e;
-            /*$data = array(
-                'status'    => 'error',
-                'code'      => '400',
-                'message'   => 'No se pudo eliminar el detalle, intente nuevamente'
-            );*/
-            //return response()->json($data, $data['code']);
-        }
+        //
     }
 }
