@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordController extends Controller
 {
@@ -34,6 +37,27 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest')->except(['index', 'update']);
+    }
+
+    public function index()
+    {
+        return view('auth.passwords.change');
+    }
+
+    public function update(Request $request, $rut_user)
+    {
+        $request->validate([
+            'password' => 'required|string|min:6|confirmed'
+        ]);
+
+        $user = User::find($rut_user);
+
+        if (!empty($request->password) && !empty($request->password_confirmation))
+        {
+            $user->password = Hash::make($request->password);
+            $user->save();
+            return back()->with('success', 'Contraseña cambiada exitosamente');
+        }
     }
 }

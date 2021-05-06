@@ -49,6 +49,9 @@ Route::get('/admin', function () {
 Route::get('auditoria', 'AuditController@index')->name('auditoria');
 
 
+Route::get('cambio-contraseña', 'Auth\ResetPasswordController@index')->name('cambio-contraseña')->middleware('auth');
+Route::put('update-contraseña/{id}', 'Auth\ResetPasswordController@update')->name('update-contraseña')->middleware('auth');
+
 Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware(['auth']);
