@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="{{asset('css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/main.css')}}">
     @yield('css')
-
-
+    
+   
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -30,7 +30,6 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="cambio-contraseña">Cambiar contraseña</a>
                 <a class="dropdown-item" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
@@ -50,7 +49,7 @@
     </div>
 
     @yield('scripts')
-
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
     <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
 
