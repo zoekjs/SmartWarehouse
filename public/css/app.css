@@ -22578,3 +22578,11 @@ h3 {
     border-color: #dee2e6;
   }
 }
+.modal-backdrop {
+  opacity: 0.7 !important;
+}
+
+.icons-column-width {
+  width: 155px;
+  max-width: 155px;
+}
