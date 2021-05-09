@@ -46,7 +46,7 @@ Route::get('/admin', function () {
 })->name('admin')->middleware(['auth', 'roles:Administrador,Supervisor']);
 
 /****************************** AUDIT ROUTES **********************************/
-Route::get('auditoria', 'AuditController@index')->name('auditoria');
+Route::get('auditoria', 'AuditController@create')->name('auditoria');
 
 
 Auth::routes(['register' => false]);

@@ -11,6 +11,10 @@ class AuditController extends Controller
         $log = new log();
         $logs = $log->getLogs();
 
-        return view('admin/auditoria', compact('logs'));
+//        return view('admin/auditoria', compact('logs'));
+        return $logs->toJson();
+    }
+    public function create() {
+        return view('admin/auditoria');
     }
 }
