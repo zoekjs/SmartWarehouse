@@ -7,6 +7,7 @@ use App\PurchaseOrder;
 use App\PaymentMethod;
 use App\PurchaseOrderDetail;
 use App\Log;
+use Illuminate\Support\Facades\DB;
 
 class PurchaseOrderController extends Controller
 {
@@ -18,11 +19,12 @@ class PurchaseOrderController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function index()
     {
-        //
+        $countrys = DB::table('country')->orderBy('name', 'asc')->get();
+        return view('providers', compact('countrys'));
     }
 
     public function download($id_purchase_order){
@@ -77,7 +79,7 @@ class PurchaseOrderController extends Controller
             $last = \DB::table('purchase_order')->orderBy('id_purchase_order', 'DESC')->first();
             $action = 'Añadió una orden de compra al sistema, el numero de orden es: '.$last->id_purchase_order;
             $log->productLog($rut_user, $action);
-            
+
             return redirect()->back();
         }catch(Exception $e){
             return response()->back();
@@ -96,7 +98,7 @@ class PurchaseOrderController extends Controller
         $orderData = $order->getOrder($id_purchase_data);
         $orderDetail = new PurchaseOrderDetail();
         $details = $orderDetail->getDetail($id_purchase_data);
-        
+
         $neto = 0;
         foreach($details as $detail){
             $neto += $detail->total;
@@ -138,7 +140,7 @@ class PurchaseOrderController extends Controller
                 $total              = $request->total;
                 $reason             = $request->reason;
                 $rut_user           = $request->rut_user;
-    
+
                 $action = 'aprobó la orden de compra N°: '.$id_purchase_order;
                 $log->productLog($rut_user, $action);
                 $order->updateOrder($id_purchase_order, $neto, $iva, $total, $id_status, $reason);
