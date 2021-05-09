@@ -3,9 +3,8 @@
 <link rel="stylesheet" href="{{asset('css/responsive.bootstrap4.min.css')}}">
 @endsection
 @section('content')
-<div class="row">
   <div class="col-md-12">
-    <div class="card mt-5">
+    <div class="card">
       <div class="card header bg-dark text-light">
         <p>Crear nueva órden de compra</p>
       </div>
@@ -21,7 +20,7 @@
                     <option selected>Selecccionar</option>
                     @foreach ($providers as $provider)
                     <option value="{{$provider->rut_provider}}">{{$provider->name}}</option>
-                    @endforeach    
+                    @endforeach
                   </select>
                 </div>
                 <div class="form-group col-md-3">
@@ -88,7 +87,6 @@
         </div>
     </div>
   </div>
-</div>
 <!-- MODAL AÑADIR PRODUCTOS OC -->
 <div class="col-sm-12 col-xl-12 offset-s4 mt-5 d-flex flex-row-reverse">
   <button type="button" class="btn btn-primary p-2" data-toggle="modal" data-target="#modal1">Añadir
@@ -109,7 +107,7 @@
                               <option selected>Selecccionar</option>
                               @foreach ($products as $product)
                               <option value="{{$product->id_product}}">{{$product->name}}</option>
-                              @endforeach                                
+                              @endforeach
                             </select>
                         </div>
                       </div>
@@ -151,7 +149,5 @@
 @endsection
 
 @section('scripts')
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <script src="{{ asset('js/PO/productData.js')}}"></script>
 @endsection
