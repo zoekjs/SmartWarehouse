@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/main.css')}}">
 </head>
 <body id="loginbg">
