@@ -1,4 +1,7 @@
 @extends('layout.layout')
+@section('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+@endsection
 @section('content')
 <div class="row mt-0">
   <div class="col-md-12">
@@ -71,7 +74,7 @@
                     <div class="col-md text-light">Productos añadidos a la órden</div>
                   </div>
                 </div>
-                 <table id='table_details' class="table table-bordered table-condensed table-sm bg-white">
+                 <table id='table_details' class="table table-bordered table-condensed table-sm bg-dark">
                     <thead class="">
                       <tr>
                         <th class='text-center' style="width: 10%;">Código</th>
@@ -125,7 +128,7 @@
                       <div class="form-group">
                         <div class="input-field col-sm-12">
                             <label for="product">Producto</label>
-                            <select class="custom-select" id="product">
+                            <select class="custom-select" id="product" required>
                               <option selected>Selecccionar</option>
 
                             </select>
@@ -135,13 +138,13 @@
                         <div class="col-md-3">
                           <div class="form-group">
                                 <label for="name">Cantidad</label>
-                                <input class="form-control" type="text" name="name" id="quantity">
+                                <input class="form-control" type="text" name="name" id="quantity" required="required">
                           </div>
                         </div>
                         <div class="col-md-4">
                           <div class="form-group">
                               <label for="name">Precio</label>
-                              <input class="form-control" type="text" name="name" id="value">
+                              <input class="form-control" type="text" name="name" id="value" required="required">
                           </div>
                         </div>
                         <div class="col-md-5">
@@ -163,4 +166,8 @@
       </div>
   </div>
 </div>
+@endsection
+@section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+    <script src="{{asset('js/PO/pod.js')}}"></script>
 @endsection
