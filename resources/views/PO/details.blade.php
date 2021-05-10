@@ -1,9 +1,6 @@
 @extends('layout.layout')
-@section('css')
-<link rel="stylesheet" href="{{asset('css/responsive.bootstrap4.min.css')}}">
-@endsection
 @section('content')
-<div class="row mt-5">
+<div class="row mt-0">
   <div class="col-md-12">
 
   </div>
@@ -42,7 +39,7 @@
                           <option selected>Selecccionar</option>
                           @foreach ($products as $product)
                           <option value="{{$product->id_product}}">{{$product->name}}</option>
-                          @endforeach                                
+                          @endforeach
                         </select>
                     </div>
                   </div>
@@ -62,7 +59,7 @@
                   </div>
                   <div class="modal-footer">
                       <button type="submit" value=" Send" id="sendForm"
-                          class="btn btn-success">Agregar</button>           
+                          class="btn btn-success">Agregar</button>
                       <a href="{{route('nueva-orden')}}" class="btn btn-danger">Cancelar</a>
                   </div>
           </form>
@@ -94,7 +91,7 @@
                           <td class='text-center'>{{$detail->quantity}}</td>
                           <td class='text-center'>{{number_format($detail->unit_price, 0, ",", ".")}}</td>
                           <td class='text-center'>{{number_format($detail->total, 0, ",", ".")}}</td>
-                          <td class='text-center'><button class="btn btn-danger delete">quitar</button></td>        
+                          <td class='text-center'><button class="btn btn-danger delete">quitar</button></td>
                       @endforeach
                     </tbody>
                   </table>
@@ -130,7 +127,7 @@
                             <label for="product">Producto</label>
                             <select class="custom-select" id="product">
                               <option selected>Selecccionar</option>
-                                
+
                             </select>
                         </div>
                       </div>
@@ -166,13 +163,4 @@
       </div>
   </div>
 </div>
-
-
-
-@endsection
-
-@section('scripts')
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script src="{{asset('js/PO/pod.js')}}"></script>
 @endsection

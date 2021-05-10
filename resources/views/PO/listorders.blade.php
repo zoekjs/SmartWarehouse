@@ -28,7 +28,7 @@
                     <option selected>Selecccionar</option>
                     @foreach ($providers as $provider)
                     <option value="{{$provider->rut_provider}}">{{$provider->name}}</option>
-                    @endforeach 
+                    @endforeach
                   </select>
                 </div>
                 <div class="form-group col-md-3">
@@ -39,7 +39,7 @@
                     <option selected>Selecccionar</option>
                     @foreach ($payment_methods as $payment_method)
                     <option value="{{$payment_method->id_payment}}">{{$payment_method->name}}</option>
-                    @endforeach 
+                    @endforeach
                   </select>
                 </div>
               </div>
@@ -50,7 +50,7 @@
                   <select class="form-control" name="id_money" id="money" required>
                     @foreach ($moneys as $money)
                     <option value="{{$money->id_money}}">{{$money->name}}</option>
-                    @endforeach 
+                    @endforeach
                   </select>
                 </div>
               </div>
@@ -85,7 +85,7 @@
                   </div>
                 </div>
 
-                  <table id='table_details' class="table table-bordered table-condensed table-sm bg-white">
+                  <table id='table_details' class="table table-bordered table-condensed table-sm bg-dark">
                     <thead class="">
                       <tr>
                         <th class='text-center' style="width: 10%;">Número de órden</th>
@@ -97,7 +97,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach ($orders as $order)   
+                      @foreach ($orders as $order)
                         <tr>
                           <td class='text-center'>{{$order->id_purchase_order}}</td>
                           <td class='text-center'>{{date('d-m-Y', strtotime($order->created_at))}}</td>
@@ -122,7 +122,7 @@
                           <td class='text-center' style="width: 15%;"><a href="{{route('ver-orden', ['id_purchase_order' => $order->id_purchase_order])}}"
                           class="btn-sm btn-success">Ver</a></td>
                         @endif
-                        </tr>                 
+                        </tr>
                       @endforeach
                     </tbody>
                   </table>
@@ -158,7 +158,7 @@
                             <label for="product">Producto</label>
                             <select class="custom-select" id="product">
                               <option selected>Selecccionar</option>
-                                
+
                             </select>
                         </div>
                       </div>
