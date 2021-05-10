@@ -32,6 +32,8 @@ Route::get('countrys', function() {
 Route::resource('categories', 'CategoryController');
 Route::delete('pods/{id_pod}/{rut_user}', 'PurchaseOrderDetailController@destroy');
 
+/********************************* AUDIT SECTION *********************************/
+Route::resource('audit', 'AuditController');
 
 /********************************* RFID SECTION **********************************/
 Route::post('rfid', 'RFIDController@index');
