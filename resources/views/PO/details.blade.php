@@ -1,9 +1,9 @@
 @extends('layout.layout')
 @section('css')
-<link rel="stylesheet" href="{{asset('css/responsive.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
 @endsection
 @section('content')
-<div class="row mt-5">
+<div class="row mt-0">
   <div class="col-md-12">
 
   </div>
@@ -42,7 +42,7 @@
                           <option selected>Selecccionar</option>
                           @foreach ($products as $product)
                           <option value="{{$product->id_product}}">{{$product->name}}</option>
-                          @endforeach                                
+                          @endforeach
                         </select>
                     </div>
                   </div>
@@ -62,7 +62,7 @@
                   </div>
                   <div class="modal-footer">
                       <button type="submit" value=" Send" id="sendForm"
-                          class="btn btn-success">Agregar</button>           
+                          class="btn btn-success">Agregar</button>
                       <a href="{{route('nueva-orden')}}" class="btn btn-danger">Cancelar</a>
                   </div>
           </form>
@@ -74,7 +74,7 @@
                     <div class="col-md text-light">Productos añadidos a la órden</div>
                   </div>
                 </div>
-                 <table id='table_details' class="table table-bordered table-condensed table-sm bg-white">
+                 <table id='table_details' class="table table-bordered table-condensed table-sm bg-dark">
                     <thead class="">
                       <tr>
                         <th class='text-center' style="width: 10%;">Código</th>
@@ -94,7 +94,7 @@
                           <td class='text-center'>{{$detail->quantity}}</td>
                           <td class='text-center'>{{number_format($detail->unit_price, 0, ",", ".")}}</td>
                           <td class='text-center'>{{number_format($detail->total, 0, ",", ".")}}</td>
-                          <td class='text-center'><button class="btn btn-danger delete">quitar</button></td>        
+                          <td class='text-center'><button class="btn btn-danger delete">quitar</button></td>
                       @endforeach
                     </tbody>
                   </table>
@@ -128,9 +128,9 @@
                       <div class="form-group">
                         <div class="input-field col-sm-12">
                             <label for="product">Producto</label>
-                            <select class="custom-select" id="product">
+                            <select class="custom-select" id="product" required>
                               <option selected>Selecccionar</option>
-                                
+
                             </select>
                         </div>
                       </div>
@@ -138,13 +138,13 @@
                         <div class="col-md-3">
                           <div class="form-group">
                                 <label for="name">Cantidad</label>
-                                <input class="form-control" type="text" name="name" id="quantity">
+                                <input class="form-control" type="text" name="name" id="quantity" required="required">
                           </div>
                         </div>
                         <div class="col-md-4">
                           <div class="form-group">
                               <label for="name">Precio</label>
-                              <input class="form-control" type="text" name="name" id="value">
+                              <input class="form-control" type="text" name="name" id="value" required="required">
                           </div>
                         </div>
                         <div class="col-md-5">
@@ -166,13 +166,8 @@
       </div>
   </div>
 </div>
-
-
-
 @endsection
-
 @section('scripts')
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script src="{{asset('js/PO/pod.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+    <script src="{{asset('js/PO/pod.js')}}"></script>
 @endsection

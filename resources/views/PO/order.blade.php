@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('css/main.css')}}">
 </head>
 <body class="order">
@@ -22,7 +22,7 @@
         </div>
         <div class="row mt-0 mb-1">
             <div class="row">
-                
+
             </div>
             <div class="col-md-2">
                     <div class="col-md-3">
@@ -33,7 +33,7 @@
                         <p class="text-left mb-0">{{$order->provider_name}}</p>
                         <p class="text-left mb-0">{{$order->rut_provider}}</p>
                         <p class="text-left mb-0">{{$order->address}}</p>
-                        <p class="text-left mb-0">{{$order->telephone}}</p> 
+                        <p class="text-left mb-0">{{$order->telephone}}</p>
                         @endforeach
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                         <th>{{$detail->quantity}}</th>
                         <th>{{$detail->unit_price}}</th>
                         <th>{{number_format($detail->total, 0, ",", ".")}}</th>
-                    </tr> 
+                    </tr>
                     @endforeach
                     <!--<tr>
                         <th class="text-right" colspan="4">SUBTOTAL</th>
@@ -83,7 +83,7 @@
                         @foreach ($orderData as $order)
                         <th>{{number_format($order->total, 0, ",", ".")}}</th>
                         @endforeach
-                        
+
                     </tr>
                 </tbody>
             </table>
@@ -97,28 +97,28 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <th>NOMBRE:</th> 
-                        <th>Grafisoft Chile Ltda.</th> 
+                        <th>NOMBRE:</th>
+                        <th>Grafisoft Chile Ltda.</th>
                     </tr>
                     <tr>
                        <th style="width: 10%;">RUT:</th>
-                       <th>76.202.350-4</th>  
+                       <th>76.202.350-4</th>
                     </tr>
                     <tr>
                         <th style="width: 10%;">DIRECCIÓN:</th>
-                        <th>Avenida Quilin 2640 B, Macul. Santiago, Chile</th>  
+                        <th>Avenida Quilin 2640 B, Macul. Santiago, Chile</th>
                     </tr>
                     <tr>
                         <th style="width: 10%;">TELEFONO:</th>
-                        <th>+56 22 7526051</th>  
+                        <th>+56 22 7526051</th>
                     </tr>
                     <tr>
                         <th style="width: 10%;">CONTACT:</th>
-                        <th>Matías Fernández</th>  
+                        <th>Matías Fernández</th>
                     </tr>
                     <tr>
                         <th style="width: 10%;">MAIL CONTACT:</th>
-                        <th>matias@grafisoft.cl</th>  
+                        <th>matias@grafisoft.cl</th>
                     </tr>
                 </tbody>
             </table>
@@ -133,20 +133,20 @@
                 <tbody>
                     @foreach ($orderData as $order)
                     <tr>
-                        <th>NOMBRE:</th> 
-                        <th>{{$order->provider_name}}</th> 
+                        <th>NOMBRE:</th>
+                        <th>{{$order->provider_name}}</th>
                     </tr>
                     <tr>
                        <th style="width: 10%;">RUT:</th>
-                       <th>{{$order->rut_provider}}</th>  
+                       <th>{{$order->rut_provider}}</th>
                     </tr>
                     <tr>
                         <th style="width: 10%;">DIRECCIÓN:</th>
-                        <th>{{$order->address}}</th>  
+                        <th>{{$order->address}}</th>
                     </tr>
                     <tr>
                         <th style="width: 10%;">TELEFONO:</th>
-                        <th>{{$order->telephone}}</th>  
+                        <th>{{$order->telephone}}</th>
                     </tr>
                     @endforeach
                 </tbody>
@@ -162,6 +162,6 @@
             <div class="col-md-4">
                 <P class="text-right">Tel. +56227526051</P>
             </div>
-        </div>    
+        </div>
 </body>
 </html>
