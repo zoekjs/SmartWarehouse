@@ -267,9 +267,9 @@
                     if(result.isConfirmed) {
                         ProductsRepository.delete(id)
                             .then((res) => {
-                                this.$swal('Todo listo !"', res.data.message, 'success')
                                 this.items.length = 0
                                 this.dataForTable()
+                                this.$swal('Todo listo !"', res.data.message, 'success')
                             })
                     }
                 })
