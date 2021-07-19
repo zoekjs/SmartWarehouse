@@ -32,6 +32,7 @@ window.Vue = require('vue');
 
 Vue.component('products-component', require('./components/ProductsComponent.vue').default);
 Vue.component('audit-component', require('./components/AuditComponent.vue').default);
+Vue.component('providers-component', require('./components/ProvidersComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
