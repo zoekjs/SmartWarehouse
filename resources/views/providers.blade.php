@@ -1,6 +1,6 @@
 @extends('layout.layout')
 @section('components')
-    <providers-component />
+    <providers-component :rut-user="{{Auth()->user()->rut_user}}" />
 @endsection
 @section('content')
 <!--<div class="row">

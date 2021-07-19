@@ -9,7 +9,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
 
-
+    <link rel="icon" href="{{asset('dist/img/Sw2021.png')}}" type="image/gif" sizes="16x16">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
@@ -26,7 +26,7 @@
 
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__wobble" src="{{asset('dist/img/AdminLTELogo.png')}}" alt="AdminLTELogo" height="60" width="60">
+        <img class="animation__wobble" src="{{asset('dist/img/Sw2021.png')}}" alt="SWLogo" height="200" width="200">
     </div>
 
     <!-- Navbar -->
@@ -57,7 +57,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="index3.html" class="brand-link">
-            <img src="{{asset('dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <img src="{{asset('dist/img/Sw2021.png')}}" alt="SWLogo" class="brand-image img-circle elevation-3" >
             <span class="brand-text font-weight-light">SmartWarehouse</span>
         </a>
 

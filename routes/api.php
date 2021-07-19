@@ -23,8 +23,8 @@ Route::resource('products', 'ProductController');
 
 /******************************* PROVIDERS SECTION ******************************/
 Route::resource('providers', 'ProviderController');
-Route::get('countrys', function() {
-    return datatables()->eloquent(App\Country::query())->toJson();
+Route::get('countries', function() {
+    return datatables()->eloquent(App\Country::query()->orderBy('name', 'asc'))->toJson();
 });
 
 
