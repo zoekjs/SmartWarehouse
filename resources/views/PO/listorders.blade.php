@@ -1,6 +1,6 @@
 @extends('layout.layout')
 @section('css')
-<link rel="stylesheet" href="{{asset('css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="css/responsive.bootstrap4.min.css"">
 @endsection
 @section('content')
 <div class="row mt-5">

@@ -1,6 +1,6 @@
 @extends('layout.layout')
 @section('css')
-<link rel="stylesheet" href="{{asset('css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="css/responsive.bootstrap4.min.css"">
 @endsection
 @section('content')
 <div class="row mt-5">
@@ -170,5 +170,5 @@
 @section('scripts')
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script src="{{asset('js/PO/pod.js')}}"></script>
+  <script src="js/PO/pod.js"></script>
 @endsection

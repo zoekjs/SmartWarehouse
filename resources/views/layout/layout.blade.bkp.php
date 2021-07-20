@@ -6,11 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/main.css')}}">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
-    <link rel="stylesheet" href="{{asset('css/dataTables.bootstrap4.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/main.css')}}">
+    <link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="css/main.css">
     @yield('css')
     
    
@@ -51,7 +51,7 @@
     @yield('scripts')
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
-    <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
 
 </body>
