@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function getPrice(){
     let idProduct = document.getElementById('id_product').value;
-    let url = 'http://smartwarehouse.test:8080/api/products/';
+    let url = 'http://localhost:8083/api/products/';
     fetch(url+=`${idProduct }`, {
         method: 'GET'
     })
