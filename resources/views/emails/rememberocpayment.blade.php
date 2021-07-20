@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" style="box-sizing: border-box;">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" style="box-sizing: border-box;">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" style="box-sizing: border-box;">
-    <link rel="stylesheet" href="css/main.css" style="box-sizing: border-box;">
+    <link rel="stylesheet" href="/css/main.css" style="box-sizing: border-box;">
     <title style="box-sizing: border-box;">Recordatorio de pago</title>
 </head>
 <body style="box-sizing: border-box;margin: 0;font-family: -apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,Arial,&quot;Noto Sans&quot;,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;,&quot;Noto Color Emoji&quot;;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #212529;text-align: left;background-color: #fff;min-width: 992px!important;">

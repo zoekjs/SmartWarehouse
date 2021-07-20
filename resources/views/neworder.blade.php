@@ -1,6 +1,6 @@
 @extends('layout.layout')
 @section('css')
-<link rel="stylesheet" href="css/responsive.bootstrap4.min.css"">
+<link rel="stylesheet" href="/css/responsive.bootstrap4.min.css">
 @endsection
 @section('content')
   <div class="col-md-12">
@@ -149,5 +149,5 @@
 @endsection
 
 @section('scripts')
-<script src="js/PO/productData.js"></script>
+<script src="/js/PO/productData.js"></script>
 @endsection
