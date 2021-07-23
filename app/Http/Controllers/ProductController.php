@@ -91,10 +91,6 @@ class ProductController extends Controller
      */
     public function show($id_product)
     {
-        if(!is_numeric($id_product)){
-            return response()->json('Los datos ingresados no son correctos', 400);
-        }
-
         try{
             //buscar producto
             $search = Product::where('id_product', $id_product)->firstOrFail();
