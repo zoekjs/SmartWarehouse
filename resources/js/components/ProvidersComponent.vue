@@ -170,7 +170,7 @@
                     <b-button variant="outline-warning" @click="show = !show, setSelectedProviderData(row.item)">
                         <b-icon icon="pencil-square" aria-hidden="true"></b-icon>
                     </b-button>
-                    <b-button variant="outline-danger" @click="deleteProduct(row.item.id_product)">
+                    <b-button variant="outline-danger" @click="deleteProvider(row.item.rut_provider)">
                         <b-icon icon="trash-fill" aria-hidden="true"></b-icon>
                     </b-button>
                 </div>
@@ -263,7 +263,7 @@ export default {
         },
         fillCountriesArray(countries) {
             countries.data.data.forEach(country => {
-                this.countries.push({value: country.id_country, text: country.name})
+                this.countries.push({ value: country.id_country, text: country.name })
             })
         },
         async dataForTable() {
@@ -278,7 +278,6 @@ export default {
                 rut_provider: this.rutProvider, dv: this.dv, name: this.name, telephone: this.telephone,
                 address: this.address, email: this.email, id_pais: this.selectedCountry, rut_user: this.rutUser
             }
-            console.log(JSON.stringify(payload))
             ProvidersRepository.create(payload)
                 .then(res => {
                     this.items.length = 0
@@ -297,7 +296,6 @@ export default {
             this.itemsFiltered = evt.length === 0
         },
         setSelectedProviderData(item) {
-            console.log(item)
             this.editRutProvider = item.rut_provider
             this.dv = this.editRutProvider.substring(this.editRutProvider.length, 8)
             this.rutProvider = this.editRutProvider.substring(0, this.editRutProvider.length - 1)
@@ -314,10 +312,10 @@ export default {
         },
         updateProvider() {
             const payload = {
-                rut_provider: this.editRutProvider, dv: this.dv, name: this.name, telephone: this.telephone,
-                address: this.address, email: this.email, id_pais: this.selectedCountry, rut_user: this.rutUser
+                rut_provider: this.editRutProvider, name: this.name, telephone: this.telephone,
+                address: this.address, email: this.email, id_country: this.selectedCountry, rut_user: this.rutUser
             }
-            ProvidersRepository.update(payload, this.rutProvider)
+            ProvidersRepository.update(payload, this.editRutProvider)
                 .then((res) => {
                     this.$swal('Todo Listo !', res.data.message, 'success')
                     this.items.length = 0
@@ -326,6 +324,27 @@ export default {
                     this.show = false
                 })
                 .catch(err => console.log(err))
+        },
+        deleteProvider(rutProvider) {
+            this.$swal({
+                title: 'Estás seguro?',
+                text: "Esta acción no se puede revertir!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, borrarlo!',
+                cancelButtonText: 'cancelar'
+            }).then((result) => {
+                if(result.isConfirmed) {
+                    ProvidersRepository.delete(rutProvider, this.rutUser)
+                        .then((res) => {
+                            this.items.length = 0
+                            this.dataForTable()
+                            this.$swal('Todo listo !"', res.data.message, 'success')
+                        })
+                }
+            })
         },
         clearProvidersForm() {
             this.rutProvider = null
