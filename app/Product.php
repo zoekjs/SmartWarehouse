@@ -26,7 +26,7 @@ class Product extends Model
         return DB::table('product')
             ->select('*')
             ->orderByDesc('created_at')
-            ->paginate(10);
+            ->get();
     }
 
     public function getProduct($id_product) {
