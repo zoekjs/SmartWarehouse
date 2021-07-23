@@ -286,9 +286,10 @@ export default {
                     this.$swal('Todo listo !"', res.data.message, 'success')
                 })
                 .catch(err => {
-                    console.log(err)
                     if (err.message === 'Request failed with status code 422') {
                         this.$swal('Algo malió sal :(', 'El proveedor ya está registrado en el sistema', 'error')
+                        this.clearProvidersForm()
+                        this.show = false
                     }
                 })
         },
@@ -323,7 +324,7 @@ export default {
                     this.clearProvidersForm()
                     this.show = false
                 })
-                .catch(err => console.log(err))
+                .catch(err => console.log(err.data))
         },
         deleteProvider(rutProvider) {
             this.$swal({
@@ -337,12 +338,16 @@ export default {
                 cancelButtonText: 'cancelar'
             }).then((result) => {
                 if(result.isConfirmed) {
-                    ProvidersRepository.delete(rutProvider, this.rutUser)
-                        .then((res) => {
-                            this.items.length = 0
-                            this.dataForTable()
-                            this.$swal('Todo listo !"', res.data.message, 'success')
-                        })
+                    try {
+                        ProvidersRepository.delete(rutProvider, this.rutUser)
+                            .then((res) => {
+                                this.items.length = 0
+                                this.dataForTable()
+                                this.$swal('Todo listo !"', res.data.message, 'success')
+                            })
+                    } catch (e) {
+                        console.log(e)
+                    }
                 }
             })
         },
