@@ -29,6 +29,12 @@ class Product extends Model
             ->paginate(10);
     }
 
+    public function getProduct($id_product) {
+        return DB::table('product')
+            ->where('id_product', $id_product)
+            ->first();
+    }
+
     public function exist($id_product)
     {
         $count = Product::where('id_product', $id_product)->count();

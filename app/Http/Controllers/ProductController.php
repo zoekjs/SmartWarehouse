@@ -93,7 +93,8 @@ class ProductController extends Controller
     {
         try{
             //buscar producto
-            $search = Product::where('id_product', $id_product)->firstOrFail();
+            $product = new Product();
+            $search = $product->getProduct($id_product);
             //devover producto como json
             return response()->json($search);
 
