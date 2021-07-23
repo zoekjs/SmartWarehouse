@@ -41,7 +41,7 @@
                         <select class="custom-select" name="id_product" id="id_product" onchange="getPrice();">
                           <option selected>Selecccionar</option>
                           @foreach ($products as $product)
-                          <option value="{{$product->id_product}}">{{$product->name}}</option>
+                          <option value="{{$product->id_product}}">{{$product->name.' - Código: '.$product->id_product}}</option>
                           @endforeach
                         </select>
                     </div>
