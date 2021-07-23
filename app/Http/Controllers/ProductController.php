@@ -19,7 +19,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-      return datatables()->eloquent(Product::query()->orderByDesc('created_at'))->toJson();
+        $product = new Product();
+      return $product->productsList();
     }
 
     /**
