@@ -11,7 +11,7 @@
 <body class="order">
         <div class="row mt-0 mb-0">
             <div class="col-md-6">
-                <img src="/img/Logo.jpg" alt="" srcset="" style="width: 35%;">
+                <img src="img/Logo.jpg"  alt="" srcset="" style="width: 35%;">
             </div>
             <div class="col-md-6">
                 <p class="text-right mb-0">Grafisoft Chile Ltda.</p>

@@ -288,8 +288,6 @@ export default {
                 .catch(err => {
                     if (err.message === 'Request failed with status code 422') {
                         this.$swal('Algo malió sal :(', 'El proveedor ya está registrado en el sistema', 'error')
-                        this.clearProvidersForm()
-                        this.show = false
                     }
                 })
         },
