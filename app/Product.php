@@ -26,9 +26,17 @@ class Product extends Model
         return DB::table('product')
             ->select('*')
             ->orderByDesc('created_at')
-            ->get();
+            ->paginate(10);
     }
 
+    public function productsAll()
+    {
+        return DB::table('product')
+            ->select('*')
+            ->orderByDesc('created_at')
+            ->get();
+    }
+    
     public function getProduct($id_product) {
         return DB::table('product')
             ->where('id_product', $id_product)
