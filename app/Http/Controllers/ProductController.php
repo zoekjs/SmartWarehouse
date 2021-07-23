@@ -144,7 +144,7 @@ class ProductController extends Controller
             $product = new Product();
             $log = new Log();
 
-            $id_product     = (int)$id_product;
+            $id_product     = $request->$id_product;
             $name           = $params->name;
             $description    = $params->description;
             $quantity       = (int)$params->quantity;
