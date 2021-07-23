@@ -53,9 +53,9 @@ class ProductController extends Controller
         //crear un nuevo producto
         $product = new Product();
         $log = new Log();
-        $exist = $product->exist((int)$params->id_product);
+        $exist = $product->exist($params->id_product);
         if(!$exist) {
-            $id_product = (int)$params->id_product;
+            $id_product = $params->id_product;
             $name       = $params->name;
             $description = $params->description;
             $quantity   = (int)$params->quantity;
@@ -144,7 +144,7 @@ class ProductController extends Controller
             $product = new Product();
             $log = new Log();
 
-            $id_product     = $request->$id_product;
+            $id_product     = $id_product;
             $name           = $params->name;
             $description    = $params->description;
             $quantity       = (int)$params->quantity;
