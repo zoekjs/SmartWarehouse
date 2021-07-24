@@ -52,7 +52,7 @@ class ProviderController extends Controller
 
         try {
             $provider = new Provider();
-            $exist = $provider->exist($params->rut_provider);
+            $exist = $provider->exist($params->rut_provider.$params->dv);
             $user = new User();
             $log = new Log();
 

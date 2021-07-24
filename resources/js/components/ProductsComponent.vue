@@ -4,13 +4,13 @@
                 <b-modal id="modal-add-product-1" centered ref="createProductModal" title="Añadir producto">
                     <div class="form-group">
                         <div class="input-field col-sm-12">
-                            <label for="id_product">Código de producto</label>
+                            <label for="id_product">Código de producto <span v-b-tooltip.hover title="Campo obligatorio" class="text-danger">(*)</span></label>
                             <input class="form-control" type="text" v-model="idProduct" id="id_product" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="input-field col-sm-12">
-                            <label for="name">Nombre producto</label>
+                            <label for="name">Nombre producto <span v-b-tooltip.hover title="Campo obligatorio" class="text-danger">(*)</span></label>
                             <input class="form-control" type="text" v-model="name" id="name" required>
                         </div>
                     </div>
@@ -22,11 +22,11 @@
                     </div>
                     <div class="row">
                         <div class="input-field col-sm-6">
-                            <label for="quantity">Cantidad</label>
+                            <label for="quantity">Cantidad <span v-b-tooltip.hover title="Campo obligatorio" class="text-danger">(*)</span></label>
                             <input class="form-control" type="text" v-model="quantity" id="quantity" required>
                         </div>
                         <div class="form-group col-sm-6">
-                            <label for="unit_price">Precio Unitario</label>
+                            <label for="unit_price">Precio Unitario <span v-b-tooltip.hover title="Campo obligatorio" class="text-danger">(*)</span></label>
                             <input class="form-control" type="text" v-model="unitPrice" id="unit_price" required="true">
                         </div>
                     </div>
@@ -177,7 +177,6 @@
         },
         async mounted () {
             await this.dataForTable()
-            console.log('Component mounted :)', this.rutUser)
         },
         computed: {
             rows() {
@@ -265,11 +264,11 @@
                     cancelButtonText: 'cancelar'
                 }).then((result) => {
                     if(result.isConfirmed) {
-                        ProductsRepository.delete(id)
+                        ProductsRepository.delete(id, this.rutUser)
                             .then((res) => {
-                                this.$swal('Todo listo !"', res.data.message, 'success')
                                 this.items.length = 0
                                 this.dataForTable()
+                                this.$swal('Todo listo !"', res.data.message, 'success')
                             })
                     }
                 })

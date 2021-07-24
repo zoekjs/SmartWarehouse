@@ -19,7 +19,19 @@ class ProductController extends Controller
      */
     public function index()
     {
-      return datatables()->eloquent(Product::query()->orderByDesc('created_at'))->toJson();
+        $product = new Product();
+      return $product->productsList();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAll()
+    {
+        $product = new Product();
+      return $product->productsAll();
     }
 
     /**
@@ -53,9 +65,9 @@ class ProductController extends Controller
         //crear un nuevo producto
         $product = new Product();
         $log = new Log();
-        $exist = $product->exist((int)$params->id_product);
+        $exist = $product->exist($params->id_product);
         if(!$exist) {
-            $id_product = (int)$params->id_product;
+            $id_product = $params->id_product;
             $name       = $params->name;
             $description = $params->description;
             $quantity   = (int)$params->quantity;
@@ -90,13 +102,10 @@ class ProductController extends Controller
      */
     public function show($id_product)
     {
-        if(!is_numeric($id_product)){
-            return response()->json('Los datos ingresados no son correctos', 400);
-        }
-
         try{
             //buscar producto
-            $search = Product::where('id_product', $id_product)->firstOrFail();
+            $product = new Product();
+            $search = $product->getProduct($id_product);
             //devover producto como json
             return response()->json($search);
 
@@ -144,7 +153,7 @@ class ProductController extends Controller
             $product = new Product();
             $log = new Log();
 
-            $id_product     = (int)$id_product;
+            $id_product     = $id_product;
             $name           = $params->name;
             $description    = $params->description;
             $quantity       = (int)$params->quantity;
@@ -178,11 +187,16 @@ class ProductController extends Controller
      * @param $id_product
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id_product)
+    public function destroy($id_product, Request $request)
     {
         try {
             $product = new Product();
-            $product->deleteProduct((int)$id_product);
+            $search = Product::where('id_product', $id_product)->firstOrFail();
+            $log = new Log();
+            $rut_user = $request->header('X-Rut-User');
+            $action = 'Eliminó el producto "'.$search->name.'" con código "'.$search->id_product.'" del sistema';
+            $log->productLog($rut_user, $action);
+            $product->deleteProduct($id_product);
 
             $data = array(
                 'status'    => 'success',

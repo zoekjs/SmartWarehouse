@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseURL= 'http://localhost:8083/api/'
+const baseURL= 'https://smartwarehouse.brazilsouth.cloudapp.azure.com/api'
 
 export default axios.create({
     baseURL
