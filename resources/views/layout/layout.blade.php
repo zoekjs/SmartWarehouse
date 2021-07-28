@@ -9,11 +9,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
 
-<<<<<<< HEAD
-    <link rel="icon" href="{{asset('dist/img/Sw2021.png')}}" type="image/gif" sizes="16x16">
-=======
     <link rel="icon" href="/dist/img/Sw2021.png" type="image/gif" sizes="16x16">
->>>>>>> b803223885e94d28e7d8c27722e6ad7f528025dd
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
@@ -30,11 +26,7 @@
 
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
-<<<<<<< HEAD
-        <img class="animation__wobble" src="{{asset('dist/img/Sw2021.png')}}" alt="SWLogo" height="200" width="200">
-=======
         <img class="animation__wobble" src="/dist/img/Sw2021.png" alt="SWLogo" height="200" width="200">
->>>>>>> b803223885e94d28e7d8c27722e6ad7f528025dd
     </div>
 
     <!-- Navbar -->
@@ -64,13 +56,8 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-<<<<<<< HEAD
-        <a href="index3.html" class="brand-link">
-            <img src="{{asset('dist/img/Sw2021.png')}}" alt="SWLogo" class="brand-image img-circle elevation-3" >
-=======
         <a href="/index3.html" class="brand-link">
             <img src="/dist/img/Sw2021.png" alt="SWLogo" class="brand-image img-circle elevation-3" >
->>>>>>> b803223885e94d28e7d8c27722e6ad7f528025dd
             <span class="brand-text font-weight-light">SmartWarehouse</span>
         </a>
 
