@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let idPOD = btn.parentElement.parentElement.childNodes[1].lastChild.nodeValue;
             let row = btn.parentElement.parentElement.rowIndex;
             let rutUser = document.getElementById('rut_user').value;
-            let url = 'http://smartwarehouse.test:8080/api/pods/'
+            let url = 'https://smartwarehouse.brazilsouth.cloudapp.azure.com/api/pods/';
             swal({
                 title: "Estás seguro?",
                 type: "warning",
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function getPrice(){
     let idProduct = document.getElementById('id_product').value;
-    let url = 'http://smartwarehouse.test:8080/api/products/';
+    let url = 'https://smartwarehouse.brazilsouth.cloudapp.azure.com/api/products/';
     fetch(url+=`${idProduct }`, {
         method: 'GET'
     })

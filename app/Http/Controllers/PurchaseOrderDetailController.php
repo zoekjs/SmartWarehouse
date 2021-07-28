@@ -37,7 +37,8 @@ class PurchaseOrderDetailController extends Controller
      */
     public function create(Request $request)
     {
-        $products = Product::all();
+        $product = new Product();
+        $products = $product->productsAll();
         $id_purchase_order = $request->id_purchase_order;
         $pdo = new PurchaseOrderDetail();
         $details = $pdo->getPODetails($id_purchase_order);

@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 /******************************* PRODUCTS SECTION *******************************/
 Route::resource('products', 'ProductController');
+Route::get('/products/all', 'ProductController@getAll')->name('products-all');
 
 
 /******************************* PROVIDERS SECTION ******************************/

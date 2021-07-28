@@ -12,10 +12,10 @@ export default {
         return Client.post(`${ resource }`, payload)
     },
     update(payload, id) {
-        return Client.put(`${ resource }`, payload)
+        return Client.put(`${ resource }/${ id }`, payload)
     },
-    delete(id) {
-        return Client.delete(`${ resource }`, id)
+    delete(id, rutUser) {
+        return Client.delete(`${ resource }/${ id }`, { headers: { 'X-Rut-User': rutUser}})
     }
 }
 

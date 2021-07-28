@@ -76,7 +76,7 @@ Route::post('/update-details', 'IngressDetailController@update')->name('update-d
 
 /****************************** TEST ROUTE TO ADD USERS *********************/
 //ruta para crear usuario
-Route::get('test_user', function(){
+/*Route::get('test_user', function(){
     $user = new App\User;
     $user->rut_user = '181912111';
     $user->name = 'Felipe';
@@ -85,6 +85,6 @@ Route::get('test_user', function(){
     $user->password = bcrypt('123456');
     $user->save();
     return $user;
-});
+});*/
 //Auth::routes();
 
