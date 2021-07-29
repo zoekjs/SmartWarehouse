@@ -6,7 +6,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'SmartWarehouse') }}</title>
 
 
     <link rel="icon" href="/dist/img/Sw2021.png" type="image/gif" sizes="16x16">
@@ -56,7 +56,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="/index3.html" class="brand-link">
+        <a href="#" class="brand-link">
             <img src="/dist/img/Sw2021.png" alt="SWLogo" class="brand-image img-circle elevation-3" >
             <span class="brand-text font-weight-light">SmartWarehouse</span>
         </a>
@@ -65,15 +65,15 @@
         <div class="sidebar">
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-<!--                <div class="image">
-                    <img src="/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                </div>-->
                 <div class="info">
-                    <p class="d-block">{{ Auth::user()->name.' '.Auth::user()->last_name.'     '.'('.Auth::user()->role->name.')' }}</p>
+                    <p class="d-block">{{ Auth::user()->name.' '.Auth::user()->last_name.' '.'('.Auth::user()->role->name.')' }}</p>
                     <a class="dropdown-item text-white" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
                         {{ __('Cerrar sesión') }}
+                    </a>
+                    <a class="dropdown-item text-white" href="cambio-contraseña">
+                        Cambiar contraseña
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
@@ -128,7 +128,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('nueva-orden') }}" class="nav-link">
                                     <i class="fas fa-file-medical    nav-icon"></i>
-                                    <p>nueva orden de compra</p>
+                                    <p>Nueva orden de compra</p>
                                 </a>
                             </li>
                             <li class="nav-item">
