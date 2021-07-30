@@ -189,6 +189,9 @@ class ProductController extends Controller
     public function destroy($id_product, Request $request)
     {
         try {
+            if(!is_numeric($id_product)){
+                return response()->json('Los datos ingresados no son correctos', 400);
+            }
             $product = new Product();
             $search = Product::where('id_product', $id_product)->firstOrFail();
             $log = new Log();

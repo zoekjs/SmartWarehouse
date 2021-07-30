@@ -54,7 +54,13 @@ class LoginController extends Controller
 
     }
 
-    public function logout(Request $request){
+    /**
+     * Logout.
+     *
+     * @return void
+     */
+    public function logout(Request $request)
+    {
         $log = new Log();
         $rut_user = Auth::User()->rut_user;
         $action = 'Cerró sesión en el sistema';
