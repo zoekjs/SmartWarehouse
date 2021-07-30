@@ -10,8 +10,7 @@ class ProductController extends Controller
 {
     function __construct()
     {
-        $this->middleware('auth')->only('create');
-    }
+        $this->middleware('auth')->except(['index', 'update']);    }
     /**
      * Display a listing of the resource.
      *
