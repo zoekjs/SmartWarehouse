@@ -13,3 +13,5 @@ npm-debug.log
 yarn-error.log
 /resources/clients/AxiosClient.js
 /public/js/PO/pod.js
+/public/js/app.js
+/public/css/app.css
