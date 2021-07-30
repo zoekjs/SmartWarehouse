@@ -1,3 +1,7 @@
+/resources/clients/AxiosClient.js
+/public/js/PO/pod.js
+/public/js/app.js
+/public/css/app.css
 .idea/
 /node_modules
 /public/hot
@@ -11,7 +15,3 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-/resources/clients/AxiosClient.js
-/public/js/PO/pod.js
-/public/js/app.js
-/public/css/app.css
