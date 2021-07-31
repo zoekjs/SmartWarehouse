@@ -166,17 +166,18 @@ export default {
                 cancelButtonText: "cancelar"
             }).then(result => {
                 if (result.isConfirmed) {
-                    PaymentRepository.update(id_purchase_order, this.rutUser)
-                        .then(res => {
-                            this.items.length = 0;
-                            this.dataForTable();
-                            this.$swal(
-                                'Todo listo !"',
-                                res.data.message,
-                                "success"
-                            );
-                        })
-                        .catch(err => console.log(err));
+                    PaymentRepository.update(
+                        id_purchase_order,
+                        this.rutUser
+                    ).then(res => {
+                        this.items.length = 0;
+                        this.dataForTable();
+                        this.$swal(
+                            'Todo listo !"',
+                            res.data.message,
+                            "success"
+                        );
+                    });
                 }
             });
         }
