@@ -5,7 +5,7 @@ export default {
     get() {
         return Client.get(`${resource}`);
     },
-    update(id, payload) {
-        return Client.put(`${resource}/${id}`, payload);
+    update(id_purchase_order, rutUser) {
+        return Client.put(`${resource}/${id_purchase_order}`, { headers: { 'X-Rut-User': rutUser}});
     }
 };

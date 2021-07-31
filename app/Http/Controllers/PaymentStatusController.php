@@ -30,19 +30,29 @@ class PaymentStatusController extends Controller
         return response()->json($aprovedOrders);
     }
 
-    public function update(Request $request)
+    public function update($id_purchase_order, Request $request)
     {
+
         $log = new Log();
-        $id_purchase_order  = $request->id_purchase_order;
-        $rut_user           = $request->rut_user;
+        $rut_user           = $request->header('X-Rut-User');
 
-        $po = new PurchaseOrder();
-        $po->updatePaymentStatus($id_purchase_order);
-        $action = 'Cambió el estado de pago de la orden ' . $id_purchase_order . ' a Pagada';
+        try{
+            $po = new PurchaseOrder();
+            $po->updatePaymentStatus($id_purchase_order);
+            dd($id_purchase_order, $rut_user);
+            $action = 'Cambió el estado de pago de la orden ' . $id_purchase_order . ' a Pagada';
+            $log->productLog($rut_user, $action);
+            
+            $data = array(
+                'status' => 'updated',
+                'code' => '200',
+                'message' => 'Orden pagada con éxito'
+            );
 
-        $log->productLog($rut_user, $action);
-
-        return redirect()->back();
+            return response()->json($data, $data['code']);
+        } catch (Exception $e) {
+            if($e instanceof HttpException) throw new HttpException();
+        }
     }
 
     public function getPayedView()

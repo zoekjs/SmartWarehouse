@@ -40,5 +40,6 @@ Route::resource('audit', 'AuditController');
 Route::post('rfid', 'RFIDController@index');
 
 /****************************** OC PAYMENT SECTION ********************************/
-Route::resource('oc-payment', 'PaymentStatusController');
+Route::resource('/oc-payment', 'PaymentStatusController');
 Route::get('/payedPOs', 'PaymentStatusController@getPayedOrders');
+

@@ -27,7 +27,6 @@ Route::match(array('GET', 'POST', 'PUT'), '/menu', function () {
 
 /****************************  PAYMENT STATUS ***********************************/
 route::get('/status', 'PaymentStatusController@create')->name('estado-oc');
-route::post('update-payment/', 'PaymentStatusController@updatePaymentStatus')->name('update-payment');
 route::get('oc-pagadas', 'PaymentStatusController@getPayedView')->name('oc-pagadas');
 
 /***************************** PURCHASE ORDER ***********************************/

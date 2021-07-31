@@ -28,9 +28,11 @@
                     </b-form-group>
                 </b-col>
             </div>
-            <b-link :href="'oc-pagadas'" class="btn btn-primary mb-5">Ver OC pagadas</b-link>
+            <b-link :href="'oc-pagadas'" class="btn btn-primary mb-5"
+                >Ver OC pagadas</b-link
+            >
         </div>
-        
+
         <b-table
             hover
             dark
@@ -52,7 +54,7 @@
                     >
                     <b-button
                         variant="success"
-                        @click="deleteProduct(row.item.id_product)"
+                        @click="updatePayment(row.item.id_purchase_order)"
                     >
                         Pagar
                     </b-button>
@@ -132,8 +134,10 @@ export default {
     methods: {
         async dataForTable() {
             const paymentData = await PaymentRepository.get();
-            console.log(paymentData.data.data);
             await this.fillTable(paymentData.data.data);
+            if (!paymentData.data.data.length) {
+                this.items = [];
+            }
         },
         fillTable(paymentData) {
             paymentData.forEach(paymentStatus => {
@@ -149,6 +153,32 @@ export default {
         },
         itemsFilter(evt) {
             this.itemsFiltered = evt.length === 0;
+        },
+        updatePayment(id_purchase_order) {
+            this.$swal({
+                title: "Estás seguro que deseas pagar esta orden?",
+                text: "Esta acción no se puede revertir!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí, pagar !",
+                cancelButtonText: "cancelar"
+            }).then(result => {
+                if (result.isConfirmed) {
+                    PaymentRepository.update(id_purchase_order, this.rutUser)
+                        .then(res => {
+                            this.items.length = 0;
+                            this.dataForTable();
+                            this.$swal(
+                                'Todo listo !"',
+                                res.data.message,
+                                "success"
+                            );
+                        })
+                        .catch(err => console.log(err));
+                }
+            });
         }
     }
 };
