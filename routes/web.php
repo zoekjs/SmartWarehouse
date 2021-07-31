@@ -27,8 +27,7 @@ Route::match(array('GET', 'POST', 'PUT'), '/menu', function () {
 
 /****************************  PAYMENT STATUS ***********************************/
 route::get('/status', 'PaymentStatusController@create')->name('estado-oc');
-route::post('update-payment/', 'PaymentStatusController@updatePaymentStatus')->name('update-payment');
-route::get('oc-pagadas', 'PaymentStatusController@getPayed')->name('oc-pagadas');
+route::get('oc-pagadas', 'PaymentStatusController@getPayedView')->name('oc-pagadas');
 
 /***************************** PURCHASE ORDER ***********************************/
 Route::match(array('GET', 'POST', 'PUT'),'/nueva-orden', 'PurchaseOrderController@listOrders')->name('nueva-orden');
@@ -40,7 +39,6 @@ Route::post('/update-order', 'PurchaseOrderDetailController@update')->name('upda
 Route::get('/ver-orden/{id_purchase_order}', 'PurchaseOrderController@show')->name('ver-orden');
 Route::post('/estado-orden', 'PurchaseOrderController@update')->name('estado-orden')->middleware('roles:Administrador,Supervisor');
 Route::get('/descargar/{id_purchase_order}', 'PurchaseOrderController@download')->name('descargar-orden');
-
 Route::get('/admin', function () {
     return view('admin/menu');
 })->name('admin')->middleware(['auth', 'roles:Administrador,Supervisor']);

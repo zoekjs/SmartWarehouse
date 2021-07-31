@@ -36,20 +36,9 @@
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
-<!--            <li class="nav-item d-none d-sm-inline-block">
-                <a href="index3.html" class="nav-link">Home</a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">Contact</a>
-            </li>-->
         </ul>
 
         <!-- Right navbar links -->
-<!--
-        <ul class="navbar-nav ml-auto">
-        </ul>
--->
-
     </nav>
     <!-- /.navbar -->
 
@@ -87,21 +76,20 @@
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     @if (auth()->user()->hasRoles(['Administrador']))
-                    <li class="nav-item menu-open">
+{{--                     <li class="nav-item menu-open">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Dashboard
                             </p>
                         </a>
-                    </li>
+                    </li> --}}
                     @endif
                     <li class="nav-item">
                         <a href="{{ route('productos') }}" class="nav-link">
                             <i class="nav-icon fas fa-boxes"></i>
                             <p>
                                 Productos
-                                <span class="right badge badge-danger">New</span>
                             </p>
                         </a>
                     </li>
@@ -111,7 +99,6 @@
                             <i class="nav-icon fas fa-truck-loading"></i>
                             <p>
                                 Proveedores
-                                <span class="right badge badge-danger">New</span>
                             </p>
                         </a>
                     </li>
@@ -132,10 +119,23 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{ route('estado-oc') }}" class="nav-link">
                                     <i class="fas fa-file-signature nav-icon"></i>
                                     <p>Estado de pago OC</p>
+                                    <i class="right fas fa-angle-left"></i>
                                 </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('estado-oc') }}" class="nav-link">
+                                           <p>Pendientes de pago</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('oc-pagadas') }}" class="nav-link">                                          
+                                            <p>Ordenes pagadas</p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </li>
@@ -145,7 +145,6 @@
                             <i class="nav-icon fas fa-list-alt"></i>
                             <p>
                                 Auditoría
-                                <span class="right badge badge-danger">New</span>
                             </p>
                         </a>
                     </li>

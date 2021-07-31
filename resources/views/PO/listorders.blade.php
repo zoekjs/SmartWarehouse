@@ -3,14 +3,9 @@
 <link rel="stylesheet" href="/css/responsive.bootstrap4.min.css">
 @endsection
 @section('content')
-<div class="row mt-5">
-  <div class="col-md-12">
-
-  </div>
-</div>
 <div class="row">
   <div class="col-md-12">
-    <div class="card mt-5">
+    <div class="card">
       <div class="card header bg-dark text-light">
         <p>Crear nueva órden de compra</p>
       </div>
@@ -105,33 +100,35 @@
                           <td class='text-center'>{{$order->status_name}}</td>
                           @if ($order->status_name == "Borrador")
                             <td class='text-center' style="width: 15%;"><a href="{{route('detalles', ['id_purchase_order' => $order->id_purchase_order])}}"
-                            class="btn-sm btn-warning">Añadir productos</a></td>
+                            class="btn btn-sm btn-warning">Añadir productos</a></td>
                           @else
-                            <td class='text-center' style="width: 15%;"><a class="btn-sm btn-secondary">Añadir productos</a></td>
+                            <td class='text-center' style="width: 15%;"><a class="btn btn-sm btn-secondary">Añadir productos</a></td>
                           @endif
                           @if ($order->status_name == "Por aprobar")
                             <td class='text-center' style="width: 15%;"><a href="{{route('ver-orden', ['id_purchase_order' => $order->id_purchase_order])}}"
-                            class="btn-sm btn-success">Ver</a></td>
+                            class="btn btn-sm btn-success">Ver</a></td>
                           @endif
                           @if ($order->status_name == "Aprobada")
                           <td class='text-center' style="width: 15%;"><a href="{{route('ver-orden', ['id_purchase_order' => $order->id_purchase_order])}}"
-                          class="btn-sm btn-success">Ver</a> <a href="{{route('descargar-orden', ['id_purchase_order' => $order->id_purchase_order])}}"
-                            class="btn-sm btn-success">Descargar</a></td>
+                          class="btn btn-sm btn-primary">Ver</a> <a href="{{route('descargar-orden', ['id_purchase_order' => $order->id_purchase_order])}}"
+                            class="btn btn-sm btn-success">Descargar</a></td>
                           @endif
                           @if ($order->status_name == "Rechazada")
                           <td class='text-center' style="width: 15%;"><a href="{{route('ver-orden', ['id_purchase_order' => $order->id_purchase_order])}}"
-                          class="btn-sm btn-success">Ver</a></td>
+                          class="btn btn-sm btn-success">Ver</a></td>
                         @endif
                         </tr>
                       @endforeach
                     </tbody>
                   </table>
-                  <p>
+                  <p class="ml-2">
                     <span>{{ $orders->total() }}</span> registros |
                     página {{ $orders->currentPage() }}
                     de {{ $orders->lastPage() }}
                   </p>
-                  {!! $orders->render() !!}
+                  <div class="ml-2">
+                    {!! $orders->render() !!}
+                  </div>
                 <div class="row">
 
                 </div>

@@ -1,16 +1,13 @@
 @extends('layout.layout')
-@section('css')
-<link rel="stylesheet" href="/css/responsive.bootstrap4.min.css">
+@section('components')
+    <purchaseorderpayment-component />
 @endsection
 @section('content')
-<div class="row d-flex justify-content-center mt-5">
-    <h4>Estado de pago - Ordenes de compra</h4>
-</div>
 <div class="row mt-3">
-    <div class="col-sm-12 col-xl-12 offset-s4 mt-3 mb-4 d-flex flex-row-reverse">
+    {{-- <div class="col-sm-12 col-xl-12 offset-s4 mt-3 mb-4 d-flex flex-row-reverse">
         <a href="{{route('oc-pagadas')}}" class="btn btn-primary">Ver OC pagadas</a>
-    </div>
-    <table class="table table-bordered">
+    </div> --}}
+    {{-- <table class="table table-bordered">
         <thead>
             <tr>
                 <th style="width: 12%">Orden número</th>
@@ -49,13 +46,8 @@
         de {{ $orders->lastPage() }}
         &nbsp &nbsp
     </p>
-    {!! $orders->render() !!}
+    {!! $orders->render() !!} --}}
 </div>
 
 
-@endsection
-
-@section('scripts')
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 @endsection
