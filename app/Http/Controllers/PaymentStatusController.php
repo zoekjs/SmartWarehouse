@@ -21,8 +21,16 @@ class PaymentStatusController extends Controller
         $po = new PurchaseOrder();
         $orders = $po->getAprovedPOrders();
         return view('PO/unpayed', compact('orders'));
+    } 
+
+    public function index()
+    {
+        $purchaseOrder = new PurchaseOrder();
+        $aprovedOrders = $purchaseOrder->getAprovedPOrders();
+        return response()->json($aprovedOrders);
     }
 
+<<<<<<< HEAD
     public function index()
     {
         $purchaseOrder = new PurchaseOrder();
@@ -41,6 +49,21 @@ class PaymentStatusController extends Controller
             $po->updatePaymentStatus($id_purchase_order);
 
 
+=======
+    public function update($id_purchase_order, Request $request)
+    {
+
+        $log = new Log();
+        $rut_user           = $request->header('X-Rut-User');
+
+        try{
+            $po = new PurchaseOrder();
+            $po->updatePaymentStatus($id_purchase_order);
+            dd($id_purchase_order, $rut_user);
+            $action = 'Cambió el estado de pago de la orden ' . $id_purchase_order . ' a Pagada';
+            $log->productLog($rut_user, $action);
+            
+>>>>>>> 6a952f32bd040411b503a36d465a550df0f6b57a
             $data = array(
                 'status' => 'updated',
                 'code' => '200',
@@ -48,8 +71,13 @@ class PaymentStatusController extends Controller
             );
 
             return response()->json($data, $data['code']);
+<<<<<<< HEAD
         } catch (\Exception $e) {
             return response()->json($e);
+=======
+        } catch (Exception $e) {
+            if($e instanceof HttpException) throw new HttpException();
+>>>>>>> 6a952f32bd040411b503a36d465a550df0f6b57a
         }
     }
 
