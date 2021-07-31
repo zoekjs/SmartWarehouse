@@ -94,3 +94,5 @@ Route::post('/update-details', 'IngressDetailController@update')->name('update-d
 });*/
 //Auth::routes();
 
+/********************************* TAGS ROUTES *********************************/
+Route::get('tags', 'TagController@index')->name('tags')->middleware('auth');

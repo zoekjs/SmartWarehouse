@@ -43,3 +43,5 @@ Route::post('rfid', 'RFIDController@index');
 Route::resource('/oc-payment', 'PaymentStatusController');
 Route::get('/payedPOs', 'PaymentStatusController@getPayedOrders');
 
+/********************************* TAGS SECTION *********************************/
+Route::resource('tags', 'TagController');
