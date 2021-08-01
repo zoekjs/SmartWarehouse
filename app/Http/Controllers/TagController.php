@@ -8,10 +8,7 @@ use App\Log;
 
 class TagController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware(['auth'])->only('index');
-    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -20,8 +17,15 @@ class TagController extends Controller
     public function index()
     {
         $tag = new Tag();
-        $tags = $tag->getAllTags();
-        return view('tags.tags', compact('tags'));
+        $tags = $tag->getTags();
+        return response()->json(['data' => $tags]);
+    }
+
+    public function getTagsProds()
+    {
+        $tag = new Tag();
+        $tags = $tag->getTagsProds();
+        return response()->json(['data' => $tags]);
     }
 
     /**
@@ -55,12 +59,12 @@ class TagController extends Controller
         $exist = $tag->exist($params->id_tag);
         if (!$exist) {
             $id_tag = $params->id_tag;
-            $rut_user = $params->rut_user;
-
+            $rut_user = $request->header('x-rut-user');
+            
+            $tag->createTag($id_tag);
             $action = 'Añadió tag "'.$id_tag.'" al sistema';
             $log->productLog($rut_user, $action);
-            $tag->createTag($id_tag);
-
+            
             $data = array(
                 'status'    =>  'Created',
                 'code'      =>  '201',
@@ -117,25 +121,24 @@ class TagController extends Controller
             $params = json_decode(json_encode($json));
         }
         try {
-            //dd($params);
             $tag = new Tag();
             $log = new Log();
-
+            
             $id_tag = $id_tag;
             $id_product = $params->id_product;
-            $rut_user = $params->rut_user;
+            $rut_user = $request->header('x-rut-user');
+            $search = Product::where('id_product', $id_product)->firstOrFail();
 
-            $action = 'Asoció tag "'.$id_tag.'" con producto "'.$id_product.'" en el sistema';
-            $log->productLog($rut_user, $action);
             $tag->saveTagProduct($id_tag, $id_product);
-
+            $action = 'Asoció tag "'.$id_tag.'" con producto "'.$search->name.'" con código "'.$search->id_product.'" en el sistema';
+            $log->productLog($rut_user, $action);
+            
             $data = array(
                 'status'    =>  'Created',
                 'code'      =>  '201',
                 'message'   =>  'Tag actualizado exitosamente ! :)'
             );
             return response()->json($data, $data['code']);
-            
         } catch (Exception $e) {
             $data = array(
                 'status'    => 'Unprocessable Entity',
@@ -152,8 +155,39 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id_tag)
     {
-        //
+        if($request->input('json', null)) {
+            $json = $request->input('json', null);
+            $params = json_decode($json);
+        } else {
+            $json = $request->all();
+            $params = json_decode(json_encode($json));
+        }
+        try {
+            $tag = new Tag();
+            $log = new Log();
+
+            $id_tag = $id_tag;
+            $rut_user = $request->header('x-rut-user');
+
+            $tag->removeProdTag($id_tag);
+            $action = 'Desasocio el tag "'.$id_tag.'" del sistema';
+            $log->productLog($rut_user, $action);
+            
+            $data = array(
+                'status'    => 'success',
+                'code'      => '200',
+                'message'   => 'Tag desasociado correctamente del sistema ;)'
+            );
+            return response()->json($data, $data['code']);
+        } catch (Exception $e) {
+            $data = array(
+                'status'    => 'error',
+                'code'      => '400',
+                'message'   => 'No se pudo desasociar el tag, intente nuevamente'
+            );
+            return response()->json($data, $data['code']);
+        }
     }
 }
