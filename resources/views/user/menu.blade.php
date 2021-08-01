@@ -6,7 +6,7 @@
 <div class="row menu">
   <div class="col-md-3 offset-md-3">
     <div class="card mt-5" style="width: 15rem;">
-      <img class="card-img-top" src="img/prod.png'" alt="Card image cap">
+      <img class="card-img-top" src="img/prod.png" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title mx-auto"></h5>
         <a href="{{route('productos')}}" class="btn btn-primary d-flex justify-content-center">Gestionar Productos</a>
