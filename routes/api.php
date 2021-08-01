@@ -45,3 +45,4 @@ Route::get('/payedPOs', 'PaymentStatusController@getPayedOrders');
 
 /********************************* TAGS SECTION *********************************/
 Route::resource('tags', 'TagController');
+Route::get('tag/prods', 'TagController@getTagsProds')->name('tags-prods');
