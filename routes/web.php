@@ -62,6 +62,9 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware(['auth']);
     return \App\Role::with('user')->get();
 });*/
 
+/******************************* TAGS *******************************/
+Route::get('tags', 'TagController@tagsView')->name('tagsView');
+
 /******************************* ORDER TO PDF *******************************/
 Route::get('/order', function(){
     $orderDetail = new PurchaseOrderDetail();

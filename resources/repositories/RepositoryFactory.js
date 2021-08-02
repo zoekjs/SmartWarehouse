@@ -4,6 +4,7 @@ import ProvidersRepository from './ProvidersRepository'
 import CountriesRepository from "./CountriesRepository"
 import PurchaseOrderPaymentRepository from './PurchaseOrderPaymentRepository'
 import PurchaseOrderPayedRepository from './PurchaseOrderPayedRepository'
+import TagsRepository from './TagsRepository';
 
 const repositories = {
     'products': ProductsRepository,
@@ -11,7 +12,8 @@ const repositories = {
     'providers': ProvidersRepository,
     'countries': CountriesRepository,
     'payment': PurchaseOrderPaymentRepository,
-    'payed': PurchaseOrderPayedRepository
+    'payed': PurchaseOrderPayedRepository,
+    'tags': TagsRepository,
 }
 export default {
     get: name => repositories[name]

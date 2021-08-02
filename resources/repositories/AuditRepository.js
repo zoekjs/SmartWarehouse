@@ -2,7 +2,7 @@ import Client from './clients/AxiosClient'
 const resource = 'audit'
 
 export default {
-    get () {
+    get (page, size) {
         return Client.get(`${ resource }`)
     }
 }
