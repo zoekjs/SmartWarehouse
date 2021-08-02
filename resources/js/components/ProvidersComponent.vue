@@ -501,6 +501,7 @@ export default {
             }
         },
         fillTable(providers) {
+            console.log(providers.data.data)
             providers.data.data.forEach(provider => this.items.push(provider));
         },
         createProvider() {

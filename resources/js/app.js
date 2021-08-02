@@ -35,6 +35,8 @@ Vue.component('audit-component', require('./components/AuditComponent.vue').defa
 Vue.component('providers-component', require('./components/ProvidersComponent.vue').default);
 Vue.component('purchaseorderpayment-component', require('./components/PurchaseOrderPaymentComponent.vue').default);
 Vue.component('purchaseorderpayed-component', require('./components/PurchaseOrderPayedComponent.vue').default);
+Vue.component('tags-component', require('./components/TagsComponent.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

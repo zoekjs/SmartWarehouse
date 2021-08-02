@@ -339,12 +339,12 @@ export default {
         async dataForTable() {
             const products = await ProductsRepository.get();
             await this.fillTable(products);
-            if (!products.data.data.length) {
+            if (!products.data.length) {
                 this.items = [];
             }
         },
         fillTable(products) {
-            products.data.data.forEach(product => {
+            products.data.forEach(product => {
                 const producto = {
                     id_product: product.id_product,
                     name: product.name,
@@ -426,6 +426,7 @@ export default {
                 .catch(err => console.log(err));
         },
         deleteProduct(id) {
+            console.log(this.rutUser)
             this.$swal({
                 title: "Estás seguro?",
                 text: "Esta acción no se puede revertir!",

@@ -56,12 +56,14 @@
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="info">
                     <p class="d-block">{{ Auth::user()->name.' '.Auth::user()->last_name.' '.'('.Auth::user()->role->name.')' }}</p>
-                    <a class="dropdown-item text-white" href="{{ route('logout') }}"
+                        <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
+                            <i class="fas fa-power-off mr-2 text-danger"></i>
                         {{ __('Cerrar sesión') }}
                     </a>
                     <a class="dropdown-item text-white" href="cambio-contraseña">
+                        <i class="fas fa-key mr-2"></i>
                         Cambiar contraseña
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -138,6 +140,14 @@
                                 </ul>
                             </li>
                         </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('tagsView') }}" class="nav-link">
+                            <i class="nav-icon fas fa-tags"></i>
+                            <p>
+                                Tags
+                            </p>
+                        </a>
                     </li>
                     @if (auth()->user()->hasRoles(['Administrador']))
                     <li class="nav-item">

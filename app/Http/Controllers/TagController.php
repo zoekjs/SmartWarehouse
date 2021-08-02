@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Tag;
 use App\Log;
+use App\Product;
 
 class TagController extends Controller
 {
@@ -19,6 +20,10 @@ class TagController extends Controller
         $tag = new Tag();
         $tags = $tag->getTags();
         return response()->json(['data' => $tags]);
+    }
+
+    public function tagsView() {
+        return view('tags/tags');
     }
 
     public function getTagsProds()
@@ -126,7 +131,7 @@ class TagController extends Controller
             
             $id_tag = $id_tag;
             $id_product = $params->id_product;
-            $rut_user = $request->header('x-rut-user');
+            $rut_user = $request->header('X-Rut-User');
             $search = Product::where('id_product', $id_product)->firstOrFail();
 
             $tag->saveTagProduct($id_tag, $id_product);
@@ -139,7 +144,7 @@ class TagController extends Controller
                 'message'   =>  'Tag actualizado exitosamente ! :)'
             );
             return response()->json($data, $data['code']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $data = array(
                 'status'    => 'Unprocessable Entity',
                 'code'      => '422',
@@ -170,9 +175,11 @@ class TagController extends Controller
 
             $id_tag = $id_tag;
             $rut_user = $request->header('x-rut-user');
+            $id_product = $request->header('x-id-product');
+            $search = Product::where('id_product', $id_product)->firstOrFail();
 
             $tag->removeProdTag($id_tag);
-            $action = 'Desasocio el tag "'.$id_tag.'" del sistema';
+            $action = 'Desasocio el tag "'.$id_tag.'" asignado al producto "'.$search->name.'" con código '.$search->id_product.' del sistema';
             $log->productLog($rut_user, $action);
             
             $data = array(
@@ -181,7 +188,7 @@ class TagController extends Controller
                 'message'   => 'Tag desasociado correctamente del sistema ;)'
             );
             return response()->json($data, $data['code']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $data = array(
                 'status'    => 'error',
                 'code'      => '400',

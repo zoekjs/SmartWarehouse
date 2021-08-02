@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     function __construct()
     {
-        $this->middleware('auth')->except(['index', 'update']);    }
+        $this->middleware('auth')->except(['index', 'update', 'destroy', 'show']);    }
     /**
      * Display a listing of the resource.
      *
@@ -108,7 +108,7 @@ class ProductController extends Controller
             //devover producto como json
             return response()->json($search);
 
-        }catch(Exception $ex){
+        }catch(\Exception $ex){
             $data = array(
                 'status'    => 'Error',
                 'code'      => 404,
@@ -189,13 +189,10 @@ class ProductController extends Controller
     public function destroy($id_product, Request $request)
     {
         try {
-            if(!is_numeric($id_product)){
-                return response()->json('Los datos ingresados no son correctos', 400);
-            }
             $product = new Product();
             $search = Product::where('id_product', $id_product)->firstOrFail();
             $log = new Log();
-            $rut_user = $request->header('X-Rut-User');
+            $rut_user = $request->header('x-rut-user');
             $action = 'Eliminó el producto "'.$search->name.'" con código "'.$search->id_product.'" del sistema';
             $log->productLog($rut_user, $action);
             $product->deleteProduct($id_product);
@@ -206,13 +203,13 @@ class ProductController extends Controller
                 'message'   => 'Producto eliminado correctamente del sistema ;)'
             );
             return response()->json($data, $data['code']);
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             $data = array(
                 'status'    => 'error',
                 'code'      => '400',
                 'message'   => 'No se pudo eliminar el producto, intente nuevamente'
             );
-            return response()->json($data, $data['code']);
+            return response()->json($e);
         }
     }
 }

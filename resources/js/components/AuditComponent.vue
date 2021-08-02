@@ -82,14 +82,14 @@ export default {
     },
     computed: {
         rows() {
-            return this.items.length
+            return this.items.length;
         }
     },
     methods: {
       async dataForTable () {
-        const auditData = await AuditRepository.get();
-        console.log(auditData.data.data)
-        await this.fillTable(auditData.data.data)
+        const auditData = await AuditRepository.get(this.currentPage - 1);
+        console.log(auditData.data)
+        await this.fillTable(auditData.data)
       },
       fillTable(auditData) {
           auditData.forEach((registry) => {
