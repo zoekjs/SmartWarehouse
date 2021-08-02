@@ -19,7 +19,9 @@ class ProviderController extends Controller
     public function index()
     {
         $query = DB::table('provider as p')->select('p.rut_provider', 'p.name', 'p.telephone', 'p.address', 'p.email', 'c.name as country_name')
-            ->join('country as c', 'c.id_country', '=', 'p.id_country')->get();
+            ->join('country as c', 'c.id_country', '=', 'p.id_country')
+            ->whereNull('deleted_at')
+            ->get();
         return DataTables()->of($query)->toJson();
     }
 
