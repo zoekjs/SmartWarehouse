@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+    use SoftDeletes;
     protected $table = 'product';
     protected $primaryKey = 'id_product';
 
@@ -26,6 +28,7 @@ class Product extends Model
         return DB::table('product')
             ->select('*')
             ->orderByDesc('created_at')
+            ->whereNull('deleted_at')
             ->get();
     }
 
