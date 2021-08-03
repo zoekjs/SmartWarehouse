@@ -113,7 +113,8 @@ export default {
         }
     },
     methods: {
-        async dataForTable() {https://trello.com/c/sGqG7nJOpository.getDeleted();
+        async dataForTable() {
+            const providers = await ProvidersRepository.getDeleted();
             this.fillTable(providers);
             if (!providers.data.length) {
                 this.items = [];
