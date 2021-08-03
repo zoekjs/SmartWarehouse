@@ -113,8 +113,7 @@ export default {
         }
     },
     methods: {
-        async dataForTable() {
-            const providers = await ProvidersRepository.getDeleted();
+        async dataForTable() {https://trello.com/c/sGqG7nJOpository.getDeleted();
             this.fillTable(providers);
             if (!providers.data.length) {
                 this.items = [];
@@ -152,7 +151,7 @@ export default {
                         })
                         .catch(err => {
                             this.$swal(
-                                "No se pudo restaurar el producto",
+                                "No se pudo restaurar el proveedor",
                                 err.message,
                                 "error"
                             );

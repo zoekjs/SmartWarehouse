@@ -13,7 +13,8 @@ class Provider extends Model
 
     public function exist($rut_provider)
     {
-        $count = Provider::where('rut_provider', $rut_provider)->count();
+        $count = Provider::withTrashed()
+        ->where('rut_provider', $rut_provider)->count();
         if ($count == 1) {
             return true;
         } else {

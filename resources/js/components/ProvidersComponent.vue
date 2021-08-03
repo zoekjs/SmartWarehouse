@@ -532,6 +532,14 @@ export default {
                             "El proveedor ya está registrado en el sistema",
                             "error"
                         );
+                    } else if (
+                        err.message === "Request failed with status code 500"
+                    ) {
+                        this.$swal(
+                            "Algo malió sal :(",
+                            "El proveedor fue eliminado, contacte con el administrador para restaurarlo.",
+                            "error"
+                        );
                     }
                 });
         },
