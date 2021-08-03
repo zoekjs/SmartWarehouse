@@ -556,7 +556,7 @@ export default {
                 0,
                 this.editRutProvider.length - 1
             );
-            ProvidersRepository.getById(item.rut_provider)
+            ProvidersRepository.getByIdEdit(item.rut_provider)
                 .then(res => {
                     this.name = res.data[0].name;
                     this.telephone = res.data[0].telephone;

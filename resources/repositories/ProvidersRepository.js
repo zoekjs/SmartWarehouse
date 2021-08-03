@@ -2,6 +2,7 @@ import Client from './clients/AxiosClient'
 const resource = 'providers'
 const deleted = 'deleted-providers'
 const restore = 'restore-provider'
+const edit = 'getprovider'
 
 export default {
     get() {
@@ -9,6 +10,9 @@ export default {
     },
     getById(id) {
         return Client.get(`${ resource }/${ id }`)
+    },
+    getByIdEdit(id) {
+        return Client.get(`${ edit }/${ id }`)
     },
     create(payload) {
         return Client.post(`${ resource }`, payload)

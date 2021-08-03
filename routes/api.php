@@ -31,6 +31,7 @@ Route::get('countries', function() {
 });
 Route::get('deleted-providers', 'ProviderController@getDeletedProviders');
 Route::get('restore-provider/{rut_provider}', 'ProviderController@restoreProvider');
+Route::get('getprovider/{rut_provider}', 'ProviderController@getProvider');
 
 
 /******************************* CATEGORIES SECTION ******************************/

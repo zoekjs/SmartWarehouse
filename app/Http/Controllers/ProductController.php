@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     function __construct()
     {
-        $this->middleware('auth')->except(['index', 'update', 'destroy', 'show', 'getDeletedProducts', 'restoreProduct']);
+        $this->middleware('auth')->except(['index', 'update', 'destroy', 'show', 'getDeletedProducts', 'restoreProduct', 'store']);
     }
     /**
      * Display a listing of the resource.

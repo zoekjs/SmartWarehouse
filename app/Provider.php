@@ -45,6 +45,15 @@ class Provider extends Model
             ->first();
     }
 
+    public function getProvider($rut_provider)
+    {
+        return \DB::table('provider as p')
+            ->join('country as c', 'p.id_country', '=', 'c.id_country')
+            ->select('p.rut_provider', 'p.name', 'p.telephone', 'p.address', 'p.email', 'p.id_country', 'c.name as country_name')
+            ->where('p.rut_provider', $rut_provider)
+            ->get();
+    }
+
     public function updateProvider($rut_provider, $id_country, $name, $telephone, $address, $email)
     {
         $provider = Provider::where('rut_provider', $rut_provider)->firstOrFail();
