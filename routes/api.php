@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 /******************************* PRODUCTS SECTION *******************************/
 Route::resource('products', 'ProductController');
 Route::get('/products/all', 'ProductController@getAll')->name('products-all');
+Route::get('deleted-products', 'ProductController@getDeletedProducts');
+Route::get('restore-product/{id_product}', 'ProductController@restoreProduct');
 
 
 /******************************* PROVIDERS SECTION ******************************/
@@ -27,6 +29,8 @@ Route::resource('providers', 'ProviderController');
 Route::get('countries', function() {
     return datatables()->eloquent(App\Country::query()->orderBy('name', 'asc'))->toJson();
 });
+Route::get('deleted-providers', 'ProviderController@getDeletedProviders');
+Route::get('restore-provider/{rut_provider}', 'ProviderController@restoreProvider');
 
 
 /******************************* CATEGORIES SECTION ******************************/

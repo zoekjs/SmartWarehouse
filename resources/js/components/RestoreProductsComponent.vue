@@ -1,9 +1,8 @@
 <template>
     <div>
         <div class="col-12 mb-4">
-            <h3>Estado de pago - Ordenes de compra pagadas</h3>
+            <h3>Productos - Restaurar eliminados</h3>
         </div>
-
         <div class="d-flex justify-content-between ml-0 mr-0 pl-0 pr-0">
             <div class="col-lg-4 pl-0 pr-0">
                 <b-col lg="12" class="pl-0 pr-0">
@@ -28,9 +27,6 @@
                     </b-form-group>
                 </b-col>
             </div>
-            <b-link :href="'status'" class="btn btn-primary mb-5"
-                >Ver OC impagas</b-link
-            >
         </div>
 
         <b-table
@@ -41,17 +37,17 @@
             :current-page="currentPage"
             :fields="fields"
             :filter="filter"
+            ref="products"
             @filtered="itemsFilter($event)"
-            ><template
-                v-slot:cell(actions)="row"
-                class="d-flex justify-content-between"
-            >
+        >
+            <template v-slot:cell(actions)="row">
                 <div class="d-flex justify-content-around">
-                    <b-link
-                        :href="`descargar/${row.item.id_purchase_order}`"
-                        class="btn btn-primary"
-                        >ver</b-link
+                    <b-button
+                        variant="success"
+                        @click="restoreProduct(row.item.id_product)"
                     >
+                        Restaurar
+                    </b-button>
                 </div>
             </template>
         </b-table>
@@ -75,10 +71,10 @@
 
 <script>
 import Repository from "../../repositories/RepositoryFactory";
-const PaymentRepository = Repository.get("payed");
+const ProductsRepository = Repository.get("products");
 
 export default {
-    name: "PurchaseOrderPayedComponent",
+    name: "RestoreProductsComponent",
     props: {
         rutUser: Number
     },
@@ -86,24 +82,9 @@ export default {
         return {
             items: [],
             fields: [
-                {
-                    key: "id_purchase_order",
-                    label: "Orden número",
-                    sortable: true
-                },
-                { key: "provider", label: "Proveedor", sortable: true },
-                {
-                    key: "total",
-                    label: "Monto",
-                    sortable: true,
-                    formatter: (value, key, item) =>
-                        value.toLocaleString("es-CL", {
-                            style: "currency",
-                            currency: "clp"
-                        })
-                },
-                { key: "status", label: "Estado de pago", sortable: true },
-                { key: "updated_at", label: "Fecha de pago", sortable: true },
+                { key: "id_product", label: "Código producto" },
+                { key: "name", label: "Nombre" },
+                { key: "deleted_at", label: "Fecha de eliminación" },
                 {
                     key: "actions",
                     label: "",
@@ -111,6 +92,9 @@ export default {
                     thClass: "icons-column-width "
                 }
             ],
+            idProduct: null,
+            name: "",
+            rut: this.rutUser,
             perPage: 10,
             currentPage: 1,
             filter: null,
@@ -124,29 +108,71 @@ export default {
     computed: {
         rows() {
             return this.items.length;
+        },
+        disabled() {
+            return !(
+                this.idProduct &&
+                this.name &&
+                this.quantity &&
+                this.unitPrice
+            );
         }
     },
     methods: {
         async dataForTable() {
-            const paymentData = await PaymentRepository.get();
-            console.log(paymentData.data.data);
-            await this.fillTable(paymentData.data.data);
+            const products = await ProductsRepository.getDeleted();
+            await this.fillTable(products);
+            if (!products.data.length) {
+                this.items = [];
+            }
         },
-        fillTable(paymentData) {
-            paymentData.forEach(paymentStatus => {
-                const data = {
-                    id_purchase_order: paymentStatus.id_purchase_order,
-                    provider: paymentStatus.provider,
-                    total: paymentStatus.total,
-                    status: paymentStatus.status,
-                    updated_at: paymentStatus.updated_at
+        fillTable(products) {
+            products.data.forEach(product => {
+                const producto = {
+                    id_product: product.id_product,
+                    name: product.name,
+                    deleted_at: product.deleted_at
                 };
-                this.items.push(data);
+                this.items.push(producto);
             });
             console.log(this.items);
         },
         itemsFilter(evt) {
             this.itemsFiltered = evt.length === 0;
+        },
+        restoreProduct(id) {
+            console.log(this.rutUser);
+            this.$swal({
+                title: "Estás seguro?",
+                text:
+                    "El producto restaurado será visible en la sección de productos!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí, restaurar!",
+                cancelButtonText: "cancelar"
+            }).then(result => {
+                if (result.isConfirmed) {
+                    ProductsRepository.restore(id, this.rutUser)
+                        .then(res => {
+                            this.items.length = 0;
+                            this.dataForTable();
+                            this.$swal(
+                                'Todo listo !"',
+                                res.data.message,
+                                "success"
+                            );
+                        })
+                        .catch(err => {
+                            this.$swal(
+                                "No se pudo restaurar el producto",
+                                err.message,
+                                "error"
+                            );
+                        });
+                }
+            });
         }
     }
 };

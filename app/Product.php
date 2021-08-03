@@ -39,8 +39,9 @@ class Product extends Model
             ->orderByDesc('created_at')
             ->get();
     }
-    
-    public function getProduct($id_product) {
+
+    public function getProduct($id_product)
+    {
         return DB::table('product')
             ->where('id_product', $id_product)
             ->first();
@@ -72,4 +73,15 @@ class Product extends Model
         $product->delete();
     }
 
+    public function getDeletedProducts()
+    {
+        return Product::onlyTrashed()->get();
+    }
+
+    public function restoreProduct($id_product)
+    {
+        return Product::onlyTrashed()
+            ->where('id_product', $id_product)
+            ->restore($id_product);
+    }
 }

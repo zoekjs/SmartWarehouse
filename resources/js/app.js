@@ -36,7 +36,8 @@ Vue.component('providers-component', require('./components/ProvidersComponent.vu
 Vue.component('purchaseorderpayment-component', require('./components/PurchaseOrderPaymentComponent.vue').default);
 Vue.component('purchaseorderpayed-component', require('./components/PurchaseOrderPayedComponent.vue').default);
 Vue.component('tags-component', require('./components/TagsComponent.vue').default);
-
+Vue.component('restore-products-component', require('./components/RestoreProductsComponent.vue').default);
+Vue.component('restore-providers-component', require('./components/RestoreProvidersComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

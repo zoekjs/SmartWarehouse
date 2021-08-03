@@ -20,6 +20,10 @@ Route::match(array('GET', 'POST', 'PUT'),'/oc', 'PurchaseOrderController@index')
 
 Route::match(array('GET', 'POST', 'PUT'),'/categorias', 'CategoryController@create')->name('categorias')->middleware('roles:Administrador,Supervisor');
 
+/**************************** RESTORE VIEWS ********************************/
+Route::get('restore-products', 'ProductController@restoreView')->name('restore-products');
+Route::get('restore-providers', 'ProviderController@restoreView')->name('restore-providers');
+
 /**************************** USERS MENU **********************************/
 Route::match(array('GET', 'POST', 'PUT'), '/menu', function () {
     return view('user/menu');

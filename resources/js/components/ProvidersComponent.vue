@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div class="col-12 mb-4">
+            <h3>Productos - Gestión de proveedores</h3>
+        </div>
         <div class="d-flex mb-3 col-12">
             <b-modal
                 id="modal-add-provider"
@@ -501,7 +504,7 @@ export default {
             }
         },
         fillTable(providers) {
-            console.log(providers.data.data)
+            console.log(providers.data.data);
             providers.data.data.forEach(provider => this.items.push(provider));
         },
         createProvider() {

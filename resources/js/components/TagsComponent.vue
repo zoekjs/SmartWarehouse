@@ -221,18 +221,17 @@ export default {
                 const data = {
                     value: tags.id_tag,
                     text: ""
-                };
+                }
                 this.tags.push(data);
-                console.log(this.tags);
             });
         },
         async getProducts() {
             const products = await ProductsRepository.get();
-            products.data.data.forEach(product => {
+            products.data.forEach(product => {
                 const data = {
                     text: product.name,
                     value: product.id_product
-                };
+                }
                 this.products.push(data);
             });
         },
