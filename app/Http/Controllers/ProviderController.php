@@ -13,7 +13,7 @@ class ProviderController extends Controller
 
     function __construct()
     {
-        $this->middleware('auth')->except(['index', 'update', 'destroy', 'show', 'getDeletedProviders', 'restoreProvider']);
+        $this->middleware('auth')->except(['index', 'update', 'destroy', 'show', 'getDeletedProviders', 'restoreProvider', 'store', 'getProvider']);
     }
 
     /**
@@ -179,6 +179,37 @@ class ProviderController extends Controller
         $exist = $provider->exist($rut_provider);
         if($exist){
             return $provider->searchProvider($rut_provider);
+        }else {
+            $data = array(
+                'status'    => 'error',
+                'code'      => '404',
+                'message'   => 'El proveedor que intenta buscar, no se encuentra registrado en el sistema :('
+            );
+            return response()->json($data, $data['code']);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Request $request
+     * @param $rut_provider
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getProvider(Request $request, $rut_provider)
+    {
+        if($request->input('json', null)) {
+            $json = $request->input('json', null);
+            $params = json_decode($json);
+        }else{
+            $json = $request->all();
+            $params = json_decode(json_encode($json));
+        }
+
+        $provider = new Provider();
+        $exist = $provider->exist($rut_provider);
+        if($exist){
+            return $provider->getProvider($rut_provider);
         }else {
             $data = array(
                 'status'    => 'error',
