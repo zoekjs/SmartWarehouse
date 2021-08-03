@@ -49,7 +49,8 @@ class Product extends Model
 
     public function exist($id_product)
     {
-        $count = Product::where('id_product', $id_product)->count();
+        $count = Product::withTrashed()
+            ->where('id_product', $id_product)->count();
         if ($count == 1) {
             return true;
         } else {

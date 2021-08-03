@@ -152,7 +152,7 @@ export default {
                         })
                         .catch(err => {
                             this.$swal(
-                                "No se pudo restaurar el producto",
+                                "No se pudo restaurar el proveedor",
                                 err.message,
                                 "error"
                             );
