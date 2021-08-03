@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div class="col-12 mb-4">
+            <h3>Productos - Gestión de productos</h3>
+        </div>
         <div class="d-flex mb-3 col-12">
             <b-modal
                 id="modal-add-product-1"
@@ -426,7 +429,7 @@ export default {
                 .catch(err => console.log(err));
         },
         deleteProduct(id) {
-            console.log(this.rutUser)
+            console.log(this.rutUser);
             this.$swal({
                 title: "Estás seguro?",
                 text: "Esta acción no se puede revertir!",

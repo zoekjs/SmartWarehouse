@@ -10,7 +10,8 @@ class ProductController extends Controller
 {
     function __construct()
     {
-        $this->middleware('auth')->except(['index', 'update', 'destroy', 'show']);    }
+        $this->middleware('auth')->except(['index', 'update', 'destroy', 'show', 'getDeletedProducts', 'restoreProduct']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +20,50 @@ class ProductController extends Controller
     public function index()
     {
         $product = new Product();
-      return $product->productsList();
+        return $product->productsList();
+    }
+
+    public function restoreView()
+    {
+        return view('restoreProducts');
+    }
+
+    public function getDeletedProducts()
+    {
+        $product = new Product();
+        $search = $product->getDeletedProducts();
+
+        return response()->json($search);
+    }
+
+    public function restoreProduct($id_product, Request $request)
+    {
+        $data = null;
+        $log = new Log();
+        $rut_user = $request->header('x-rut-user');
+        $product = new Product();
+        $res = $product->restoreProduct($id_product);
+        $search = $product->getProduct($id_product);
+        if (!$res) {
+            $data = array(
+                'status' => 'Internal server error',
+                'code' => '500',
+                'message' => 'No se pudo restaurar el producto'
+            );
+    
+            return response()->json($data, $data['code']);
+        }
+
+        $action = 'Restauró el producto '.$search->name.' con código '.$search->id_product.' en el sistema.';
+        $log->productLog($rut_user, $action);
+
+        $data = array(
+            'status' => 'success',
+            'code' => '200',
+            'message' => 'Producto restaurado correctamente :)',
+        );
+        
+        return response()->json($data, $data['code']);
     }
 
     /**
@@ -30,7 +74,7 @@ class ProductController extends Controller
     public function getAll()
     {
         $product = new Product();
-      return $product->productsAll();
+        return $product->productsAll();
     }
 
     /**
@@ -51,7 +95,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->input('json', null)) {
+        if ($request->input('json', null)) {
             //Recoger datos del json
             $json = $request->input('json', null);
             //decodificar json
@@ -65,7 +109,7 @@ class ProductController extends Controller
         $product = new Product();
         $log = new Log();
         $exist = $product->exist($params->id_product);
-        if(!$exist) {
+        if (!$exist) {
             $id_product = $params->id_product;
             $name       = $params->name;
             $description = $params->description;
@@ -73,7 +117,7 @@ class ProductController extends Controller
             $unit_price = (int)$params->unit_price;
             $rut_user   =  $params->rut_user;
 
-            $action = 'Añadió producto "'.$name.'" al sistema';
+            $action = 'Añadió producto "' . $name . '" al sistema';
             $log->productLog($rut_user, $action);
             $product->createProduct($id_product, $name, $description, $quantity, $unit_price);
 
@@ -101,14 +145,13 @@ class ProductController extends Controller
      */
     public function show($id_product)
     {
-        try{
+        try {
             //buscar producto
             $product = new Product();
             $search = $product->getProduct($id_product);
             //devover producto como json
             return response()->json($search);
-
-        }catch(\Exception $ex){
+        } catch (\Exception $ex) {
             $data = array(
                 'status'    => 'Error',
                 'code'      => 404,
@@ -138,7 +181,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id_product)
     {
-        if($request->input('json', null)) {
+        if ($request->input('json', null)) {
             //Recoger datos del json
             $json = $request->input('json', null);
             //decodificar json
@@ -159,7 +202,7 @@ class ProductController extends Controller
             $unit_price     = (int)$params->unit_price;
             $rut_user       = $params->rut_user;
 
-            $action = 'Modificó producto "'.$name.'" con código "'.$id_product.'" en el sistema';
+            $action = 'Modificó producto "' . $name . '" con código "' . $id_product . '" en el sistema';
             $log->productLog($rut_user, $action);
             $product->updateProduct($id_product, $name, $description, $quantity, $unit_price);
 
@@ -170,7 +213,7 @@ class ProductController extends Controller
             );
 
             return response()->json($data, $data['code']);
-        } catch(Exception $e) {
+        } catch (\Exception $e) {
             $data = array(
                 'status'    => 'not found',
                 'code'      => '404',
@@ -193,7 +236,7 @@ class ProductController extends Controller
             $search = Product::where('id_product', $id_product)->firstOrFail();
             $log = new Log();
             $rut_user = $request->header('x-rut-user');
-            $action = 'Eliminó el producto "'.$search->name.'" con código "'.$search->id_product.'" del sistema';
+            $action = 'Eliminó el producto "' . $search->name . '" con código "' . $search->id_product . '" del sistema';
             $log->productLog($rut_user, $action);
             $product->deleteProduct($id_product);
 
@@ -203,7 +246,7 @@ class ProductController extends Controller
                 'message'   => 'Producto eliminado correctamente del sistema ;)'
             );
             return response()->json($data, $data['code']);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $data = array(
                 'status'    => 'error',
                 'code'      => '400',

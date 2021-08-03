@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\DB;
 
 class ProviderController extends Controller
 {
+
+    function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'update', 'destroy', 'show', 'getDeletedProviders', 'restoreProvider']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -34,6 +40,49 @@ class ProviderController extends Controller
     {
         $countrys = DB::table('country')->orderBy('name', 'asc')->get();
         return view('providers', compact('countrys'));
+    }
+
+    public function restoreView() {
+        return view('restoreProviders');
+    }
+
+    public function getDeletedProviders()
+    {
+        $provider = new Provider();
+        $search = $provider->getDeletedProviders();
+
+        return response()->json($search);
+    }
+
+    public function restoreProvider($rut_provider, Request $request)
+    {
+        $data = null;
+        $log = new Log();
+        $rut_user = $request->header('x-rut-user');
+        $provider = new Provider();
+        $res = $provider->restoreProvider($rut_provider);
+        $search = $provider->searchProvider($rut_provider);
+
+        if (!$res) {
+            $data = array(
+                'status' => 'Internal server error',
+                'code' => '500',
+                'message' => 'No se pudo restaurar el proveedor :('
+            );
+    
+            return response()->json($data, $data['code']);
+        }
+
+        $action = 'Restauró el proveedor "'.$search->name.'" con rut número "'.$search->rut_provider.'" en el sistema.';
+        $log->productLog($rut_user, $action);
+
+        $data = array(
+            'status' => 'success',
+            'code' => '200',
+            'message' => 'Proveedor restaurado correctamente :)',
+        );
+        
+        return response()->json($data, $data['code']);
     }
 
     /**

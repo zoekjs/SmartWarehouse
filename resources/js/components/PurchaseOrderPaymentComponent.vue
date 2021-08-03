@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="col-12 mb-4">
-            <h3>Estado de pago - Ordenes de compra</h3>
+            <h3>Estado de pago - Ordenes de compra pendientes de pago</h3>
         </div>
 
         <div class="d-flex justify-content-between ml-0 mr-0 pl-0 pr-0">

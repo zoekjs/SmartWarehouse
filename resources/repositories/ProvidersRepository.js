@@ -1,5 +1,7 @@
 import Client from './clients/AxiosClient'
 const resource = 'providers'
+const deleted = 'deleted-providers'
+const restore = 'restore-provider'
 
 export default {
     get() {
@@ -16,6 +18,14 @@ export default {
     },
     delete(id, rutUser) {
         return Client.delete(`${ resource }/${ id }`, { headers: { 'X-Rut-User': rutUser}})
+    },
+    getDeleted() {
+        return Client.get(`${deleted}`);
+    },
+    restore(id, rutUser) {
+        return Client.get(`${restore}/${id}`, {
+            headers: { "X-Rut-User": rutUser }
+        });
     }
 }
 

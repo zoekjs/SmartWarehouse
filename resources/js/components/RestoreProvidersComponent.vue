@@ -1,9 +1,8 @@
 <template>
     <div>
         <div class="col-12 mb-4">
-            <h3>Estado de pago - Ordenes de compra pagadas</h3>
+            <h3>Proveedores - Restaurar eliminados</h3>
         </div>
-
         <div class="d-flex justify-content-between ml-0 mr-0 pl-0 pr-0">
             <div class="col-lg-4 pl-0 pr-0">
                 <b-col lg="12" class="pl-0 pr-0">
@@ -28,9 +27,6 @@
                     </b-form-group>
                 </b-col>
             </div>
-            <b-link :href="'status'" class="btn btn-primary mb-5"
-                >Ver OC impagas</b-link
-            >
         </div>
 
         <b-table
@@ -41,21 +37,21 @@
             :current-page="currentPage"
             :fields="fields"
             :filter="filter"
+            ref="products"
             @filtered="itemsFilter($event)"
-            ><template
-                v-slot:cell(actions)="row"
-                class="d-flex justify-content-between"
-            >
+        >
+            <template v-slot:cell(actions)="row">
                 <div class="d-flex justify-content-around">
-                    <b-link
-                        :href="`descargar/${row.item.id_purchase_order}`"
-                        class="btn btn-primary"
-                        >ver</b-link
+                    <b-button
+                        variant="success"
+                        @click="restoreProvider(row.item.rut_provider)"
                     >
+                        Restaurar
+                    </b-button>
                 </div>
             </template>
         </b-table>
-        <div v-if="itemsFiltered" class="success">
+        <div v-if="itemsFiltered" class="danger">
             <b-alert
                 show="show"
                 variant="danger"
@@ -75,35 +71,24 @@
 
 <script>
 import Repository from "../../repositories/RepositoryFactory";
-const PaymentRepository = Repository.get("payed");
+
+const ProvidersRepository = Repository.get("providers");
 
 export default {
-    name: "PurchaseOrderPayedComponent",
+    name: "RestoreProvidersComponent",
     props: {
         rutUser: Number
     },
     data() {
         return {
             items: [],
+            countries: [
+                { value: null, text: "Seleccione una opción", disabled: true }
+            ],
             fields: [
-                {
-                    key: "id_purchase_order",
-                    label: "Orden número",
-                    sortable: true
-                },
-                { key: "provider", label: "Proveedor", sortable: true },
-                {
-                    key: "total",
-                    label: "Monto",
-                    sortable: true,
-                    formatter: (value, key, item) =>
-                        value.toLocaleString("es-CL", {
-                            style: "currency",
-                            currency: "clp"
-                        })
-                },
-                { key: "status", label: "Estado de pago", sortable: true },
-                { key: "updated_at", label: "Fecha de pago", sortable: true },
+                { key: "rut_provider", label: "Rut proveedor" },
+                { key: "name", label: "Nombre" },
+                { key: "deleted_at", label: "Fecha de eliminación" },
                 {
                     key: "actions",
                     label: "",
@@ -115,6 +100,7 @@ export default {
             currentPage: 1,
             filter: null,
             filterOn: [],
+            disabled: true,
             itemsFiltered: false
         };
     },
@@ -128,26 +114,54 @@ export default {
     },
     methods: {
         async dataForTable() {
-            const paymentData = await PaymentRepository.get();
-            console.log(paymentData.data.data);
-            await this.fillTable(paymentData.data.data);
+            const providers = await ProvidersRepository.getDeleted();
+            this.fillTable(providers);
+            if (!providers.data.length) {
+                this.items = [];
+            }
         },
-        fillTable(paymentData) {
-            paymentData.forEach(paymentStatus => {
-                const data = {
-                    id_purchase_order: paymentStatus.id_purchase_order,
-                    provider: paymentStatus.provider,
-                    total: paymentStatus.total,
-                    status: paymentStatus.status,
-                    updated_at: paymentStatus.updated_at
-                };
-                this.items.push(data);
-            });
-            console.log(this.items);
+        fillTable(providers) {
+            providers.data.forEach(provider => this.items.push(provider));
         },
         itemsFilter(evt) {
             this.itemsFiltered = evt.length === 0;
+        },
+        restoreProvider(rut_provider) {
+            console.log(this.rutUser);
+            this.$swal({
+                title: "Estás seguro?",
+                text:
+                    "El proveedor restaurado será visible en la sección de proveedores!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí, restaurar!",
+                cancelButtonText: "cancelar"
+            }).then(result => {
+                if (result.isConfirmed) {
+                    ProvidersRepository.restore(rut_provider, this.rutUser)
+                        .then(res => {
+                            this.items.length = 0;
+                            this.dataForTable();
+                            this.$swal(
+                                'Todo listo !"',
+                                res.data.message,
+                                "success"
+                            );
+                        })
+                        .catch(err => {
+                            this.$swal(
+                                "No se pudo restaurar el producto",
+                                err.message,
+                                "error"
+                            );
+                        });
+                }
+            });
         }
     }
 };
 </script>
+
+<style scoped></style>
