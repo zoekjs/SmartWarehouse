@@ -287,6 +287,7 @@
 <script>
 import Repository from "../../repositories/RepositoryFactory";
 const ProductsRepository = Repository.get("products");
+import { numberValidator } from "../../utils/NumberValidator"
 
 export default {
     name: "ProductsComponent",
@@ -333,8 +334,8 @@ export default {
             return !(
                 this.idProduct &&
                 this.name &&
-                this.quantity &&
-                this.unitPrice
+                numberValidator(this.quantity) &&
+                numberValidator(this.unitPrice)
             );
         }
     },
