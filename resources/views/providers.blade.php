@@ -35,7 +35,7 @@
                                 <div class="input-field col-sm-12">
                                     <label for="id_pais">País</label>
                                     <select class="custom-select" id="id_pais">
-                                        <option selected>Selecccionar</option>
+                                        <option selected>Seleccionar</option>
                                         @foreach ($countrys as $country)
                                         <option value="{{$country->id_country}}">{{$country->name}}</option>
                                         @endforeach

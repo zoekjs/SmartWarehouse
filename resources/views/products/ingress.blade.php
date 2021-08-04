@@ -25,7 +25,7 @@
                 <div class="form-group col-md-3">
                   <label for="rut_provider">Proveedor</label>
                   <select class="form-control" name="rut_provider" id="rut_provider" required>
-                    <option selected>Selecccionar</option>
+                    <option selected>Seleccionar</option>
                     @foreach ($providers as $provider)
                     <option value="{{$provider->rut_provider}}">{{$provider->name}}</option>
                     @endforeach 
@@ -36,7 +36,7 @@
                 <div class="form-group col-md-6">
                   <label for="payment_condition">Tipo documento</label>
                   <select class="form-control" name="id_type_document" id="" required>
-                    <option selected>Selecccionar</option>
+                    <option selected>Seleccionar</option>
                     @foreach ($doctypes as $doctype)
                     <option value="{{$doctype->id_type_document}}">{{$doctype->name}}</option>
                     @endforeach 
