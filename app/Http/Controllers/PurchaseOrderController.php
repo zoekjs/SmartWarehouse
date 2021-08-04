@@ -86,7 +86,7 @@ class PurchaseOrderController extends Controller
             $log->productLog($rut_user, $action);
 
             return redirect()->back();
-        }catch(Exception $e){
+        }catch(\Exception $e){
             return response()->back();
         }
     }
@@ -165,7 +165,7 @@ class PurchaseOrderController extends Controller
                 return redirect('/ordenes');
             }
 
-        }catch(Exception $e){
+        }catch(\Exception $e){
             return $e;
         }
 

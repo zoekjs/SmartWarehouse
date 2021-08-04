@@ -1,6 +1,6 @@
 @extends('layout.layout')
 @section('components')
-    <purchaseorderpayment-component />
+    <purchaseorderpayment-component :rut-user="{{Auth()->user()->rut_user}}"/>
 @endsection
 @section('content')
 <div class="row mt-3">

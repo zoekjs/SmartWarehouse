@@ -61,7 +61,7 @@ class IngressDetailController extends Controller
             $ingressDetail->storeIngressDetail($id_ingress, $id_product, $quantity);
 
             return redirect()->back();
-        }catch(Exception $e){
+        }catch(\Exception $e){
             throw new Exception($e->getMessage());
         }
 

@@ -71,7 +71,7 @@ class PurchaseOrderDetailController extends Controller
             $log->productLog($rut_user, $action);
             $pdo->createPODetails($id_purchase_order, $id_product, $quantity, $unit_price, $total);
             return redirect()->back();
-        }catch(Exception $e){
+        }catch(\Exception $e){
             return $e;
         }
     }
@@ -147,7 +147,7 @@ class PurchaseOrderDetailController extends Controller
                 'message'   => 'Detalle eliminado correctamente del sistema ;)'
             );
             return response()->json($data, $data['code']);
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             return $e;
             /*$data = array(
                 'status'    => 'error',
