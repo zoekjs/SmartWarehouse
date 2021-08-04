@@ -70,7 +70,7 @@ class CategoryController extends Controller
                 );
                 return response()->json($data, $data['code']);
             }
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             return $e;
         }
     }
@@ -149,7 +149,7 @@ class CategoryController extends Controller
                 );
                 return response()->json($data, $data['code']);
             }
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             $data = array(
                 'status'    => 'bad request',
                 'code'      => '400',
@@ -188,7 +188,7 @@ class CategoryController extends Controller
                     'message'   => 'La categoría que intenta eliminar no está registrado en el sistema'
                 );
             }
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             /* $data = array(
                  'status'   => 'error',
                  'code'     => '400',

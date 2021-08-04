@@ -148,7 +148,7 @@ class ProviderController extends Controller
                 return response()->json($data, $data['code']);
             }
 
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             $data = array(
                 'status'    => 'error',
                 'code'      => '400',
@@ -283,7 +283,7 @@ class ProviderController extends Controller
                 return response()->json($data, $data['code']);
             }
 
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             $data = array(
                 'status'    => 'error',
                 'code'      => '400',
@@ -320,7 +320,7 @@ class ProviderController extends Controller
                     'message'   => 'El proveedor que intenta eliminar no está registrado en el sistema'
                 );
             }
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             $data = array(
                 'status'   => 'error',
                 'code'     => '400',
