@@ -17,7 +17,7 @@
                 <div class="form-group col-md-3">
                   <label for="proveedor">Proveedor</label>
                   <select class="form-control" name="proveedor" id="">
-                    <option selected>Selecccionar</option>
+                    <option selected>Seleccionar</option>
                     @foreach ($providers as $provider)
                     <option value="{{$provider->rut_provider}}">{{$provider->name}}</option>
                     @endforeach
@@ -104,7 +104,7 @@
                         <div class="input-field col-sm-12">
                             <label for="product">Producto</label>
                             <select class="custom-select" id="product">
-                              <option selected>Selecccionar</option>
+                              <option selected>Seleccionar</option>
                               @foreach ($products as $product)
                               <option value="{{$product->id_product}}">{{$product->name}}</option>
                               @endforeach

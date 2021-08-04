@@ -12,7 +12,7 @@ use App\PurchaseOrder;
 |
 */
 
-Route::match(array('GET', 'POST', 'PUT'), '/', 'ProductController@create')->name('productos');
+Route::match(array('GET', 'POST', 'PUT'), '/', 'ProductController@create')->name('productos')->middleware('auth');
 
 Route::match(array('GET', 'POST', 'PUT'),'/proveedores', 'ProviderController@create')->name('proveedores')->middleware(['auth', 'roles:Administrador,Supervisor']);
 
@@ -30,8 +30,8 @@ Route::match(array('GET', 'POST', 'PUT'), '/menu', function () {
 })->name('menu')->middleware(['auth']);
 
 /****************************  PAYMENT STATUS ***********************************/
-route::get('/status', 'PaymentStatusController@create')->name('estado-oc');
-route::get('oc-pagadas', 'PaymentStatusController@getPayedView')->name('oc-pagadas');
+route::get('/status', 'PaymentStatusController@create')->name('estado-oc')->middleware(['roles:Administrador,Supervisor']);
+route::get('oc-pagadas', 'PaymentStatusController@getPayedView')->name('oc-pagadas')->middleware(['roles:Administrador,Supervisor']);
 
 /***************************** PURCHASE ORDER ***********************************/
 Route::match(array('GET', 'POST', 'PUT'),'/nueva-orden', 'PurchaseOrderController@listOrders')->name('nueva-orden');
@@ -48,7 +48,7 @@ Route::get('/admin', function () {
 })->name('admin')->middleware(['auth', 'roles:Administrador,Supervisor']);
 
 /****************************** AUDIT ROUTES **********************************/
-Route::get('auditoria', 'AuditController@create')->name('auditoria');
+Route::get('auditoria', 'AuditController@create')->name('auditoria')->middleware(['auth', 'roles:Administrador,Supervisor']);
 
 /***************************** PASSWORD ROUTES ********************************/
 Route::get('cambio-contraseña', 'Auth\ResetPasswordController@index')->name('cambio-contraseña')->middleware('auth');
@@ -67,7 +67,7 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware(['auth']);
 });*/
 
 /******************************* TAGS *******************************/
-Route::get('tags', 'TagController@tagsView')->name('tagsView');
+Route::get('tags', 'TagController@tagsView')->name('tagsView')->middleware('auth');
 
 /******************************* ORDER TO PDF *******************************/
 Route::get('/order', function(){
@@ -77,7 +77,7 @@ Route::get('/order', function(){
     $orderData = $order->getOrder(9);
     $pdf = PDF::loadView('PO/order', compact('details', 'orderData'));
     return $pdf->stream('archivo.pdf');
-})->name('order');
+})->name('order')->middleware('auth');
 
 /*********************** INGRESS REGISTER ************************************/
 Route::match(array('GET', 'POST', 'PUT'),'/ingresos', 'IngressController@listIngress')->name('ingresos');

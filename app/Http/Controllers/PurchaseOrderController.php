@@ -65,6 +65,11 @@ class PurchaseOrderController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'rut_provider' => 'required|numeric',
+            'id_payment' => 'required|numeric'
+        ]);
+        
         try{
             $order = new PurchaseOrder();
             $log = new Log();

@@ -35,21 +35,21 @@ class LoginController extends Controller
         $action = 'Inicio sesión en el sistema';
 
         $log->productLog($rut_user, $action);
-         $rol = Auth::User()->role->name;
+        $rol = Auth::User()->role->name;
         
-         switch ($rol)
+        switch ($rol)
         {
             case 'Administrador':
-                return redirect()->route('admin');
+                return redirect()->route('productos');
                 break;
             case 'Supervisor':
-                return redirect()->route('admin');
+                return redirect()->route('productos');
                 break;
             case 'Bodeguero':
-                return redirect()->route('menu');
+                return redirect()->route('productos');
                 break;
             default:
-                return redirect()->route('menu');
+                return redirect()->route('productos');
         }
 
     }

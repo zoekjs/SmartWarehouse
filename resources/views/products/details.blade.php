@@ -39,7 +39,7 @@
                     <div class="input-field col-sm-12">
                         <label for="id_product">Producto</label>
                         <select class="custom-select" name="id_product" id="id_product" onchange="getPrice();">
-                          <option selected>Selecccionar</option>
+                          <option selected>Seleccionar</option>
                           @foreach ($products as $product)
                           <option value="{{$product->id_product}}">{{$product->name}}</option>
                           @endforeach                                
@@ -129,7 +129,7 @@
                         <div class="input-field col-sm-12">
                             <label for="product">Producto</label>
                             <select class="custom-select" id="product">
-                              <option selected>Selecccionar</option>
+                              <option selected>Seleccionar</option>
                                 
                             </select>
                         </div>

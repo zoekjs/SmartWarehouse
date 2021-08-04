@@ -19,23 +19,37 @@
               <div class="row">
                 <div class="form-group col-md-3">
                   <label for="rut_provider">Proveedor</label>
-                  <select class="form-control" name="rut_provider" id="rut_provider" required>
-                    <option selected>Selecccionar</option>
+                  <select class="form-control @error('rut_provider') is-invalid @enderror" name="rut_provider" id="rut_provider" required>
+                    <option selected>Seleccionar</option>
                     @foreach ($providers as $provider)
-                    <option value="{{$provider->rut_provider}}">{{$provider->name}}</option>
+                    @if ( $provider->rut_provider == old('rut_provider'))
+                      <option value="{{$provider->rut_provider}}" selected>{{$provider->name}}</option>
+                    @else
+                      <option value="{{$provider->rut_provider}}">{{$provider->name}}</option>
+                    @endif
                     @endforeach
                   </select>
+                  @error('rut_provider')
+                    <span class="text-danger">Debe seleccionar un proveedor</span>
+                  @enderror
                 </div>
                 <div class="form-group col-md-3">
                 </div>
                 <div class="form-group col-md-6">
                   <label for="payment_condition">Condición de pago</label>
-                  <select class="form-control" name="id_payment" id="" required>
-                    <option selected>Selecccionar</option>
+                  <select class="form-control @error('id_payment') is-invalid @enderror" name="id_payment" id="id_payment" required>
+                    <option selected>Seleccionar</option>
                     @foreach ($payment_methods as $payment_method)
+                    @if ( $payment_method->id_payment == old('id_payment'))
+                    <option value="{{$payment_method->id_payment}}" selected>{{$payment_method->name}}</option>
+                    @else
                     <option value="{{$payment_method->id_payment}}">{{$payment_method->name}}</option>
+                    @endif
                     @endforeach
                   </select>
+                  @error('id_payment')
+                    <span class="text-danger">Debe seleccionar una condicion de pago</span>
+                  @enderror
                 </div>
               </div>
               <!-- ROW MONEDAS -->
@@ -59,11 +73,11 @@
               <div class="row">
                 <div class="form-group col-md-6">
                   <label for="paymentObservations">Observaciones relacionadas al pago</label>
-                  <textarea class="form-control" name="observation" required id="" style="resize: none;" rows="3"></textarea>
+                  <textarea class="form-control" name="observation" required id="" style="resize: none;" rows="3" >{{ old('observation') }}</textarea>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="observations">Otras observaciones</label>
-                  <textarea class="form-control" name="observation_payment" required id="" style="resize: none;" rows="3"></textarea>
+                  <textarea class="form-control" name="observation_payment" required id="" style="resize: none;" rows="3">{{ old('observation_payment') }}</textarea>
                 </div>
               </div>
             </div>
@@ -154,7 +168,7 @@
                         <div class="input-field col-sm-12">
                             <label for="product">Producto</label>
                             <select class="custom-select" id="product">
-                              <option selected>Selecccionar</option>
+                              <option selected>Seleccionar</option>
 
                             </select>
                         </div>
